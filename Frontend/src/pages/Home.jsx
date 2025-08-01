@@ -1,29 +1,40 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import Navbar from '../components/Navbar'
 import Header from '../components/Header'
 import { IoArrowDownCircleOutline } from "react-icons/io5";
 import ExamCat from '../components/ExamCat';
 import { AppContent } from '../context/AppContext';
+import ExamsList from '../components/ExamsList';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const { scrollToExams } = useContext(AppContent);
+  const { scrollToExams, examsPop, setExamsPop } = useContext(AppContent);
+  const location = useLocation();
 
-  const handleScroll = () => {
-    scrollToExams.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(location.hash) {
+      const element = document.querySelector(location.hash);
+      if(element)
+        element.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [location])
+  
 
 
   return (
     <div className='w-full h-full flex flex-col items-center'>
         <Navbar />
         <Header />
-        <div onClick={() =>handleScroll()} className='flex flex-col justify-center items-center gap-1 animate-bounce text-gray-400 cursor-pointer'>
+        <div onClick={() => navigate('/#exam-categories')} className='flex flex-col justify-center items-center gap-1 animate-bounce text-gray-400 cursor-pointer'>
           <div>Exam Categories</div>
           <IoArrowDownCircleOutline className='size-8'/>
         </div>
-        <div ref={scrollToExams}>
+        <div id='exam-categories'>
           <ExamCat/>
         </div>
+        
     </div>
   )
 }
