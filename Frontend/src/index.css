@@ -1,6 +1,24 @@
 @import "tailwindcss";
 
 
+@keyframes heart-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.94);
+    opacity: 0.6;
+  }
+}
+
+.animate-heart-pulse {
+  animation: heart-pulse 3s ease-in-out infinite;
+}
+
+
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   /* background: radial-gradient(circle, #F0EBEB, #B7C6EB); */
