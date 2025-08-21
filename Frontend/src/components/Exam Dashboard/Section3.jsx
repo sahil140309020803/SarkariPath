@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import AboutLoader from './AboutLoader';
 import { AppContent } from '../../context/AppContext';
+import AboutExam from './AboutExam';
 
 const Section3 = () => {
   const { isExamDataFetched, setIsExamDataFetched } = useContext(AppContent);
@@ -9,6 +10,7 @@ const Section3 = () => {
       <div className='w-full h-full p-5'>
         <div className='h-full w-full mt-2 mb-2 bg-white rounded-xl p-5 shadow-2xl'>
           {!isExamDataFetched && <AboutLoader />}
+          {isExamDataFetched && <AboutExam />}
         </div>
       </div>
     </div>

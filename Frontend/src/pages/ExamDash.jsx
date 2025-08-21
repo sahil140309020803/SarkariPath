@@ -10,15 +10,23 @@ import AITopicSumm from '../components/Exam Dashboard/AITopicSumm';
 import Section1 from '../components/Exam Dashboard/Section1';
 import Section2 from '../components/Exam Dashboard/Section2';
 import Section3 from '../components/Exam Dashboard/Section3';
+import { useEffect } from 'react';
+import Difficulty from '../components/Exam Dashboard/Difficulty';
+import CustomizeTopic from '../components/Exam Dashboard/CustomizeTopic';
+import TestGenerating from '../components/Exam Dashboard/TestGenerating';
 
 const ExamDash = () => {
   const { exam_cat, exam_name } = useParams();
-  const { AItopicSummarizer, setAItopicSummarizer } = useContext(AppContent);
+  const { AItopicSummarizer, setAItopicSummarizer, activeExamPage, setActiveExamPage, showDifficulty, setShowDifficulty, activeSubject, setActiveSubject, showCustomTopic, setShowTestGenerate, showTestGenerate } = useContext(AppContent);
   const [activeSection, setActiveSection] = useState(0);
 
   const removeSlug = (text) => {
     return text.replaceAll('-', ' ');
   }
+  useEffect(() => {
+    setActiveExamPage(exam_name);
+  }, []);
+  
 
   const features = [
     {
@@ -56,7 +64,10 @@ const ExamDash = () => {
         </div>
       </div>
       {AItopicSummarizer && <AITopicSumm examContext={exam_name} />}
-      
+      {showDifficulty && <Difficulty />}
+      {showCustomTopic && <CustomizeTopic />}
+      {showTestGenerate && <TestGenerating />}
+
       {/* Sections Container */}
       <div className='w-[52rem] flex flex-col gap-8 max-h-full m-2 overflow-hidden'>
         {/* Section Tabs */}

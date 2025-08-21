@@ -3,6 +3,8 @@ import cors from 'cors';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import AITopicSummarizer from './controllers/AITopicSummarizer.js';
+import getExamDetails from './controllers/GetExamDetails.js';
+import { generateMockTest } from './controllers/GenerateMockTest.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -16,5 +18,7 @@ app.use(cors({origin: allowedOrigins, credentials: true}));
 // API end points
 app.get('/', (req, res) => res.send("Backend Server is Running"));
 app.post('/api/summarize', AITopicSummarizer);
+app.get('/api/:id', getExamDetails);
+app.post('/api/generate-mock-test', generateMockTest);
 
 app.listen(PORT, '0.0.0.0', () => console.log(`Server is running on port ${PORT}`));

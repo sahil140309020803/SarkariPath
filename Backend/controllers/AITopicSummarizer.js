@@ -37,9 +37,9 @@ const AITopicSummarizer = async (req, res) => {
         `;
         const result = await AI.generateContent(prompt);
         res.json({success:true, message: result.response.candidates.at(0).content.parts.at(0).text});
-        } catch(err) {
+    } catch(err) {
             res.json({success:false, message: err.message});
-        }
+    }
 
 }
 
