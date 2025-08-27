@@ -1,19 +1,43 @@
 import React, { useContext } from 'react'
 import LOGO from '../assets/LOGO.png';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AppContent } from '../context/AppContext';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
 const Navbar = () => {
   const navigate = useNavigate();
-  const { scrollToExams, activeList, setActiveList } = useContext(AppContent);
+  const { scrollToExams, activeList, setActiveList, isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useContext(AppContent);
 
   const handleScroll = () => {
     navigate('/');
     setActiveList(null);
     scrollToExams.current.scrollIntoView({ behavior: 'smooth' });
   }
+
+  const handleLogOut = async () => {
+    if(!userDetails)
+      return;
+    try {
+      const { data } = await axios.post(`${backend_url}/api/auth/${userDetails.role}/logout`);
+      if(data.success) {
+        setIsLoggedIn(false);
+        setUserDetails(null);
+        toast.success(data.message);
+        navigate('/');
+      }
+    }catch(err) {
+      toast.error("Error logging out. Please try again.");
+    }
+  }
+
   const handleLogoClick = () => {
     setActiveList(null);
     navigate('/');
+  }
+  const handleExamClick = () => {
+    setActiveList(null);
+    navigate("/#exam-categories")
   }
 
   return (
@@ -25,15 +49,20 @@ const Navbar = () => {
       </div>
 
       {/* Exam Categories */}
-      <div>
-        <Link to={"/#exam-categories"} onClick={() => setActiveList(null)} className='font-semibold text-[19px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 hover:bg-[#e3ebff] transition-colors duration-400'>Exams</Link>
+      <div className='flex justify-center items-center gap-5'>
+        <div onClick={() => handleExamClick()} className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Exams</div>
+        {userDetails && userDetails.role === 'admin' && <div className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Admin Dashboard</div>}
       </div>
 
       {/* Login/SignUp Section */}
-      <div className='flex justify-between items-center gap-10'>
+      {!isLoggedIn && <div className='flex justify-between items-center gap-10'>
         <button onClick={() => navigate('/login')} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-blue-800 hover:bg-blue-700 hover:text-white transition-all duration-600 cursor-pointer font-semibold ease-in-out'>Login</button>
         <button onClick={() => navigate('/signup')} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-white bg-blue-700 hover:bg-white hover:text-blue-800 transition-all duration-600 cursor-pointer font-semibold'>Sign Up</button>
-      </div>
+      </div>}
+      {isLoggedIn && <div className='flex gap-5'>
+        <div className='size-10 rounded-full bg-linear-to-t from-sky-500 to-indigo-600 text-white font-semibold text-xl pb-0.5 cursor-pointer flex justify-center items-center'>{userDetails && (userDetails.name.split(" ").length > 1 ? userDetails.name.split(" ")[0][0] + userDetails.name.split(" ")[1][0] : userDetails.name[0])}</div>
+        <button onClick={handleLogOut} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-blue-800 hover:bg-linear-to-r hover:from-blue-600 hover:to-blue-500 hover:text-white transition-all duration-600 cursor-pointer font-semibold ease-in-out'>Logout</button>
+      </div>}
     </div>
   )
 }

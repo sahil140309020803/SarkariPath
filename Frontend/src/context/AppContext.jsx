@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useState } from 'react'
+import React, { createContext, use, useRef, useState } from 'react'
 import { useEffect } from 'react';
 import axios from 'axios';
 
@@ -21,6 +21,9 @@ const AppContextProvider = (props) => {
     const [difficulty, setDifficulty] = useState(null);
     const [showCustomTopic, setShowCustomTopic] = useState(false);
     const [showTestGenerate, setShowTestGenerate] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [userDetails, setUserDetails] = useState(null);
 
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -45,6 +48,40 @@ const AppContextProvider = (props) => {
         }
     };
 
+    const getUserDetails = async () => {
+        axios.defaults.withCredentials = true;
+        setIsLoading(true);
+        try {
+            const {data} = await axios.get(`${backend_url}/api/user-details`);
+            if (data.success) {
+                setUserDetails(data.details);
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+        setIsLoading(false);
+    };
+
+    const isAuth = async () => {
+        axios.defaults.withCredentials = true;
+        setIsLoading(true);
+        try {
+            const {data} = await axios.get(`${backend_url}/api/is-auth`);
+            if (data.success) {
+                setIsLoggedIn(true);
+                getUserDetails();
+            }
+        } catch (err) {
+            console.log(err.message);
+        }
+        if(!userDetails)
+            await delay(1300);
+        setIsLoading(false);
+    }
+    useEffect(()=> {
+        isAuth();
+    }, [isLoggedIn, setIsLoggedIn]);
+
     useEffect(() => {
         fetchExamData(1);
     }, [activeExamPage]);
@@ -66,7 +103,10 @@ const AppContextProvider = (props) => {
         activeTopic, setActiveTopic,
         difficulty, setDifficulty,
         showCustomTopic, setShowCustomTopic,
-        showTestGenerate, setShowTestGenerate
+        showTestGenerate, setShowTestGenerate,
+        isLoggedIn, setIsLoggedIn,
+        isLoading, setIsLoading,
+        userDetails, setUserDetails
     };
 
     
