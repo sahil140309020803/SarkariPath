@@ -1,10 +1,19 @@
 import React from 'react'
 import Difficulty from './Difficulty'
 import { useContext } from 'react'
-import { AppContent } from '../../context/AppContext'
+// import { AppContent } from '../../context/AppContext'
+import { useExam } from '../../context/ExamContext'
 
 const Section1 = () => {
-  const { showDifficulty, setShowDifficulty, difficulty, setDifficulty, setShowTestGenerate, showTestGenerate, isExamDataFetched } = useContext(AppContent);
+  // const { showDifficulty, setShowDifficulty, difficulty, setDifficulty, setShowTestGenerate, showTestGenerate, isExamDataFetched } = useContext(AppContent);
+
+  const {
+    isExamDataFetched,
+    showDifficulty, setShowDifficulty,
+    difficulty, setDifficulty,
+    showTestGenerate, setShowTestGenerate
+} = useExam();
+
   const questions = isExamDataFetched?.QuesnTimer[0];
   const time = isExamDataFetched?.QuesnTimer[1];
   const handleClick = () => {

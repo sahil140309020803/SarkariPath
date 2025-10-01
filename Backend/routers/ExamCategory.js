@@ -1,8 +1,10 @@
 import express from 'express'
-import { getExamsListFromCategory } from '../controllers/GetExamsList.js';
+import { addCategory, deleteCategory, getCategories } from '../controllers/CategoryController.js';
 
-const examCat = express.Router()
+const categoryRouter = express.Router();
 
-examCat.post('/get-exams-list', getExamsListFromCategory);
+categoryRouter.post('/add-category', addCategory);
+categoryRouter.get('/get-categories', getCategories);
+categoryRouter.get('/delete-category/:categoryId', deleteCategory);
 
-export default examCat;
+export default categoryRouter;

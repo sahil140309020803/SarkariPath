@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { AppContent } from '../../context/AppContext';
+// import { AppContent } from '../../context/AppContext';
 import { Bars, CirclesWithBar, ThreeDots } from 'react-loader-spinner';
+import { useExam } from '../../context/ExamContext';
 
 const TestGenerating = () => {
-    const { activeExamPage, setActiveExamPage, showDifficulty, setShowDifficulty, activeSubject, setActiveSubject, showCustomTopic, setShowTestGenerate, showTestGenerate, difficulty, setDifficulty, activeTopic, setActiveTopic } = useContext(AppContent);
+    // const { activeExamPage, setActiveExamPage, showDifficulty, setShowDifficulty, activeSubject, setActiveSubject, showCustomTopic, setShowTestGenerate, showTestGenerate, difficulty, setDifficulty, activeTopic, setActiveTopic } = useContext(AppContent);
 
+    const {
+    activeSubject, setActiveSubject,
+    activeTopic, setActiveTopic,
+    difficulty, setDifficulty, setShowTestGenerate
+} = useExam();
     
     const [tipText, setTipText] = useState('');
     const [questionCount, setQuestionCount] = useState(0);

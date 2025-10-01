@@ -1,11 +1,19 @@
 import React from 'react'
 import { useContext } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
-import { AppContent } from '../../context/AppContext';
+// import { AppContent } from '../../context/AppContext';
 import { useState } from 'react';
+import { useExam } from '../../context/ExamContext';
 
 const SubjectList = () => {
-    const { isExamDataFetched, showDifficulty, setShowDifficulty, setActiveSubject, activeSubject, setTopicList, topicList, difficulty, setDifficulty, showCustomTopic, setShowCustomTopic } = useContext(AppContent);
+    // const { isExamDataFetched, showDifficulty, setShowDifficulty, setActiveSubject, activeSubject, setTopicList, topicList, difficulty, setDifficulty, showCustomTopic, setShowCustomTopic } = useContext(AppContent);
+
+    const {
+    isExamDataFetched, setShowDifficulty, setActiveSubject, setTopicList,
+    setDifficulty,
+     setShowCustomTopic
+} = useExam();
+
     const [subjectName, setSubjectName] = useState(null);
     const Subjects = isExamDataFetched?.Subjects;
 

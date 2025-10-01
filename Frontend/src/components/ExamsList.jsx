@@ -1,9 +1,15 @@
 import React, { useContext, useEffect } from 'react'
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
 import SpecficExam from './SpecficExam';
+import { useExam } from '../context/ExamContext';
 
 const ExamsList = ({ examList, title }) => {
-  const { activeList , setActiveList } = useContext(AppContent)
+  // const { activeList , setActiveList } = useContext(AppContent)
+
+  const {
+    activeList, setActiveList,
+} = useExam();
+
   useEffect(() => {
     document.body.style.overflowY = "hidden";
   

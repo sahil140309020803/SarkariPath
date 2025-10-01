@@ -2,14 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import LOGO from '../assets/LOGO.png';
 import SignIn from '../components/Auth Page/SignIn';
 import SignUp from '../components/Auth Page/SignUp';
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 
 const Authentication = ({initialIsLogin}) => {
   const [isLogin, setIsLogin] = useState(initialIsLogin);
   const [isLoaded, setIsLoaded] = useState(false);
-  const {isLoggedIn, setIsLoggedIn} = useContext(AppContent);
+  // const {isLoggedIn, setIsLoggedIn} = useContext(AppContent);
+  const { isLoggedIn } = useAuth();
+
+
   const navigate = useNavigate();
 
   useEffect(() => {

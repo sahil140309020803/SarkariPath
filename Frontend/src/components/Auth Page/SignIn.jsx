@@ -3,9 +3,10 @@ import RoleButton from "./RoleButton";
 import InputField from "./InputField";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { AppContent } from "../../context/AppContext";
+// import { AppContent } from "../../context/AppContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from "../../context/AuthContext";
 
 const SignIn = ({ isLoaded }) => {
   const [role, setRole] = useState('user');
@@ -13,7 +14,9 @@ const SignIn = ({ isLoaded }) => {
   const [password, setPassword] = useState('');
   const [adminID, setAdminID] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { backend_url, isLoggedIn, setIsLoggedIn } = useContext(AppContent);
+  // const { backend_url, isLoggedIn, setIsLoggedIn } = useContext(AppContent);
+
+    const { setIsLoggedIn, backend_url } = useAuth();
 
   const navigate = useNavigate();
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));

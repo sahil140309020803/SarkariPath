@@ -1,10 +1,13 @@
 import React, { act, useContext } from 'react'
-import { AppContent } from '../../context/AppContext';
+// import { AppContent } from '../../context/AppContext';
 import { RxCross2 } from "react-icons/rx";
 import { BsArrowLeft } from "react-icons/bs";
+import { useExam } from '../../context/ExamContext';
 
 const CustomizeTopic = () => {
-    const { activeSubject, setActiveSubject, setTopicList, topicList, activeTopic, setActiveTopic, showCustomTopic, setShowCustomTopic, difficulty, setDifficulty, setShowTestGenerate, showTestGenerate } = useContext(AppContent);
+    const { activeSubject, setActiveSubject, setTopicList, topicList, activeTopic, setActiveTopic, showCustomTopic, setShowCustomTopic, difficulty, setDifficulty, setShowTestGenerate, showTestGenerate } = useExam();
+
+
 
     const handleCancel = () => {
         setShowCustomTopic(prev => !prev);

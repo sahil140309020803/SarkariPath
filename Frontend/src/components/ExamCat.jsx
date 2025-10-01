@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import ExamCard from './ExamCard';
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
 import ExamsList from './ExamsList';
+import { useExam } from '../context/ExamContext';
 
 const ExamCat = () => {
+  const { examCatList } = useExam();
 
   return (
     <div className='w-[85vw] h-[94vh] flex flex-col items-center gap-12 pt-[1rem]'>
@@ -18,11 +20,9 @@ const ExamCat = () => {
         </div>
         {/* Exam Categories */}
         <div className='flex justify-center items-center flex-wrap gap-10'>
-          <ExamCard icon="📝"  title="HSSC" content="Haryana Staff Selection Commission exams including CET Group C and D." examList={["HSSC CET Group C", "HSSC CET Group D", "HSSC Gram Sachiv", "Haryana Police Constable", "Haryana Sub-Inspector", "Haryana Patwari"]}/>
-          <ExamCard icon="🗒️" title="SSC" content="Staff Selection Commission exams including CGL, CHSL, MTS" examList={["SSC CGL", "SSC MTS", "SSC CHSL", "SSC GD Constable", "SSC Junior Engineer"]}/>
-          <ExamCard icon="🏦" title="Banking" content="IBPS, SBI, RBI and other banking examination preparation" examList={["IBPS PO", "IBPS Clerk", "SBI PO", "SBI Clerk"]}/>
-          <ExamCard icon="👮" title="Delhi Police" content="Delhi Police related exams like DP Constable, Head Constable and SI etc." examList={["Delhi Police Constable", "Delhi Police MTS", "Delhi Police SI", "Delhi Police Head Constable"]}/>
-          <ExamCard icon="🚂" title="Railways" content="Railway Recruitment Board exams like RRB NTPC, Group D etc." examList={["RRB NTPC", "RRB JE", "RRB Group D"]}/>
+          {examCatList && examCatList.map((category) => (
+            <ExamCard key={category._id} icon={category.icon} title={category.Name} content={category.Description} examList={category.Exams}/>
+          ))}
         </div>
         
     </div>

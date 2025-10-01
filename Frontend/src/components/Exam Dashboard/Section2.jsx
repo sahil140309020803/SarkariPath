@@ -1,10 +1,16 @@
 import React, { useContext, useState } from 'react'
 import SubjectLoader from './SubjectLoader';
-import { AppContent } from '../../context/AppContext';
+// import { AppContent } from '../../context/AppContext';
 import SubjectList from './SubjectList';
+import { useExam } from '../../context/ExamContext';
 
 const Section2 = () => {
-  const { isExamDataFetched, setIsExamDataFetched } = useContext(AppContent);
+  // const { isExamDataFetched, setIsExamDataFetched } = useContext(AppContent);
+
+  const {
+    isExamDataFetched, setIsExamDataFetched
+} = useExam();
+
   return (
     <div className={`w-full h-full flex items-start justify-start`}>
       <div className='w-full h-full flex flex-col justify-start items-start p-5 gap-4'>

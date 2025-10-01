@@ -1,9 +1,13 @@
 import React, { useContext } from 'react'
-import { AppContent } from '../../context/AppContext'
+// import { AppContent } from '../../context/AppContext'
 import AITopicSumm from './AITopicSumm';
 
 const FeatureCard = ({ icon, title, desc, onClick }) => {
-    const { AItopicSummarizer,setAItopicSummarizer } = useContext(AppContent);
+    // const { AItopicSummarizer,setAItopicSummarizer } = useContext(AppContent);
+
+//     const {
+//     AItopicSummarizer, setAItopicSummarizer
+// } = useExam();
     
   return (
     <>

@@ -39,7 +39,8 @@ export const generateMockTest = async (req, res) => {
       -> No extra text should be there .
       -> Do not include any introductory phrases, summaries, conversational text.
 ***VERY VERY VERY VERY CRITICAL POINT, NEVER SKIP THIS***Do not include any introductory phrases, summaries, conversational text before and after json object.******
-------> This test must not contains any incorrect option and I don't want any extra text inside Explanation. No extra talks about AI because you are a question designer. Do not give any extra text outside the json.
+*** This test must not contains any incorrect option and I don't want any extra text inside Explanation. No extra talks about AI because you are a question designer. Do not give any extra text outside the json.
+
 
 **JSON FORMAT EXAMPLES:**
 
@@ -134,7 +135,9 @@ export const generateMockTest = async (req, res) => {
 }
         `;
 
-        const result = await AI.generateContent(prompt);
+        const result = await AI.generateContent(prompt, {
+        responseMimeType: "application/json",
+    });
         aiResponseText = result.response.candidates.at(0).content.parts.at(0).text;
 
         const jsonMatch = aiResponseText.match(/\{[\s\S]*\}/);

@@ -3,12 +3,9 @@ import Navbar from '../components/Navbar'
 import Header from '../components/Header'
 import { IoArrowDownCircleOutline } from "react-icons/io5";
 import ExamCat from '../components/ExamCat';
-import { AppContent } from '../context/AppContext';
-import ExamsList from '../components/ExamsList';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Home = () => {
-  const { scrollToExams, examsPop, setExamsPop } = useContext(AppContent);
   const location = useLocation();
 
   const navigate = useNavigate();

@@ -5,7 +5,7 @@ import FeatureCard from '../components/Exam Dashboard/FeatureCard';
 import { FaLayerGroup } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 import { FaBrain } from "react-icons/fa6";
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
 import AITopicSumm from '../components/Exam Dashboard/AITopicSumm';
 import Section1 from '../components/Exam Dashboard/Section1';
 import Section2 from '../components/Exam Dashboard/Section2';
@@ -15,9 +15,22 @@ import Difficulty from '../components/Exam Dashboard/Difficulty';
 import CustomizeTopic from '../components/Exam Dashboard/CustomizeTopic';
 import TestGenerating from '../components/Exam Dashboard/TestGenerating';
 
+import { useExam } from '../context/ExamContext';
+
 const ExamDash = () => {
   const { exam_cat, exam_name } = useParams();
-  const { AItopicSummarizer, setAItopicSummarizer, activeExamPage, setActiveExamPage, showDifficulty, setShowDifficulty, activeSubject, setActiveSubject, showCustomTopic, setShowTestGenerate, showTestGenerate } = useContext(AppContent);
+  // const { AItopicSummarizer, setAItopicSummarizer, activeExamPage, setActiveExamPage, showDifficulty, setShowDifficulty, activeSubject, setActiveSubject, showCustomTopic, setShowTestGenerate, showTestGenerate } = useContext(AppContent);
+
+  // const { isLoggedIn, setIsLoggedIn, isLoading, setIsLoading, userDetails, setUserDetails } = useAuth();
+  const {
+    setActiveExamPage,
+    showDifficulty, 
+    showCustomTopic,
+    showTestGenerate,
+    AItopicSummarizer, setAItopicSummarizer
+} = useExam();
+
+
   const [activeSection, setActiveSection] = useState(0);
 
   const removeSlug = (text) => {

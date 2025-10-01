@@ -1,10 +1,13 @@
 import React from 'react'
 import { useContext } from 'react';
-import { AppContent } from '../../context/AppContext';
+// import { AppContent } from '../../context/AppContext';
 import { RxCross2 } from "react-icons/rx";
+import { useExam } from '../../context/ExamContext';
 
 const Difficulty = () => {
-    const { showDifficulty, setShowDifficulty, difficulty, setDifficulty, showTestGenerate, setShowTestGenerate } = useContext(AppContent);
+    // const { showDifficulty, setShowDifficulty, difficulty, setDifficulty, showTestGenerate, setShowTestGenerate } = useContext(AppContent);
+
+    const { showDifficulty, setShowDifficulty, difficulty, setDifficulty, showTestGenerate, setShowTestGenerate } = useExam();
 
     const handleTest = (diff) => {
       setDifficulty(diff);

@@ -1,11 +1,15 @@
 import React, { useContext } from 'react'
 import FeatureCard from './FeatureCard';
 import { useNavigate } from 'react-router-dom';
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { userDetails, setUserDetails, isLoggedIn } = useContext(AppContent);
+    // const { userDetails, setUserDetails, isLoggedIn } = useContext(AppContent);
+
+    const { isLoggedIn, userDetails, setUserDetails } = useAuth();
+
     const name = userDetails ? userDetails.name : '';
   return (
     <div className='flex justify-center items-center h-[85dvh]'>

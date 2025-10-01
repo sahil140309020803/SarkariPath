@@ -1,9 +1,15 @@
 import React, { useContext, useState } from 'react'
 import ExamsList from './ExamsList'
-import { AppContent } from '../context/AppContext'
+// import { AppContent } from '../context/AppContext'
+import { useExam } from '../context/ExamContext';
 
 const ExamCard = ({ icon, title, content, examList }) => {
-  const { activeList , setActiveList, activeExamTitle, setActiveExamTitle } = useContext(AppContent)
+  // const { activeList , setActiveList, activeExamTitle, setActiveExamTitle } = useContext(AppContent)
+
+  const {
+    activeList, setActiveList,
+    activeExamTitle, setActiveExamTitle,
+} = useExam();
 
   const handleClick = () => {
     setActiveList(examList);

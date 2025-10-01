@@ -2,8 +2,9 @@ import { useContext, useState } from "react";
 import InputField from "./InputField";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { AppContent } from "../../context/AppContext";
+// import { AppContent } from "../../context/AppContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useAuth } from "../../context/AuthContext";
 
 const SignUp = ({ isLoaded }) => {
   const [name, setName] = useState('');
@@ -11,7 +12,11 @@ const SignUp = ({ isLoaded }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false);
-  const {backend_url, isLoggedIn, setIsLoggedIn} = useContext(AppContent)
+  // const {backend_url, isLoggedIn, setIsLoggedIn} = useContext(AppContent)
+
+
+  const { isLoggedIn, setIsLoggedIn, backend_url } = useAuth();
+  
 
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   const getDelay = (base) => isLoaded ? `${base}ms` : '0ms';

@@ -1,19 +1,26 @@
 import React, { useContext } from 'react'
 import LOGO from '../assets/LOGO.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { AppContent } from '../context/AppContext';
+// import { AppContent } from '../context/AppContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
+import { useExam } from '../context/ExamContext';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { scrollToExams, activeList, setActiveList, isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useContext(AppContent);
+  // const { scrollToExams, activeList, setActiveList, isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useContext(AppContent);
 
-  const handleScroll = () => {
-    navigate('/');
-    setActiveList(null);
-    scrollToExams.current.scrollIntoView({ behavior: 'smooth' });
-  }
+  const { isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useAuth();
+  const {
+    setActiveList,
+} = useExam();
+
+  // const handleScroll = () => {
+  //   navigate('/');
+  //   setActiveList(null);
+  //   scrollToExams.current.scrollIntoView({ behavior: 'smooth' });
+  // }
 
   const handleLogOut = async () => {
     if(!userDetails)
@@ -51,7 +58,7 @@ const Navbar = () => {
       {/* Exam Categories */}
       <div className='flex justify-center items-center gap-5'>
         <div onClick={() => handleExamClick()} className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Exams</div>
-        {userDetails && userDetails.role === 'admin' && <div className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Admin Dashboard</div>}
+        {userDetails && userDetails.role === 'admin' && <div onClick={() => navigate('/admin-page')} className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Admin Dashboard</div>}
       </div>
 
       {/* Login/SignUp Section */}
