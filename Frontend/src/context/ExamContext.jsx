@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export const ExamContext = createContext();
 
+
 export const ExamProvider = ({ children }) => {
     const backend_url = import.meta.env.VITE_BACKEND_URL;
     const [activeList, setActiveList] = useState(null);
@@ -26,8 +27,9 @@ export const ExamProvider = ({ children }) => {
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/exam-details/${activeExamPage}`);
+            console.log(data);
             if (data.success) {
-                setIsExamDataFetched({ Subjects: data.Subjects, About: data.About, QuesnTimer: data.QuesnTimer });
+                setIsExamDataFetched({ Subjects: data.Subjects, MockTests: data.MockTests });
             }
         } catch (err) {
             console.error('Failed to fetch exam data:', err);
@@ -35,22 +37,20 @@ export const ExamProvider = ({ children }) => {
     };
 
     const getExamCategories = async () => {
-
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/exam-category/get-categories`);
-            if (data.success) {
+            if (data.success && data.categories.length > 0) {
                 setExamCatList(data.categories);
-                console.log(data.categories);
             }
         } catch (err) {
-            console.error('Failed to fetch exam categories:', err);
+            console.error('Failed to fetch exam categories, using mock data:', err);
         }
     };
 
     useEffect(() => {
         getExamCategories();
-},[isCatUpdated]);
+    }, [isCatUpdated]);
 
     useEffect(() => {
         fetchExamData();
@@ -82,5 +82,5 @@ export const ExamProvider = ({ children }) => {
     );
 };
 
-// Custom hook for easy consumption
+// Custom hook
 export const useExam = () => useContext(ExamContext);

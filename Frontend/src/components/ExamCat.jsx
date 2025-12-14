@@ -6,7 +6,7 @@ import { useExam } from '../context/ExamContext';
 
 const ExamCat = () => {
   const { examCatList } = useExam();
-
+console.log(examCatList);
   return (
     <div className='w-[85vw] h-[94vh] flex flex-col items-center gap-12 pt-[1rem]'>
         {/* Exam Categories Heading */}

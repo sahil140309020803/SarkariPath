@@ -2,21 +2,17 @@ import { AI } from "../GenAI/ai.js";
 import fs from 'fs';
 
 export const generateMockTest = async (req, res) => {
-    const { Exam, Subject, Topic, Difficulty } = req.body;
+    const { Exam, SubjectPrompt, Difficulty } = req.body;
     let aiResponseText;
     try {
         let prompt = `You are an expert multilingual question designer and also act as json parser for competitive exams. Your task is to generate a set of high-quality multiple-choice questions (MCQs) based on the parameters provided.
 
 **Exam:** ${Exam}
-**Subject:** ${Subject || 'null'}
-**Topic:** ${Topic || 'null'}
-**Difficulty Level:** ${Difficulty}
+**Difficulty Level:** ${Difficulty || 'Medium'}
 
 **CRITICAL INSTRUCTIONS:**
-1.  **Conditional Generation:** VERY CRITICAL INFORMATION
-    * **IF** "Subject" and "Topic" are "null": Generate a full mock test for the specified "Exam" as per its official pattern and total number of questions in this mock test must be the number of questions asked in official exam. The resulting JSON object should have keys corresponding to each subject in the exam, and the value for each key should be an array of questions for that subject.
-    * **ELSE:** Generate a targeted quiz of exactly "15" questions. The resulting JSON object should have a single key, which is the name of the "[SUBJECT]", and its value should be an array of the 15 questions.
-
+1.  **Subject Prompt**: 
+      ${SubjectPrompt}
 
 2.  **Bilingual Output:** VERY CRITICAL POINT
     * Provide all text content in both English ("en") and Hindi ("hi") except Subject's 'English' and 'Hindi'. In these subjects only one language must be there and other field is absent.EX. For Subject 'English' hi must be absent and for 'Hindi' en must be absent.

@@ -4,7 +4,8 @@ import { usersDbConnection } from "../config/mongo_config.js";
 const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+    password: {type: String, required: true},
+    testsAttempted: {type: Number, default: 0},
 }, {
     timestamps: true,
     collection: 'users'

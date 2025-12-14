@@ -11,7 +11,7 @@ const SubjectList = () => {
     const {
     isExamDataFetched, setShowDifficulty, setActiveSubject, setTopicList,
     setDifficulty,
-     setShowCustomTopic
+    setShowCustomTopic
 } = useExam();
 
     const [subjectName, setSubjectName] = useState(null);
@@ -26,6 +26,10 @@ const SubjectList = () => {
         setShowDifficulty(prev => !prev);
     }
     const handleCustomTopic = (subjectName, topics) => {
+        alert('Customize Topics feature is under development!');
+        return;
+
+
         setDifficulty(null);
         setShowCustomTopic(prev => !prev);
         setActiveSubject(subjectName);
@@ -34,13 +38,13 @@ const SubjectList = () => {
     return (
         <div className='w-full h-[40rem] flex flex-col gap-4'>
             {Subjects.map((subject, index) => {
-                const isActive = subjectName === subject[1];
+                const isActive = subjectName === subject;
                 return (
                     <div key={index} className='bg-white p-2 rounded-xl shadow-cyan-900 shadow-xs hover:-translate-y-1 transition-all duration-500 hover:shadow'>
-                        <div onClick={() => handleClick(subject[1])} className='w-full flex justify-between items-center p-4 cursor-pointer hover:bg-blue-50 rounded-xl'>
+                        <div onClick={() => handleClick(subject)} className='w-full flex justify-between items-center p-4 cursor-pointer hover:bg-blue-50 rounded-xl'>
                             <div className='flex justify-center items-center gap-4'>
                                 <div className='size-10 bg-blue-100 flex justify-center items-center text-xl rounded-[6px]'>{subject[0]}</div>
-                                <div className='text-lg font-semibold'>{subject[1]}</div>
+                                <div className='text-lg font-semibold'>{subject}</div>
                             </div>
                             <div className={`text-xl ${isActive ? 'rotate-90' : ''} transition-transform duration-500`}><IoIosArrowForward /> </div>
                         </div>
@@ -54,8 +58,8 @@ const SubjectList = () => {
                                     </div>
                                 </div>
                                 <div className='flex justify-between items-center gap-4'>
-                                    <div onClick={() => handleTest(subject[1])} className='grow text-center p-[6px] rounded-[8px] cursor-pointer bg-blue-500 text-white font-medium hover:bg-blue-700 transition-colors duration-100'>Start Test</div>
-                                    <div onClick={() => handleCustomTopic(subject[1], subject[2])} className='text-center p-[6px] pl-3 pr-3 rounded-[8px] cursor-pointer font-medium bg-gray-200 hover:bg-gray-300 transition-colors duration-100'>Customize Topics</div>
+                                    <div onClick={() => handleTest(subject)} className='grow text-center p-[6px] rounded-[8px] cursor-pointer bg-blue-500 text-white font-medium hover:bg-blue-700 transition-colors duration-100'>Start Test</div>
+                                    <div onClick={() => handleCustomTopic(subject, subject)} className='text-center p-[6px] pl-3 pr-3 rounded-[8px] cursor-pointer font-medium bg-gray-200 hover:bg-gray-300 transition-colors duration-100'>Customize Topics</div>
                                 </div>
                             </div>
                         </div>

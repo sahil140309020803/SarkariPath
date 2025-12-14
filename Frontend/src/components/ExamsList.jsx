@@ -22,7 +22,7 @@ const ExamsList = ({ examList, title }) => {
   return (
     <div>
       {/* Wrapper Container */}
-      <div onClick={() => setActiveList(null)} className='fixed top-0 left-0 right-0 bottom-0 backdrop-blur-sm cursor-pointer z-5'></div>
+      <div onClick={() => setActiveList(null)} className='fixed top-0 left-0 right-0 bottom-0 bg-black opacity-20 cursor-pointer z-5'></div>
       {/* Actual PopUp */}
       <div className='fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] p-10 z-6 bg-white shadow rounded-2xl flex flex-col justify-center gap-5'>
         <div className='flex flex-col justify-center items-center gap-1'>
@@ -35,8 +35,8 @@ const ExamsList = ({ examList, title }) => {
         
         <ul className='relative flex flex-col gap-6 max-h-[60vh] overflow-y-auto pt-2'>
           {examList.map(exam => (
-            <li key={exam}>
-              <SpecficExam exam = {exam} title={title}/>
+            <li key={exam._id}>
+              <SpecficExam exam = {exam.Name} title={title}/>
             </li>
           ))}
         </ul>

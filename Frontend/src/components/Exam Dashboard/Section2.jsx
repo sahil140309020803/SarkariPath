@@ -8,7 +8,7 @@ const Section2 = () => {
   // const { isExamDataFetched, setIsExamDataFetched } = useContext(AppContent);
 
   const {
-    isExamDataFetched, setIsExamDataFetched
+    isExamDataFetched
 } = useExam();
 
   return (

@@ -5,8 +5,7 @@ import { FiAlignJustify } from "react-icons/fi";
 const Sidebar = ({ activePage, setActivePage }) => {
     const navItems = [
         { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
-        { id: 'manage-categories', icon: <Folder size={20} />, label: 'Manage Categories' },
-        { id: 'manage-exams', icon: <FileText size={20} />, label: 'Manage Exams' },
+        { id: 'exam-management', icon: <Folder size={20} />, label: 'Exam Management' },
         { id: 'manage-mock-tests', icon: <Settings2 size={20} />, label: 'Test Generator' },
         { id: 'user-management', icon: <Users size={20} />, label: 'Users' },
         { id: 'analytics', icon: <BarChart3 size={20} />, label: 'Analytics' },

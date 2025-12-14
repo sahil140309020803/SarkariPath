@@ -11,33 +11,39 @@ const Section1 = () => {
     isExamDataFetched,
     showDifficulty, setShowDifficulty,
     difficulty, setDifficulty,
-    showTestGenerate, setShowTestGenerate
+    showTestGenerate, setShowTestGenerate,
+    activeExamPage
 } = useExam();
 
-  const questions = isExamDataFetched?.QuesnTimer[0];
-  const time = isExamDataFetched?.QuesnTimer[1];
   const handleClick = () => {
     setDifficulty(null);
     setShowDifficulty(prev => !prev);
   }
+  const removeSlug = (text) => {
+    return text.replaceAll('-', ' ');
+  }
+  // console.log(isExamDataFetched);
 
+  const mockTests = isExamDataFetched?.MockTests;
+  console.log(mockTests);
   return (
     <div className={`w-full h-full flex justify-center items-start`}>
-      {/* Full Mock Test Card */}
-      <div  className='shadow-2xl flex justify-center items-center gap-4 p-10 w-[92%] rounded-xl bg-radial-[at_50%_75%] from-sky-600 via-blue-500 to-indigo-400 to-90%'>
-        <div className='flex flex-col gap-5'>
-          <div>
-            <div className='font-bold text-white text-2xl'>Full Mock Test</div>
-            <div className='text-gray-300 text-[17px]'>Generate a unique test tailored to the official syllabus. Prepare smarter, not just harder.
+
+      <div className='w-full h-full flex flex-col justify-start items-start p-5 gap-4'>
+        <div className='font-semibold text-2xl text-gray-700'>Available Mock Tests</div>
+        <div className='h-full w-full mt-2 mb-2 bg-white rounded-xl p-5 shadow-2xl overflow-y-scroll flex flex-col gap-4'>
+          {!isExamDataFetched && <div>Loading mock tests...</div>}
+          {isExamDataFetched && mockTests.length === 0 && <div>No mock tests available for {removeSlug(activeExamPage)}.</div>}
+          {isExamDataFetched && mockTests.map((test, index) => (
+            <div key={index} className='border-b pb-4'>
+              <div className='flex justify-between items-center'>
+                <div className='text-lg font-semibold'>{test.Title}</div>
+                <div onClick={handleClick} className='bg-blue-500 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700 transition-colors duration-100'>Start Test</div>
+              </div>
+              <div className='text-gray-600 mt-2'>Questions: {test.Questions.length} | Duration: {test.DurationinMinutes} minutes</div>
             </div>
-            {isExamDataFetched && <div className='flex justify-start items-center gap-5 text-white mt-1'>
-              <div>✅ {questions} Questions</div>
-              <div>⌛ {time} Minutes</div>
-            </div>}
-          </div>
-          <div onClick={() => handleClick()} className='bg-radial-[at_50%_75%] from-sky-600 via-blue-700 to-indigo-800 to-90% text-gray-100 font-semibold border p-2 pl-5 pr-5 w-fit rounded-full cursor-pointer text-lg hover:bg-radial-[at_50%_75%] hover:from-sky-800 hover:via-blue-800 hover:to-indigo-800 hover:to-90% transition-all duration-400'>Start New Test</div>
+          ))}
         </div>
-        <div className='text-9xl cursor-pointer animate-heart-pulse'>🧠</div>
       </div>
     </div>
   )

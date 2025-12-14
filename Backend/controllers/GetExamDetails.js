@@ -1,6 +1,7 @@
 import { AI } from "../GenAI/ai.js";
+import { examModel, MockTestModel } from "../models/ExamModel.js";
 
-const getExamDetails = async(req, res) => {
+const getExamDetailsUsingAI = async(req, res) => {
     const exam = req.params?.id;
     try {
         const prompt = `You are an AI assistant specialized in providing information about academic and competitive examinations. Your task is to take an exam name as input and return a single, valid JSON object.
@@ -48,4 +49,24 @@ const getExamDetails = async(req, res) => {
     }
 }
 
-export default getExamDetails;
+const removeSlug = (text) => {
+    return text.replaceAll('-', ' ');
+  }
+
+const getExamDetails = async (req, res) => {
+    const examName = removeSlug(req.params?.examName);
+    try {
+        const examData = await examModel.findOne({ Name: examName }).lean();
+        console.log(examData); 
+        if(!examData) {
+            return res.json({success: false, message: "Exam not found"});
+        }
+        // How to add MockTests in detail not only their IDs
+        const mockTests = await MockTestModel.find({ _id: { $in: examData.MockTests } });
+        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests });
+    } catch(err) {
+        res.json({success: false, message: err.message});
+    }
+}
+
+export { getExamDetailsUsingAI, getExamDetails };
