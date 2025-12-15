@@ -8,6 +8,8 @@ import {ToastContainer} from 'react-toastify'
 import Loading from './components/Loading'
 import AdminPage from './pages/AdminPage'
 import { useAuth } from './context/AuthContext'
+import TestInstruction from './components/Test Window/TestInstruction'
+import TestWindow from './pages/TestWindow'
 
 const App = () => {
   const {isLoading, setIsLoading } = useAuth();
@@ -20,7 +22,13 @@ const App = () => {
       <Route path='/signup' element={<Authentication initialIsLogin={false} />} />
       <Route path='/login' element={<Authentication initialIsLogin={true} />} />
       <Route path='/admin-page' element={<AdminPage />} />
-      <Route path='/:exam_cat/:exam_name' element={<ExamDash />} />
+      <Route path='/:exam_cat/:exam_name'>
+        <Route path='' element={<ExamDash />} />
+        <Route path='tests/:testID'>
+          <Route path='' element={<TestInstruction />} />
+          <Route path='live-test' element={<TestWindow />} />
+        </Route>
+      </Route>
     </Routes>
     {isLoading && <Loading />}
     </div>

@@ -47,6 +47,7 @@ const MockTestSchema = new mongoose.Schema({
         required: true
     },
     Status: {type: String, required: true, enum: ['Draft', 'Published'], default: 'Draft'},
+    Difficulty: { type: String, required: true, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
     NegativeMarks: { type: Number, default: 0 },
     Structure: [
         {

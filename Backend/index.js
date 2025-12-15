@@ -19,6 +19,8 @@ import categoryRouter from './routers/ExamCategory.js';
 import examRouter from './routers/HandleExams.js';
 import fetchAllUsers from './controllers/FetchAllUsers.js';
 import { setupSocketHandlers } from './controllers/generationController.js'; 
+import fetchActiveTest from './controllers/fetchActiveTest.js';
+import testWindowRouter from './routers/TestWindowRouter.js';
 
 const app = express();
 const server = http.createServer(app); 
@@ -78,5 +80,9 @@ app.use('/api/exam-category', categoryRouter);
 
 // Exam routes
 app.use('/api/exams', examRouter);
+
+// Test Window Routes
+app.use('/api/test-window', testWindowRouter); // Assuming test window related routes are in examRouter
+
 
 server.listen(PORT, '0.0.0.0', () => console.log(`Server is running with WebSockets on port ${PORT}`));

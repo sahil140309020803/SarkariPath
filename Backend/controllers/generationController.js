@@ -29,7 +29,8 @@ export const setupSocketHandlers = (socket, io) => {
         Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
         Questions: [],
         TotalMarks: totalQuestions,
-        DurationinMinutes: duration
+        DurationinMinutes: duration,
+        Difficulty: difficulty
       });
       
       await newTest.save();

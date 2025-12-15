@@ -5,13 +5,16 @@ import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { ExamProvider } from './context/ExamContext.jsx'
+import { TestWindowProvider } from './context/TestWindowContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthProvider>
       <ExamProvider>
-        <App />
+        <TestWindowProvider>
+          <App />
+        </TestWindowProvider>
       </ExamProvider>
     </AuthProvider>
   </BrowserRouter>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import FeatureCard from '../components/Exam Dashboard/FeatureCard';
 import { FaLayerGroup } from "react-icons/fa";
@@ -91,7 +91,7 @@ const ExamDash = () => {
         </div>
 
         {/* Slider Viewport*/}
-        <div className='w-full h-full'>
+        <div className='w-full h-full '>
           {/* Slider Track: This element moves */}
           <div 
             className={`flex w-full h-full transition-transform duration-500 ease-in-out translate-x-[-${activeSection * 100}%]`}
@@ -112,6 +112,9 @@ const ExamDash = () => {
           </div>
         </div>
       </div>
+      
+
+      <Outlet/>
     </div>
   )
 }
