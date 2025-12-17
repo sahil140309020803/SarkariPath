@@ -56,13 +56,13 @@ const removeSlug = (text) => {
 const getExamDetails = async (req, res) => {
     const examName = removeSlug(req.params?.examName);
     try {
-        const examData = await examModel.findOne({ Name: examName }).lean();
+        const examData = await examModel.findOne({ Name: examName }).populate('MockTests').lean();
         console.log(examData); 
         if(!examData) {
             return res.json({success: false, message: "Exam not found"});
         }
-        // How to add MockTests in detail not only their IDs
-        const mockTests = await MockTestModel.find({ _id: { $in: examData.MockTests } });
+        const mockTests = examData.MockTests || [];
+        console.log(mockTests);
         res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests });
     } catch(err) {
         res.json({success: false, message: err.message});

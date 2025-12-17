@@ -59,7 +59,7 @@ const TestInstruction = () => {
                         </div>
                     </section>
 
-                    {/* Section B: Marking Scheme & Scoring (Card Style) */}
+                    {/* Section B: Marking Scheme & Scoring */}
                     <section className="mb-10">
                         <h2 className="text-xl md:text-2xl font-bold text-indigo-600 mb-5 border-l-4 border-indigo-600 pl-4">Marking Scheme & Scoring</h2>
                         <div className="card-grid grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -7,6 +7,7 @@ const fetchActiveTest = async (req, res) => {
         if(!testData) {
             return res.json({success: false, message: "Test not found"});
         }
+        // console.log('Fetched active test data:', testData);
         res.json({ success: true, Test: testData });
     } catch(err) {
         res.json({success: false, message: err.message});

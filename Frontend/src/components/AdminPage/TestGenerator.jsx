@@ -3,6 +3,8 @@ import { Plus, Sparkles, Eye, CheckCircle, Trash2 } from 'lucide-react';
 import io from 'socket.io-client';
 import { useExam } from '../../context/ExamContext';
 import Modal from './Modal';
+import { toast } from "react-toastify";
+import axios from 'axios';
 
 const TestGenerator = () => {
     const { examCatList, backend_url } = useExam();
@@ -20,6 +22,66 @@ const TestGenerator = () => {
     const [difficulty, setDifficulty] = useState('Medium');
     const [previewLang, setPreviewLang] = useState('en');
     const [progress, setProgress] = useState({ count: 0, total: 0 });
+
+
+    // Fetch all past generations on mount
+    useEffect(() => {
+        fetchGenerations();
+    }, [progress]);
+
+    const fetchGenerations = async () => {
+        if (!backend_url) return;
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.get(`${backend_url}/api/admin/test-generations/fetch`);
+            if (data.success && data.generations) {
+                setRecentGenerations(data.generations);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+    console.log('recentGenerations', recentGenerations);
+
+    const handleDeleteGeneration = async(testId) => {
+        if(!confirm('Are you sure you want to discard this test generation? This action cannot be undone.')) {
+            return;
+        }
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.get(`${backend_url}/api/admin/test-generations/delete/${testId}`);
+            if (data.success) {
+                toast.success('Test generation discarded successfully', {autoClose: 2000});
+                setPreviewTest(null);
+                fetchGenerations();
+            } else {
+                alert(data.message);
+            }
+        }catch(err) {
+            alert('Failed to discard test generation');
+        }
+    }
+
+    const handlePublishGeneration = async(testId) => {
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.get(`${backend_url}/api/admin/test-generations/publish/${testId}`);
+            if (data.success) {
+                toast.success('Test generation published successfully', {autoClose: 2000});
+                fetchGenerations();
+            } else {
+                alert(data.message);
+            }
+        }catch(err) {
+            alert('Failed to publish test generation');
+        }
+    }
+
+
+
+
 
     useEffect(() => {
         if (!backend_url) return;
@@ -41,7 +103,6 @@ const TestGenerator = () => {
                 content: data.test
             };
             setRecentGenerations(prev => [newTest, ...prev].slice(0, 5));
-            setPreviewTest(newTest);
         });
 
         newSocket.on('generation_error', (error) => {
@@ -72,7 +133,29 @@ const TestGenerator = () => {
         }
     }, [selectedCategory, examCatList]);
 
-    const handleExamChange = (e) => setSelectedExam(e.target.value);
+    const handleExamChange = (e) => {
+        setSelectedExam(e.target.value);
+        fetchSubjectsForExam(e.target.value);
+    };
+
+    const fetchSubjectsForExam = async (examId) => {
+        if (!backend_url) return;
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.post(`${backend_url}/api/admin/test-generations/subjects`, { examId });
+            if (data.success && data.Subjects) {
+                const initialSubjects = data.Subjects.map(sub => ({ name: sub, count: 1 }));
+                setSubjects(initialSubjects.length > 0 ? initialSubjects : [{ name: '', count: 1 }]);
+                console.log('Fetched subjects for exam:', data.Subjects);
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+
     const handleAddSubject = () => setSubjects([...subjects, { name: '', count: 1 }]);
     const handleRemoveSubject = (index) => setSubjects(subjects.filter((_, i) => i !== index));
     const handleSubjectChange = (index, field, value) => {
@@ -104,7 +187,7 @@ const TestGenerator = () => {
     };
 
     return (
-        <div>
+        <div className=' overflow-hidden'>
             <h2 className="text-3xl font-bold text-gray-800 mb-6">Test Generator</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* --- LEFT SIDE: FORM --- */}
@@ -147,7 +230,7 @@ const TestGenerator = () => {
                     </div>
                     <hr />
                     <div>
-                        <div id="subject-list" className="space-y-4">
+                        <div id="subject-list" className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                             {subjects.map((s, i) => (
                                 <div key={i} className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                                     <div className="md:col-span-3"><label className="block mb-1 text-xs font-medium text-gray-700">Subject Name</label><input type="text" value={s.name} onChange={e => handleSubjectChange(i, 'name', e.target.value)} className="subject-name bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="e.g., General Knowledge" /></div>
@@ -183,12 +266,28 @@ const TestGenerator = () => {
                     )}
                     
                     <div className="mt-8">
-                        <h3 className="text-xl font-semibold text-gray-700">Recent Generations</h3>
-                        <div className="space-y-3 mt-4">
+                        <h3 className="text-xl font-semibold text-gray-700">History</h3>
+                        <div className="space-y-3 mt-4 max-h-[65vh] overflow-y-auto pr-3">
                             {recentGenerations.length > 0 ? recentGenerations.map((gen, index) => (
-                                <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100">
-                                    <div><p className="font-semibold text-gray-900">{gen.title}</p><p className="text-xs text-gray-500">Generated on: {gen.date.toLocaleTimeString()}</p></div>
-                                    <div className="flex items-center gap-3"><button onClick={() => setPreviewTest(gen)} className="text-gray-500 hover:text-indigo-600" title="Preview"><Eye size={20} /></button><button className="text-gray-500 hover:text-green-600" title="Publish"><CheckCircle size={20} /></button><button className="text-gray-500 hover:text-red-600" title="Discard"><Trash2 size={20} /></button></div>
+                                <div key={index} className={`flex items-center justify-between p-3 rounded-lg transition ${gen.Status === 'Published' ? 'border-l-4 border-green-500 bg-green-50 hover:bg-green-100' : ''} ${gen.Status === 'Draft' ? 'border-l-4 border-yellow-500 bg-yellow-50 hover:bg-yellow-100' : ''}`}>
+                                    <div>
+                                        <p className="font-semibold text-gray-900">
+                                            {gen.ExamId?.Name} - {gen.Title}
+                                            <span className={`text-xs ml-4 rounded p-0.5 font-semibold ${gen.Difficulty === 'Easy' ? 'bg-green-50 text-green-800' : gen.Difficulty === 'Medium' ? 'bg-yellow-50  text-yellow-800' : gen.Difficulty === 'Hard' ? 'bg-red-50 text-red-800' : ''} `}>{gen.Difficulty}</span>
+                                        </p>
+                                        <p className="text-xs text-gray-500">
+                                            Generated On: {new Date(gen.createdAt).toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <button onClick={() => setPreviewTest(gen)} className="text-gray-500 hover:text-indigo-600" title="Preview"><Eye size={20} /></button>
+                                        {gen.Status === 'Draft' && <button onClick={() => handlePublishGeneration(gen._id)} className="text-gray-500 hover:text-green-600" title="Publish">
+                                            <CheckCircle size={20} />
+                                        </button>}
+                                        <button onClick={() => handleDeleteGeneration(gen._id)} className="text-gray-500 hover:text-red-600" title="Discard">
+                                            <Trash2 size={20} />
+                                        </button>
+                                    </div>
                                 </div>
                             )) : <p className="text-sm text-gray-500">No tests generated yet.</p>}
                         </div>
@@ -196,15 +295,15 @@ const TestGenerator = () => {
                 </div>
             </div>
 
-            <Modal isOpen={!!previewTest} onClose={() => setPreviewTest(null)} title={previewTest?.title}>
+            <Modal isOpen={!!previewTest} onClose={() => setPreviewTest(null)} title={previewTest?.ExamId?.Name + ' - ' + previewTest?.Title}>
                 <div className="flex justify-center gap-2 mb-4 border-b pb-4">
                     <button onClick={() => setPreviewLang('en')} className={`font-semibold py-2 px-5 rounded-lg text-sm ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>English</button>
                     <button onClick={() => setPreviewLang('hi')} className={`font-semibold py-2 px-5 rounded-lg text-sm ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>हिन्दी (Hindi)</button>
                 </div>
                 
                 <div className="prose prose-sm max-w-none">
-                    <ol className="list-decimal pl-5 space-y-6">
-                        {previewTest?.content?.Questions?.map((q) => {
+                    <ol className="list-decimal ml-6.5 space-y-6">
+                        {previewTest?.Questions?.map((q) => {
                             if (!q) return null;
                             const langData = (previewLang === 'hi' && q.hi) ? q.hi : q.en;
                             const fallbackLangData = q.en || q.hi;

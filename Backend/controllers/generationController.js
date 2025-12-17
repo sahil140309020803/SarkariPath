@@ -2,168 +2,157 @@ import { AI } from '../GenAI/ai.js';
 import { MockTestModel, QuestionModel } from '../models/ExamModel.js';
 import { examModel } from '../models/ExamModel.js';
 
+const withTimeout = (promise, ms) => {
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error(`AI Request timed out after ${ms}ms`)), ms)
+  );
+  return Promise.race([promise, timeout]);
+};
+
+const activeGenerations = new Map();
+
 export const setupSocketHandlers = (socket, io) => {
+  socket.on('stop_generation', (testId) => {
+    activeGenerations.set(testId, false);
+    socket.emit('generation_status', { message: "Stopping... Please wait." });
+  });
+
   socket.on('start_generation', async (data) => {
-    const { 
-      title, 
-      examId, 
-      rules,
-      difficulty, 
-      negativeMarks,
-      duration,
-      totalMarks 
-    } = data;
-    
-    let newTest;
-
-    const totalQuestions = rules.reduce((acc, rule) => acc + (parseInt(rule.count) || 0), 0);
-
-    let generatedCount = 0;
+    const { title, examId, rules, difficulty, negativeMarks, duration } = data;
+    let activeTest;
+    const totalRequired = rules.reduce((acc, rule) => acc + (parseInt(rule.count) || 0), 0);
 
     try {
-      newTest = new MockTestModel({
-        Title: title,
-        ExamId: examId,
-        Status: 'Draft',
-        NegativeMarks: negativeMarks,
-        Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
-        Questions: [],
-        TotalMarks: totalQuestions,
-        DurationinMinutes: duration,
-        Difficulty: difficulty
-      });
-      
-      await newTest.save();
-      console.log(`Draft test created with ID: ${newTest._id}`);
+      activeTest = await MockTestModel.findOne({ 
+        Title: title, ExamId: examId, Status: 'Draft' 
+      }).populate('Questions');
 
-    } catch (error) {
-      socket.emit('generation_error', { message: `Failed to create draft test: ${error.message}` });
-      return;
-    }
+      if (!activeTest) {
+        activeTest = new MockTestModel({
+          Title: title, ExamId: examId, Status: 'Draft',
+          NegativeMarks: negativeMarks,
+          Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
+          Questions: [], TotalMarks: totalRequired,
+          DurationinMinutes: duration, Difficulty: difficulty
+        });
+        await activeTest.save();
+      }
 
-    let aiResponseString = ""; 
-    
-    try {
+      activeGenerations.set(activeTest._id.toString(), true);
+      let generatedHistory = activeTest.Questions.map(q => ({
+        topic: q.Topic,
+        summary: (q.en?.Question || q.hi?.Question || "").substring(0, 50)
+      }));
+
       for (const rule of rules) {
-        for (let i = 0; i < rule.count; i++) {
-          
+        const existingSubjectQuestions = activeTest.Questions.filter(q => q.Subject === rule.name);
+        const remainingCount = rule.count - existingSubjectQuestions.length;
+
+        for (let i = 0; i < remainingCount; i++) {
+          if (activeGenerations.get(activeTest._id.toString()) === false) throw new Error("Cancelled.");
+
           let questionGenerated = false;
           let retryCount = 0;
-          const MAX_RETRIES = 100;
+          const MAX_RETRIES = 5; 
+          let lastError = "";
+          let lastResponse = "";
 
           while (!questionGenerated && retryCount < MAX_RETRIES) {
             try {
-              const prompt = getSingleQuestionPrompt(examId, rule.name, difficulty);
-              
-              const result = await AI.generateContent(prompt);
-              aiResponseString = result.response.candidates[0].content.parts[0].text;
+              socket.emit('generation_progress', { 
+                count: activeTest.Questions.length, 
+                total: totalRequired,
+                status: `Processing ${rule.name}...` 
+              });
+
+              const prompt = getSingleQuestionPrompt(examId, rule.name, difficulty, lastError, lastResponse, generatedHistory);
+              const result = await withTimeout(AI.generateContent(prompt), 30000);
+              const aiResponseString = result.response.candidates[0].content.parts[0].text;
               
               const jsonMatch = aiResponseString.match(/\{[\s\S]*\}/);
-              if (!jsonMatch) {
-                throw new Error("No valid JSON object found in AI response.");
-              }
-              const cleanedJsonString = jsonMatch[0];
+              if (!jsonMatch) throw new Error("No JSON found.");
+
+              // AGGRESSIVE CLEANING FOR MATH SYMBOLS
+              let cleanedJsonString = jsonMatch[0]
+                .replace(/\\/g, "\\\\") // Double escape ALL backslashes first
+                .replace(/\\\\"/g, "\\\"") // Fix double-escaped quotes back to single-escaped
+                .replace(/\\\\n/g, "\\n") // Fix double-escaped newlines
+                .replace(/[\u0000-\u001F\u007F-\u009F]/g, ""); // Remove hidden control chars
 
               const questionData = JSON.parse(cleanedJsonString);
               
               const newQuestion = new QuestionModel({
                 ...questionData,
-                ExamId: examId,
-                Subject: rule.name,
-                Difficulty: difficulty
+                ExamId: examId, Subject: rule.name, Difficulty: difficulty
               });
               
               await newQuestion.validate();
               await newQuestion.save();
               
-              const updatedTest = await MockTestModel.findByIdAndUpdate(
-                newTest._id,
+              activeTest = await MockTestModel.findByIdAndUpdate(
+                activeTest._id, 
                 { $push: { Questions: newQuestion._id } },
                 { new: true }
-              );
+              ).populate('Questions');
 
-              if (!updatedTest) {
-                throw new Error(`CRITICAL FAILURE: Could not find and update Mock Test with ID ${newTest._id}.`);
-              }
-              
-              questionGenerated = true;
-              generatedCount++;
-              
-              socket.emit('generation_progress', {
-                count: generatedCount,
-                total: totalQuestions 
+              generatedHistory.push({
+                topic: questionData.Topic,
+                summary: (questionData.en?.Question || "").substring(0, 40)
               });
 
+              questionGenerated = true;
             } catch (error) {
               retryCount++;
-              console.error(`Attempt ${retryCount}/${MAX_RETRIES} for ${rule.name} failed:`, error.message);
-              if (error instanceof SyntaxError || error.message.includes("No valid JSON")) {
-                console.error("Raw AI Response:", aiResponseString);
-              }
+              lastError = error.message;
+              console.error(`Attempt ${retryCount} failed for Math: ${error.message}`);
+              if (retryCount >= MAX_RETRIES) throw new Error(`Math generation failed: ${error.message}`);
             }
-          }
-
-          if (!questionGenerated) {
-            throw new Error(`Failed to generate question for ${rule.name} after ${MAX_RETRIES} attempts.`);
           }
         }
       }
-
-      const finalTest = await MockTestModel.findById(newTest._id).populate('Questions');
-
-      if (!finalTest) {
-        throw new Error(`Could not retrieve final Mock Test with ID ${newTest._id}.`);
-      }
-
-      
-      // await examModel.findByIdAndUpdate(
-      //   examId,
-      //   { $push: { MockTests: finalTest._id } }
-      // );
-
-      
-      socket.emit('generation_complete', { 
-        message: 'Test generated successfully!', 
-        test: finalTest 
-      });
-
+      socket.emit('generation_complete', { message: 'Test Generated Successfully!', test: activeTest });
     } catch (error) {
-      socket.emit('generation_error', { 
-        message: 'A fatal error occurred. Test may be incomplete.',
-        error: error.message
-      });
+      socket.emit('generation_error', { message: error.message });
     }
   });
 };
 
-function getSingleQuestionPrompt(exam, subject, difficulty) {
+function getSingleQuestionPrompt(exam, subject, difficulty, lastError = "", lastResponse = "", history = []) {
   const isEnglish = subject.toLowerCase() === 'english';
   const isHindi = subject.toLowerCase() === 'hindi';
 
-  return `You are an expert multilingual question designer for competitive exams.
-Your task is to generate 1 high-quality multiple-choice question (MCQ).
+  // 1. Handle JSON Parsing Errors
+  const errorFeedback = lastError ? `
+### ⚠️ FIX PREVIOUS JSON ERROR:
+Error: ${lastError}
+Ensure all quotes are escaped and no illegal backslashes are used.
+Previous Response Snippet: ${lastResponse ? `"${lastResponse}..."` : "None"}
+` : "";
 
-**Parameters:**
-- Exam: "${exam}"
-- Subject: "${subject}"
-- Difficulty: "${difficulty}"
+  // 2. Handle Duplication Prevention
+  // We send the last 15 questions to ensure the AI stays varied
+  const recentHistory = history.slice(-15);
+  const historyList = recentHistory.length > 0
+    ? `\n### 🛑 DO NOT REPEAT THESE TOPICS/QUESTIONS:\n${recentHistory.map((h, i) => `- ${h.topic}: ${h.summary}...`).join('\n')}`
+    : "";
 
-**CRITICAL INSTRUCTIONS:**
-1.  **Bilingual Output:**
-    * Provide all text in both English ("en") and Hindi ("hi").
-    * **EXCEPTION:** If the subject is "English", the "hi" object MUST be null.
-    * **EXCEPTION:** If the subject is "Hindi", the "en" object MUST be null.
-2.  **Strict JSON Format:**
-    * **CRITICAL:** The output **MUST** be ONLY the JSON object itself.
-    * Do not wrap it in \`\`\`json markdown blocks.
-    * Do not include *any* other text before the opening \`{\` or after the closing \`}\`.
-    * The "answer" field must be the string text of the correct option, not just the letter.
-    * The "solution" field must be a brief, clear explanation.
+  return `You are an expert question designer for the "${exam}" exam.
+Task: Generate 1 unique MCQ for "${subject}" (${difficulty} level).
 
-**JSON Schema to Follow:**
+${errorFeedback}
+${historyList}
+
+**STRICT UNIQUENESS & QUALITY RULES:**
+1. **No Duplicates:** The question must be conceptually different from the history list above.
+2. **Specific Topic:** Pick a specific sub-topic (e.g., if history has "CPU", pick "Input/Output Devices" or "Cache Memory").
+3. **JSON Format:** Return ONLY a raw JSON object. No markdown blocks.
+4. **Escaping:** Use "\\n" for newlines and "\\\\" for math backslashes.
+5. **JSON Safety:** If the question involves Math/Science, you MUST use double backslashes for all symbols (e.g., "\\\\sqrt{x}" or "\\\\frac{1}{2}").
+
+**JSON Schema:**
 {
   "en": ${isHindi ? 'null' : `{
-    "Question": "The question in English.",
+    "Question": "Question in English",
     "options": [
       { "text": "Option A", "isCorrect": false },
       { "text": "Option B", "isCorrect": true },
@@ -171,10 +160,10 @@ Your task is to generate 1 high-quality multiple-choice question (MCQ).
       { "text": "Option D", "isCorrect": false }
     ],
     "answer": "Option B",
-    "solution": "Explanation in English."
+    "solution": "Brief explanation"
   }`},
   "hi": ${isEnglish ? 'null' : `{
-    "Question": "प्रश्न हिन्दी में।",
+    "Question": "हिन्दी में प्रश्न",
     "options": [
       { "text": "विकल्प ए", "isCorrect": false },
       { "text": "विकल्प बी", "isCorrect": true },
@@ -182,9 +171,74 @@ Your task is to generate 1 high-quality multiple-choice question (MCQ).
       { "text": "विकल्प डी", "isCorrect": false }
     ],
     "answer": "विकल्प बी",
-    "solution": "स्पष्टीकरण हिन्दी में।"
+    "solution": "हिन्दी में व्याख्या"
   }`},
-  "Topic": "A specific topic (e.g., 'Percentage', 'Ancient History')"
+  "Topic": "Name of the sub-topic"
+}`;
 }
-`;
+
+
+
+
+export const fetchGenerations = async (req, res) => {
+  try {
+    // Logic to fetch past test generations from the database
+    const generations = await MockTestModel.find({}).populate('Questions').populate('ExamId').sort({ createdAt: -1 });
+    res.status(200).json({ success: true, generations });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to fetch past generations" });
+  }
+};
+
+export const deleteGeneration = async (req, res) => {
+  const { testId } = req.params;
+  try {
+    const test = await MockTestModel.findById(testId);
+    if (!test) {
+      return res.status(404).json({ success: false, message: "Test generation not found" });
+    }
+    await MockTestModel.findByIdAndDelete(testId);
+    // Also delete from Exam's MockTests array if published
+    const exam = await examModel.findById(test.ExamId);
+    exam.MockTests = exam.MockTests.filter(tid => tid.toString() !== testId);
+    await exam.save();
+    res.status(200).json({ success: true, message: "Test generation deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to delete test generation" });
+  }
+};
+
+export const publishGeneration = async (req, res) => {
+  const { testId } = req.params;
+  try {
+    const test = await MockTestModel.findById(testId);
+    if (!test) {
+      return res.status(404).json({ success: false, message: "Test generation not found" });
+    }
+    test.Status = 'Published';
+    await test.save();
+
+    // Also add these inside the Exam's MockTests array
+    const exam = await examModel.findById(test.ExamId);
+    exam.MockTests.push(test._id);
+    await exam.save();
+
+    res.status(200).json({ success: true, message: "Test generation published successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to publish test generation" });
+  }
+};
+
+export const fetchSubjectsForExam = async (req, res) => {
+  const { examId } = req.body;
+  try {
+    const exam = await examModel.findById(examId);
+    if (!exam) {
+      res.status(404).json({ success: false, message: "Exam not found" });
+      return;
+    }
+    res.status(200).json({ success: true, Subjects: exam.Subjects });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to fetch subjects for exam" });
+  }
 }

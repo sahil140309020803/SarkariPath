@@ -21,6 +21,7 @@ import fetchAllUsers from './controllers/FetchAllUsers.js';
 import { setupSocketHandlers } from './controllers/generationController.js'; 
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
+import { generationRouter } from './routers/GenerationRouter.js';
 
 const app = express();
 const server = http.createServer(app); 
@@ -65,6 +66,9 @@ app.post('/api/summarize', AITopicSummarizer);
 app.use('/api/auth/admin', adminRouter);
 app.use('/api/auth/user', userRouter);
 app.get('/api/is-auth', isAuth, isAuthenticated);
+
+// Fetch Past Generations Through Admin Page
+app.use('/api/admin/test-generations', isAuth, generationRouter);
 
 // User Details routes
 app.get('/api/user-details', isAuth, userDetails);

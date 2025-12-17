@@ -62,7 +62,11 @@ const MockTestSchema = new mongoose.Schema({
     }],
     TotalMarks: { type: Number, required: true },
     DurationinMinutes: { type: Number, required: true },
+}, {
+    timestamps: true,
 });
+
+MockTestSchema.index({ Title: 1, ExamId: 1 }, { unique: true });
 
 const MockTestModel = examDbConnection.models.mock_tests || examDbConnection.model('mock_tests', MockTestSchema);
 

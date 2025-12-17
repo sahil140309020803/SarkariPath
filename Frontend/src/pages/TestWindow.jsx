@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTestWindow } from '../context/TestWindowContext';
 import { useParams } from 'react-router-dom';
 
@@ -179,12 +179,13 @@ const TestWindow = () => {
         return text.replaceAll('-', ' ');
     }
 
-
     // Get current question data based on selected language
     const currentQuestionData = questions[currentQuestionIndex];
 
     const questionContent = useMemo(() => {
         if (!currentQuestionData) return null;
+
+        // setLanguage(currentQuestionData.en ? 'en' : currentQuestionData.hi ? 'hi' : 'en');
         const content = currentQuestionData[language];
         if (!content) return null;
 
@@ -199,12 +200,28 @@ const TestWindow = () => {
 
     }, [currentQuestionData, language]);
 
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang);
+    };
+
+    useEffect(() => {
+        // Auto-switch language if current question doesn't have content in selected language
+        if (currentQuestionData) {
+            if (!currentQuestionData[language]) {
+                const otherLanguage = language === 'en' ? 'hi' : 'en';
+                setLanguage(otherLanguage);
+            }
+        }
+    }, [currentQuestionData, language, setLanguage]);
+
+
     const questionId = currentQuestionData ? currentQuestionData._id : null;
     const totalQuestions = questions.length;
     const currentAnswer = questionId ? userAnswers[questionId] : null;
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isLastQuestion = currentQuestionIndex === questions.length - 1;
     const currentSubject = currentQuestionData?.Subject;
+
 
 
     if (isTestLoading) {
@@ -258,15 +275,16 @@ const TestWindow = () => {
                         {/* Language Switcher */}
                         <div className="flex rounded-sm overflow-hidden border border-gray-500 shadow-sm">
                             <button
-                                onClick={() => setLanguage('en')}
-                                className={`px-3 py-1.5 text-sm font-semibold transition-colors ${language === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
+                                onClick={() => handleLanguageChange('en')}
+                                disabled={!currentQuestionData || !currentQuestionData.en}
+                                className={`px-3 py-1.5 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
                             >
                                 English
                             </button>
                             <button
-                                onClick={() => setLanguage('hi')}
+                                onClick={() => handleLanguageChange('hi')}
                                 disabled={!currentQuestionData || !currentQuestionData.hi}
-                                className={`px-3 py-1 text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
+                                className={`px-3 py-1 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
                             >
                                 हिन्दी
                             </button>
@@ -377,7 +395,7 @@ const TestWindow = () => {
                                         Clear Response
                                     </button>
                                     <button
-                                        onClick={handleSaveAndNext}
+                                        onClick={isLastQuestion ? handleSubmitTest : handleSaveAndNext}
                                         className={`px-4 py-3 text-white font-semibold rounded-lg shadow-lg transition ${isLastQuestion ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-800'}`}
                                     >
                                         {isLastQuestion ? 'Save & Submit' : 'Save & Next'}
