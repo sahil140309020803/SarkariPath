@@ -57,13 +57,13 @@ const getExamDetails = async (req, res) => {
     const examName = removeSlug(req.params?.examName);
     try {
         const examData = await examModel.findOne({ Name: examName }).populate('MockTests').lean();
-        console.log(examData); 
+        // console.log(examData); 
         if(!examData) {
             return res.json({success: false, message: "Exam not found"});
         }
         const mockTests = examData.MockTests || [];
         console.log(mockTests);
-        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests });
+        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests, ExamId: examData._id });
     } catch(err) {
         res.json({success: false, message: err.message});
     }

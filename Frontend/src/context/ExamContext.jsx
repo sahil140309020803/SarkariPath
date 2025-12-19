@@ -29,7 +29,7 @@ export const ExamProvider = ({ children }) => {
             const { data } = await axios.get(`${backend_url}/api/exam-details/${activeExamPage}`);
             console.log(data);
             if (data.success) {
-                setIsExamDataFetched({ Subjects: data.Subjects, MockTests: data.MockTests });
+                setIsExamDataFetched({ ExamId: data.ExamId, Subjects: data.Subjects, MockTests: data.MockTests });
             }
         } catch (err) {
             console.error('Failed to fetch exam data:', err);

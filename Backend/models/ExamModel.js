@@ -62,6 +62,7 @@ const MockTestSchema = new mongoose.Schema({
     }],
     TotalMarks: { type: Number, required: true },
     DurationinMinutes: { type: Number, required: true },
+    type: { type: String, required: true, enum: ['mock_test', 'quiz'], default: 'mock_test' },
 }, {
     timestamps: true,
 });
@@ -71,16 +72,21 @@ MockTestSchema.index({ Title: 1, ExamId: 1 }, { unique: true });
 const MockTestModel = examDbConnection.models.mock_tests || examDbConnection.model('mock_tests', MockTestSchema);
 
 const QuizSchema = new mongoose.Schema({
-    Name: { type: String, required: true },
+    Title: { type: String, required: true },
     ExamId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'exams',
         required: true
     },
     NegativeMarks: { type: Number, required: true, default: 0 },
-    Questions: {},
+    Difficulty: { type: String, required: true, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
+    Questions: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'questions',
+        required: true
+    }],
     DurationinMinutes: { type: Number, required: true, default: 20 },
-    TotalMarks: { type: Number, required: true },
+    TotalMarks: { type: Number, required: true, default: 15 },
 });
 
 const QuizModel = examDbConnection.models.quizzes || examDbConnection.model('quizzes', QuizSchema);
