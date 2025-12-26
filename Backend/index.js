@@ -22,6 +22,8 @@ import { setupSocketHandlers } from './controllers/generationController.js';
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
+import { getTestAnalysis } from './controllers/GetTestAnalysis.js';
+import { submitTest } from './controllers/SubmitTest.js';
 
 const app = express();
 const server = http.createServer(app); 
@@ -88,5 +90,10 @@ app.use('/api/exams', examRouter);
 // Test Window Routes
 app.use('/api/test-window', testWindowRouter); // Assuming test window related routes are in examRouter
 
+// Submit test
+app.post('/api/submit-test', isAuth, submitTest);
+
+// Test result
+app.get('/api/test-results/:submissionId', isAuth, getTestAnalysis);
 
 server.listen(PORT, '0.0.0.0', () => console.log(`Server is running with WebSockets on port ${PORT}`));

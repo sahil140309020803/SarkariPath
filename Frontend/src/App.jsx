@@ -10,6 +10,7 @@ import AdminPage from './pages/AdminPage'
 import { useAuth } from './context/AuthContext'
 import TestInstruction from './components/Test Window/TestInstruction'
 import TestWindow from './pages/TestWindow'
+import Analysis from './pages/Analysis'
 
 const App = () => {
   const {isLoading, setIsLoading } = useAuth();
@@ -29,6 +30,7 @@ const App = () => {
           <Route path='live-test' element={<TestWindow />} />
         </Route>
       </Route>
+      <Route path='/analysis/:submissionId' element={<Analysis />} />
     </Routes>
     {isLoading && <Loading />}
     </div>

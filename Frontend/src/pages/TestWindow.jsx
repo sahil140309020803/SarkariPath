@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { useTestWindow } from '../context/TestWindowContext';
 import { useParams } from 'react-router-dom';
 import { QuestionPalette } from '../components/Test Window/QuestionPallete';
@@ -24,6 +24,7 @@ const TestWindow = () => {
         handleMarkForReview,
         handleClearResponse,
         handleSubmitTest,
+        activeQuestionDuration
     } = useTestWindow();
 
 
@@ -88,7 +89,6 @@ const TestWindow = () => {
     const currentQuestionNumber = currentQuestionIndex + 1;
     const isLastQuestion = currentQuestionIndex === questions.length - 1;
     const currentSubject = currentQuestionData?.Subject;
-
 
 
     if (isTestLoading) {
@@ -198,8 +198,13 @@ const TestWindow = () => {
                                 <div className="text-[22px] font-semibold text-gray-800">
                                     Question <span className="text-blue-700">{currentQuestionNumber}</span>
                                 </div>
-                                <div className="text-md font-semibold text-red-600">
-                                    <span className='text-green-800'>Marks: +1</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
+                                <div className="flex items-center gap-4">
+                                    <div className="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-md border border-blue-200">
+                                        Time Spent: {formatTime(activeQuestionDuration)}
+                                    </div>
+                                    <div className="text-md font-semibold text-red-600">
+                                        <span className='text-green-800'>Marks: +1</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
+                                    </div>
                                 </div>
                             </div>
 

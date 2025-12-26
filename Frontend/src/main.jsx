@@ -6,6 +6,7 @@ import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { ExamProvider } from './context/ExamContext.jsx'
 import { TestWindowProvider } from './context/TestWindowContext.jsx'
+import { TestAnalysisProvider } from './context/TestAnalysisContext.jsx'
 
 
 createRoot(document.getElementById('root')).render(
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <ExamProvider>
         <TestWindowProvider>
-          <App />
+          <TestAnalysisProvider>
+            <App />
+          </TestAnalysisProvider>
         </TestWindowProvider>
       </ExamProvider>
     </AuthProvider>

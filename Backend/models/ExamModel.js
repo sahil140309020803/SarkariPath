@@ -92,6 +92,70 @@ const QuizSchema = new mongoose.Schema({
 const QuizModel = examDbConnection.models.quizzes || examDbConnection.model('quizzes', QuizSchema);
 
 
+const TestSubmissionSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true,
+        index: true
+    },
+    testId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'mock_tests',
+        required: true
+    },
+    examId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'exams', 
+        required: true
+    },
+    responses: [
+        {
+            questionId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'questions',
+                required: true
+            },
+            subject: { type: String, required: true },
+            selectedOptionIndex: { type: Number, default: null }, 
+            status: { 
+                type: String, 
+                enum: ['correct', 'incorrect', 'skipped'], 
+                required: true 
+            },
+            timeSpent: { type: Number, default: 0 }
+        }
+    ],
+    sectionAnalysis: [
+        {
+            subject: { type: String, required: true },
+            score: { type: Number, required: true },
+            totalQuestions: { type: Number, required: true },
+            correct: { type: Number, required: true },
+            incorrect: { type: Number, required: true },
+            skipped: { type: Number, required: true },
+            timeSpent: { type: Number, required: true },
+            accuracy: { type: Number, required: true }
+        }
+    ],
+    totalScore: { type: Number, required: true },
+    maxPossibleScore: { type: Number, required: true },
+    correctCount: { type: Number, default: 0 },
+    incorrectCount: { type: Number, default: 0 },
+    skippedCount: { type: Number, default: 0 },
+    accuracy: { type: Number, required: true }, 
+
+    timeTaken: { type: Number, required: true },
+    isQualified: { type: Boolean, default: false }, 
+
+}, {
+    timestamps: true,
+    collection: 'test_submissions'
+});
+TestSubmissionSchema.index({ userId: 1, testId: 1 });
+
+const TestSubmissionModel = examDbConnection.models.test_submissions || examDbConnection.model('test_submissions', TestSubmissionSchema);
+
+
 const QuestionSchema = new mongoose.Schema({
     ExamId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -140,4 +204,4 @@ const QuestionSchema = new mongoose.Schema({
 const QuestionModel = examDbConnection.models.questions || examDbConnection.model('questions', QuestionSchema);
 
 
-export { examCatModel, examModel, MockTestModel, QuizModel, QuestionModel };
+export { examCatModel, examModel, MockTestModel, QuizModel, QuestionModel, TestSubmissionModel };

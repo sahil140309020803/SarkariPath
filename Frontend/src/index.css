@@ -2,6 +2,19 @@
 
 
 
+/* Analysis circular bar percentage */
+@keyframes circular-bar-animation {
+  0% {
+    stroke-dashoffset: 400;
+  
+  }
+
+}
+.animate-circular-bar {
+  animation: circular-bar-animation 2s ease-out forwards;
+}
+
+
 @keyframes heart-pulse {
   0%, 100% {
     transform: scale(1);

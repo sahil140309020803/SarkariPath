@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useContext, createContext, useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from './AuthContext';
 
 
 
@@ -11,30 +13,34 @@ export const TestWindowProvider = ({ children }) => {
 
     const backend_url = import.meta.env.VITE_BACKEND_URL;
 
-    // Test Data State (Fetched from API)
     const [activeTest, setActiveTest] = useState(null);
     const [activeTestID, setActiveTestID] = useState('');
     const [questions, setQuestions] = useState([]);
-    const [duration, setDuration] = useState(0); // Duration in minutes
+    const [duration, setDuration] = useState(0);
     const [markingScheme, setMarkingScheme] = useState({ correct: 0, incorrect: 0 });
 
-    // Core Test Management State
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [timeRemaining, setTimeRemaining] = useState(0); // Time in seconds
-    const [userAnswers, setUserAnswers] = useState({}); // { 'qId': 'selectedOption', ...}
-    const [questionStatus, setQuestionStatus] = useState({}); // { 'qId': 'answered' | 'marked_for_review' | 'not_visited', ...}
+    const [timeRemaining, setTimeRemaining] = useState(0);
+    const [userAnswers, setUserAnswers] = useState({});
+    const [questionStatus, setQuestionStatus] = useState({});
 
-    // Test Status State
-    const [score, setScore] = useState(0); // Current calculated score
-    const [isTestLoading, setIsLoading] = useState(true); // Replaces isTestStarted initially for loading popup
+    const [score, setScore] = useState(0);
+    const [isTestLoading, setIsLoading] = useState(true);
     const [isTestStarted, setIsTestStarted] = useState(false);
     const [isTestEnded, setIsTestEnded] = useState(false);
 
-    // --- Data Fetching and Initialization ---
+    const { userDetails } = useAuth();
+
+    const navigate = useNavigate();
+
+    // Timer per question functionality
+    const questionTimesRef = useRef({});
+    const [activeQuestionDuration, setActiveQuestionDuration] = useState(0);
+    const activeDurationRef = useRef(0);
+
 
     useEffect(() => {
 
-        // Simulating the loading popup delay before fetching
         const loadTimer = setTimeout(() => setIsLoading(false), 3000);
         if (activeTestID) {
             fetchActiveTestDetails();
@@ -57,13 +63,10 @@ export const TestWindowProvider = ({ children }) => {
                 setMarkingScheme({ correct: 1, incorrect: test.NegativeMarks });
                 setTimeRemaining(totalSeconds);
 
-                // Initialize user answers and question status based on fetched questions
                 const initialAnswers = test.Questions.reduce((acc, q) => ({ ...acc, [q._id]: null }), {});
                 const initialStatus = test.Questions.reduce((acc, q) => ({ ...acc, [q._id]: 'not_visited' }), {});
                 setUserAnswers(initialAnswers);
                 setQuestionStatus(initialStatus);
-
-                // Set isTestStarted to true once data is ready and loaded
                 setIsTestStarted(true);
 
             } else {
@@ -78,7 +81,6 @@ export const TestWindowProvider = ({ children }) => {
 
     }
 
-    // --- Timer Logic ---
     useEffect(() => {
 
         if (!isTestStarted || isTestEnded || timeRemaining <= 0) return;
@@ -86,8 +88,8 @@ export const TestWindowProvider = ({ children }) => {
             setTimeRemaining(prevTime => {
                 if (prevTime <= 1) {
                     setIsTestEnded(true);
-                    // auto submission logic here
                     clearInterval(timerId);
+                    handleSubmitTest();
                     return 0;
                 }
                 return prevTime - 1;
@@ -95,7 +97,7 @@ export const TestWindowProvider = ({ children }) => {
         }, 1000);
 
         return () => clearInterval(timerId);
-    }, [isTestStarted, isTestEnded]);
+    }, [isTestStarted, isTestEnded, timeRemaining]);
 
 
     const formatTime = (totalSeconds) => {
@@ -106,15 +108,35 @@ export const TestWindowProvider = ({ children }) => {
     };
 
 
-    // --- Action Handlers ---
     const currentQuestion = questions[currentQuestionIndex];
     const questionId = currentQuestion ? currentQuestion._id : null;
+
+
+    useEffect(() => {
+        if (!isTestStarted || isTestEnded || !questionId) return;
+
+        const qId = questionId;
+        const previouslySpent = questionTimesRef.current[qId] || 0;
+
+        activeDurationRef.current = previouslySpent;
+        setActiveQuestionDuration(previouslySpent);
+
+        const interval = setInterval(() => {
+            activeDurationRef.current += 1;
+            setActiveQuestionDuration(activeDurationRef.current);
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+            questionTimesRef.current[qId] = activeDurationRef.current;
+        };
+    }, [questionId, isTestStarted, isTestEnded]);
+
 
     const handleSetAnswer = (answer) => {
         if (isTestEnded || !questionId) return;
         setUserAnswers(prev => ({ ...prev, [questionId]: answer }));
 
-        // Update status to 'answered' if not marked for review
         setQuestionStatus(prev => {
             const currentStatus = prev[questionId];
             if (currentStatus !== 'marked_for_review' && currentStatus !== 'answered_and_marked') {
@@ -135,7 +157,7 @@ export const TestWindowProvider = ({ children }) => {
         if (currentQuestionIndex < questions.length - 1) {
             setCurrentQuestionIndex(prev => prev + 1);
         } else {
-            // End of test sequence
+            handleSubmitTest();
         }
 
     };
@@ -163,50 +185,66 @@ export const TestWindowProvider = ({ children }) => {
         }));
     };
 
+
     const handleSubmitTest = async () => {
-        // Confirmation modal logic should wrap this
         if (window.confirm("Are you sure you want to end and submit the test?")) {
+            // setIsTestLoading(true);
 
-            // Submit answers and calculate final score here
-            let totalScore = 0;
-            questions.forEach(q => {
-                const userAnswer = userAnswers[q._id];
-                const correctAnswer = q.en ? q.en.answer : q.hi ? q.hi.answer : null;
-                // console.log('Question ID:', q._id, 'User Answer:', userAnswer, 'Correct Answer:', correctAnswer);
-                // console.log(markingScheme);
-                if (userAnswer) {
-                    if (userAnswer === correctAnswer) {
-                        // console.log('Correct answer for question ID:', q._id);
-                        totalScore += markingScheme.correct;
-                    } else {
-                        totalScore += markingScheme.incorrect; // negative marking
-                    }
+            try {
+                if (!activeTestID) throw new Error("Test ID is missing");
+
+                const totalSecondsAllocated = duration * 60;
+                const timeTakenInSeconds = totalSecondsAllocated - timeRemaining;
+
+                if (questionId) {
+                    questionTimesRef.current[questionId] = activeDurationRef.current;
                 }
-            });
 
-            // auto submission logic
-            console.log('Final Score:', totalScore);
-            setIsTestEnded(true);
-            // try {
-            //     axios.defaults.withCredentials = true;
-            //     const { data } = await axios.post(`${backend_url}/api/test-window/submit-test/${activeTestID}`, {
-            //         answers: userAnswers,
-            //         score: totalScore,
-            //     });
-            //     if (data.success) {
-            //         console.log('Test submitted successfully.');
+                const formattedResponses = questions.map(q => {
+                    const userSelectedValue = userAnswers[q._id];
 
-            //         setIsTestEnded(true);
-            //     } else {
-            //         console.error('Failed to submit test.');
-            //     }
-            // } catch (err) {
-            //     console.error('Failed to submit test:', err);
-            // }
+                    let finalIndex = null;
+
+                    const options = q.en?.options || q.hi?.options || [];
+
+                    if (userSelectedValue) {
+                        const foundIndex = options.findIndex(opt => opt.text === userSelectedValue);
+
+                        if (foundIndex !== -1) {
+                            finalIndex = foundIndex;
+                        }
+                    }
+
+                    return {
+                        questionId: q._id,
+                        selectedOptionIndex: finalIndex,
+                        timeSpent: questionTimesRef.current[q._id] || 0,
+                    };
+                });
+
+                const payload = {
+                    testId: activeTestID,
+                    timeTaken: timeTakenInSeconds,
+                    userResponses: formattedResponses
+                };
+
+                const { data } = await axios.post(`${backend_url}/api/submit-test`, payload);
+
+                if (data.success) {
+                    setIsTestEnded(true);
+                    navigate(`/analysis/${data.result._id}`);
+                } else {
+                    alert("Submission failed.");
+                }
+
+            } catch (error) {
+                console.error("Submission Error:", error);
+                alert("Error: " + (error.response?.data?.error || error.message));
+            } finally {
+                // setIsTestLoading(false);
+            }
         }
-
     };
-
 
 
     const [language, setLanguage] = useState('en');
@@ -220,7 +258,6 @@ export const TestWindowProvider = ({ children }) => {
         isTestEnded, setIsTestEnded,
         activeTestID, setActiveTestID,
 
-        // New Test Window Logic
         currentQuestionIndex, setCurrentQuestionIndex,
         userAnswers, handleSetAnswer,
         questionStatus,
@@ -229,6 +266,7 @@ export const TestWindowProvider = ({ children }) => {
         isTestLoading, setIsLoading,
         handleSaveAndNext, handleMarkForReview,
         handleClearResponse, handleSubmitTest,
+        activeQuestionDuration
     };
 
     return (
@@ -241,4 +279,3 @@ export const TestWindowProvider = ({ children }) => {
 export const useTestWindow = () => {
     return useContext(TestWindowContext);
 };
-
