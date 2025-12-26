@@ -187,64 +187,63 @@ export const TestWindowProvider = ({ children }) => {
 
 
     const handleSubmitTest = async () => {
-        if (window.confirm("Are you sure you want to end and submit the test?")) {
-            // setIsTestLoading(true);
+    if (window.confirm("Are you sure you want to end and submit the test?")) {
+        try {
+            if (!activeTestID) throw new Error("Test ID is missing");
 
-            try {
-                if (!activeTestID) throw new Error("Test ID is missing");
+            const totalSecondsAllocated = duration * 60;
+            const timeTakenInSeconds = totalSecondsAllocated - timeRemaining;
 
-                const totalSecondsAllocated = duration * 60;
-                const timeTakenInSeconds = totalSecondsAllocated - timeRemaining;
-
-                if (questionId) {
-                    questionTimesRef.current[questionId] = activeDurationRef.current;
-                }
-
-                const formattedResponses = questions.map(q => {
-                    const userSelectedValue = userAnswers[q._id];
-
-                    let finalIndex = null;
-
-                    const options = q.en?.options || q.hi?.options || [];
-
-                    if (userSelectedValue) {
-                        const foundIndex = options.findIndex(opt => opt.text === userSelectedValue);
-
-                        if (foundIndex !== -1) {
-                            finalIndex = foundIndex;
-                        }
-                    }
-
-                    return {
-                        questionId: q._id,
-                        selectedOptionIndex: finalIndex,
-                        timeSpent: questionTimesRef.current[q._id] || 0,
-                    };
-                });
-
-                const payload = {
-                    testId: activeTestID,
-                    timeTaken: timeTakenInSeconds,
-                    userResponses: formattedResponses
-                };
-
-                const { data } = await axios.post(`${backend_url}/api/submit-test`, payload);
-
-                if (data.success) {
-                    setIsTestEnded(true);
-                    navigate(`/analysis/${data.result._id}`);
-                } else {
-                    alert("Submission failed.");
-                }
-
-            } catch (error) {
-                console.error("Submission Error:", error);
-                alert("Error: " + (error.response?.data?.error || error.message));
-            } finally {
-                // setIsTestLoading(false);
+            if (questionId) {
+                questionTimesRef.current[questionId] = activeDurationRef.current;
             }
+
+            const formattedResponses = questions.map(q => {
+                const userSelectedValue = userAnswers[q._id];
+                let finalIndex = null;
+
+                if (userSelectedValue) {
+                    const enOptions = q.en?.options || [];
+                    let foundIndex = enOptions.findIndex(opt => opt.text === userSelectedValue);
+
+                    if (foundIndex === -1) {
+                        const hiOptions = q.hi?.options || [];
+                        foundIndex = hiOptions.findIndex(opt => opt.text === userSelectedValue);
+                    }
+                    
+                    if (foundIndex !== -1) {
+                        finalIndex = foundIndex;
+                    }
+                }
+
+                return {
+                    questionId: q._id,
+                    selectedOptionIndex: finalIndex,
+                    timeSpent: questionTimesRef.current[q._id] || 0,
+                };
+            });
+
+            const payload = {
+                testId: activeTestID,
+                timeTaken: timeTakenInSeconds,
+                userResponses: formattedResponses
+            };
+
+            const { data } = await axios.post(`${backend_url}/api/submit-test`, payload);
+
+            if (data.success) {
+                setIsTestEnded(true);
+                navigate(`/analysis/${data.result._id}`);
+            } else {
+                alert("Submission failed.");
+            }
+
+        } catch (error) {
+            console.error("Submission Error:", error);
+            alert("Error: " + (error.response?.data?.error || error.message));
         }
-    };
+    }
+};
 
 
     const [language, setLanguage] = useState('en');
