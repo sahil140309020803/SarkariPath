@@ -1,5 +1,6 @@
 import { AI } from "../GenAI/ai.js";
 import { examModel, MockTestModel } from "../models/ExamModel.js";
+import userModel from "../models/userModel.js";
 
 const getExamDetailsUsingAI = async(req, res) => {
     const exam = req.params?.id;
@@ -55,6 +56,7 @@ const removeSlug = (text) => {
 
 const getExamDetails = async (req, res) => {
     const examName = removeSlug(req.params?.examName);
+    const userEmail = req.body?.userEmail;
     try {
         const examData = await examModel.findOne({ Name: examName }).populate('MockTests').lean();
         // console.log(examData); 
@@ -62,8 +64,25 @@ const getExamDetails = async (req, res) => {
             return res.json({success: false, message: "Exam not found"});
         }
         const mockTests = examData.MockTests || [];
-        console.log(mockTests);
-        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests, ExamId: examData._id });
+        // console.log(mockTests);
+
+        let testHistory = [];
+
+        if (userEmail) {
+            const user = await userModel.findOne({ email: userEmail }).select('testHistory');
+
+            if (user && user.testHistory && user.testHistory.length > 0) {
+                testHistory = user.testHistory.filter(item => 
+                    item.examId.toString() === examData._id.toString()
+                );
+
+                testHistory.sort((a, b) => new Date(b.attemptedAt) - new Date(a.attemptedAt));
+            }
+        }
+        
+        // console.log(`TestHistory for exam ${examName}: ${testHistory}`);
+
+        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests, ExamId: examData._id, testHistory });
     } catch(err) {
         res.json({success: false, message: err.message});
     }

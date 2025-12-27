@@ -408,7 +408,7 @@ export default function Analysis() {
       </div>
     );
   }
-
+  console.log(analysisData);
   return (
     <div className="min-h-screen bg-slate-50 font-sans pb-24">
       <Navbar_in />
@@ -436,8 +436,8 @@ export default function Analysis() {
             <button
               onClick={() => {
                 // Ensure context passes testId, or fallback gracefully
-                if (analysisData?.originalTestId) {
-                  navigate(`/live-test/${analysisData?.originalTestId}`);
+                if (analysisData?.testId) {
+                  navigate(`/tests/${analysisData?.testId}`);
                 } else {
                   console.warn("Test ID not found for retake");
                 }

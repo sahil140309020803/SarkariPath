@@ -3,7 +3,7 @@ import { MockTestModel } from "../models/ExamModel.js";
 const fetchActiveTest = async (req, res) => {
     const testID = req.params?.testID;
     try {
-        const testData = await MockTestModel.findById(testID).populate('Questions').lean();
+        const testData = await MockTestModel.findById(testID).populate('ExamId').populate('Questions').lean();
         if(!testData) {
             return res.json({success: false, message: "Test not found"});
         }

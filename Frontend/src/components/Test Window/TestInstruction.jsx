@@ -20,7 +20,7 @@ const TestInstruction = () => {
             alert('Starting test now. Good luck!');
             setIsTestStarted(true);
             setIsReady(false);
-            navigate(`/${exam_cat}/${exam_name}/tests/${testID}/live-test`);
+            navigate(`/tests/${testID}/live-test`);
         }
     };
 
@@ -35,6 +35,9 @@ const TestInstruction = () => {
                         ⏳
                         Total Estimated Reading Time: <strong className="ml-1">3 Minutes</strong>
                     </p>
+                    {/* Test can not be paused/resume add this line below*/}
+                    <p className='text-red-800 font-semibold'>Note: Test can not be Paused.</p>
+
                 </header>
 
                 {/* Instructions Container */}
@@ -54,7 +57,7 @@ const TestInstruction = () => {
                             </div>
                             <div className=" bg-gray-50 rounded-xl p-5 border border-gray-200 hover:shadow-lg shadow-md transition duration-300">
                                 <h3 className="text-lg font-bold text-indigo-900 mb-2">Integrity</h3>
-                                <p className="text-gray-700">Do not refresh the page or use other browser tabs. This action will result in an immediate submission and may void your score.</p>
+                                <p className="text-gray-700">Once started, this test cannot be <strong className='text-red-600'>paused</strong>. The timer will continue running even if you close the window or lose internet connection.</p>
                             </div>
                         </div>
                     </section>
@@ -74,7 +77,7 @@ const TestInstruction = () => {
                             {/* Negative Marking Card */}
                             <div className=" bg-white rounded-xl p-5 border-2 border-red-500 shadow-lg">
                                 <h3 className="text-lg font-bold text-gray-800 mb-2">Incorrect Answer</h3>
-                                <div className="text-3xl font-black text-red-500 leading-none">{markingScheme.incorrect !== 0 ? '-' : ''}{markingScheme.incorrect}</div>
+                                <div className="text-3xl font-black text-red-500 leading-none">{markingScheme.incorrect}</div>
                                 <p className="text-gray-600 mt-2">{markingScheme.incorrect} Mark will be deducted for each incorrect response (Negative Marking applies).</p>
                             </div>
 

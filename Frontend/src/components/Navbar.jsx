@@ -46,6 +46,7 @@ const Navbar = () => {
     setActiveList(null);
     navigate("/#exam-categories")
   }
+  // console.log('User Details in Navbar:', userDetails);
 
   return (
     <div className='min-w-full flex justify-between items-center border-b rounded border-blue-900 pl-7 pr-10 pt-1 pb-1 sticky top-0 shadow-xl shadow-blue-100 z-1 bg-white'>

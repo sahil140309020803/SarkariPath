@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data } = await axios.get(`${backend_url}/api/user-details`);
             if (data.success) {
-                setUserDetails(data.details);
+                setUserDetails({...data.details, role: data.role});
             }
         } catch (err) {
             console.error("Failed to get user details:", err.message);

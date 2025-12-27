@@ -5,16 +5,16 @@ const userDetails = async(req, res) => {
     const {userEmail, role} = req.body;
     try {
         if(role === 'user') {
-            const user = await userModel.findOne({email:userEmail});
+            const user = await userModel.findOne({email:userEmail}).select('-password');
             if(user) {
-                res.status(200).json({success: true, message: "User details fetched successfully", details: {name: user.name, email: user.email, role: 'user'}});
+                res.status(200).json({success: true, message: "User details fetched successfully", details: user, role: 'user'});
             } else {
                 res.status(404).json({success: false, message: "User not found"});
             }
         } else if(role === 'admin') {
-            const admin = await adminModel.findOne({email:userEmail});
+            const admin = await adminModel.findOne({email:userEmail}).select('-password');
             if(admin) {
-                res.status(200).json({success: true, message: "Admin details fetched successfully", details: {name: admin.name, email: admin.email, role: 'admin'}});
+                res.status(200).json({success: true, message: "Admin details fetched successfully", details: admin, role: 'admin'});
             } else {
                 res.status(404).json({success: false, message: "Admin not found"});
             }

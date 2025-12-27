@@ -73,7 +73,7 @@ const TestGenerating = () => {
                 title: title,
                 examId: examId, 
                 type: 'quiz',
-                rules: [{ name: subjectName, count: 1 }],
+                rules: [{ name: subjectName, count: 5 }],
                 difficulty: difficulty || 'Medium',
                 negativeMarks: 0, 
                 duration: 20, 

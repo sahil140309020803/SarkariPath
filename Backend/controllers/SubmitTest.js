@@ -137,15 +137,30 @@ export const submitTest = async (req, res) => {
             skippedCount,
             accuracy,
             timeTaken: timeTaken || 0,
-            isQualified: accuracy >= 80 // Example qualification criteria
+            isQualified: ((finalScore / maxScore) * 100) >= 80    // Example qualification criteria
         });
 
         await newSubmission.save();
         console.log("Submission saved successfully:", newSubmission._id);
 
-        userModel.findOneAndUpdate(
+        // Updating user's test history
+        await userModel.findOneAndUpdate(
             { email: userEmail },
-            { $inc: { testsAttempted: 1 } }
+            {
+                $push: {
+                    testHistory: {
+                        submissionId: newSubmission._id,
+                        testId: testId,
+                        examId: mockTest.ExamId,
+                        status: 'Completed',
+                        title: mockTest.Title,
+                        score: finalScore,
+                        maxPossibleScore: maxScore,
+                        accuracy: accuracy,
+                        attemptedAt: newSubmission.createdAt
+                    }
+                }
+            }
         ).catch(err => console.error("Failed to update user stats:", err.message));
 
         res.status(200).json({ success: true, result: newSubmission });

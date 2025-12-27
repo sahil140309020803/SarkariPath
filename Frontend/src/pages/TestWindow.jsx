@@ -41,7 +41,7 @@ const TestWindow = () => {
     // };
 
 
-    const { exam_cat, exam_name, testID } = useParams();
+    const { testID } = useParams();
 
     const removeSlug = (text) => {
         return text.replaceAll('-', ' ');
@@ -130,7 +130,7 @@ const TestWindow = () => {
                 <header className="flex justify-between items-center bg-blue-800 text-white py-3 px-4 shadow-lg sticky top-0 z-30">
                     <div className="flex items-center justify-center space-x-4">
                         <div className="text-4xl text-white font-bold">Sarkari<span className="text-red-500">Path</span></div>
-                        <span className="text-md font-medium text-gray-300 ml-2 hidden sm:inline">Mock Test: {removeSlug(exam_name)} {activeTest.Title}</span>
+                        <span className="text-md font-medium text-gray-300 ml-2 hidden sm:inline">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
                     </div>
 
                     <div className="flex items-center justify-center space-x-4">

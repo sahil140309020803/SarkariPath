@@ -79,7 +79,7 @@ app.get('/api/user-details', isAuth, userDetails);
 app.get('/api/users', isAuth, fetchAllUsers);
 
 // Exam Details routes
-app.get('/api/exam-details/:examName', getExamDetails);
+app.get('/api/exam-details/:examName', isAuth, getExamDetails);
 
 // Exam Category routes
 app.use('/api/exam-category', categoryRouter);
