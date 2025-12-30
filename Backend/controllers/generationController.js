@@ -22,15 +22,15 @@ export const setupSocketHandlers = (socket, io) => {
     
     let activeTest;
     const totalRequired = rules.reduce((acc, rule) => acc + (parseInt(rule.count) || 0), 0);
-    const testType = type === 'quiz' ? 'quiz' : 'mock_test'; // Default to mock_test
+    const testType = type === 'quiz' ? 'quiz' : 'mock_test'; 
 
     try {
       if (testType === 'quiz') {
-
+        // ... (Your existing quiz creation code) ...
         activeTest = new MockTestModel({
           Title: title,
           ExamId: examId,
-          Status: 'Published', // Quizzes are ready immediately
+          Status: 'Published',
           Difficulty: difficulty || 'Medium',
           NegativeMarks: negativeMarks || 0,
           Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
@@ -42,7 +42,7 @@ export const setupSocketHandlers = (socket, io) => {
         await activeTest.save();
 
       } else {
-        
+        // ... (Your existing mock test creation code) ...
         activeTest = await MockTestModel.findOne({ 
           Title: title, 
           ExamId: examId, 
@@ -51,7 +51,7 @@ export const setupSocketHandlers = (socket, io) => {
         }).populate('Questions');
 
         if (!activeTest) {
-          activeTest = new MockTestModel({
+           activeTest = new MockTestModel({
             Title: title, 
             ExamId: examId, 
             Status: 'Draft',
@@ -69,17 +69,19 @@ export const setupSocketHandlers = (socket, io) => {
 
       activeGenerations.set(activeTest._id.toString(), true);
 
-      let generatedHistory = [];
+      // 1. Initialize session history (Questions generated in THIS specific test)
+      let sessionHistory = [];
       if (activeTest.Questions && activeTest.Questions.length > 0) {
+          // ... (Your existing history loading logic) ...
+          // Note: Renamed generatedHistory -> sessionHistory for clarity
           if(activeTest.Questions[0] instanceof QuestionModel) {
-             generatedHistory = activeTest.Questions.map(q => ({
+             sessionHistory = activeTest.Questions.map(q => ({
                 topic: q.Topic,
                 summary: (q.en?.Question || q.hi?.Question || "").substring(0, 50)
              }));
-          } else if (activeTest.Questions.length > 0) {
-
+          } else {
              const loadedQuestions = await QuestionModel.find({ _id: { $in: activeTest.Questions } });
-             generatedHistory = loadedQuestions.map(q => ({
+             sessionHistory = loadedQuestions.map(q => ({
                 topic: q.Topic,
                 summary: (q.en?.Question || q.hi?.Question || "").substring(0, 50)
              }));
@@ -91,6 +93,26 @@ export const setupSocketHandlers = (socket, io) => {
         
         const existingSubjectQuestions = currentTestState.Questions.filter(q => q.Subject === rule.name);
         const remainingCount = rule.count - existingSubjectQuestions.length;
+
+        // ---------------------------------------------------------
+        // 2. FIX: Fetch Global History from previous tests
+        // ---------------------------------------------------------
+        const previousQuestions = await QuestionModel.find({ 
+            ExamId: examId, 
+            Subject: rule.name 
+        })
+        .sort({ createdAt: -1 }) // Get most recent questions first
+        .limit(30) // Limit to 30 to prevent token overflow, adjust as needed
+        .select('Topic en.Question hi.Question');
+
+        const globalHistory = previousQuestions.map(q => ({
+            topic: q.Topic,
+            summary: (q.en?.Question || q.hi?.Question || "").substring(0, 50)
+        }));
+
+        // Combine global history with current session history
+        const fullHistory = [...globalHistory, ...sessionHistory];
+        // ---------------------------------------------------------
 
         for (let i = 0; i < remainingCount; i++) {
           if (activeGenerations.get(activeTest._id.toString()) === false) throw new Error("Cancelled.");
@@ -109,7 +131,9 @@ export const setupSocketHandlers = (socket, io) => {
                 status: `Processing ${rule.name}...` 
               });
 
-              const prompt = getSingleQuestionPrompt(examId, rule.name, difficulty, lastError, lastResponse, generatedHistory);
+              // 3. Pass fullHistory instead of sessionHistory
+              const prompt = getSingleQuestionPrompt(examId, rule.name, difficulty, lastError, lastResponse, fullHistory);
+              
               const result = await withTimeout(AI.generateContent(prompt), 30000);
               const aiResponseString = result.response.candidates[0].content.parts[0].text;
               
@@ -134,17 +158,24 @@ export const setupSocketHandlers = (socket, io) => {
               await newQuestion.validate();
               await newQuestion.save();
               
-              // Push new question ID to the MockTestModel
               activeTest = await MockTestModel.findByIdAndUpdate(
                 activeTest._id, 
                 { $push: { Questions: newQuestion._id } },
                 { new: true }
               );
 
-              generatedHistory.push({
+              // Update session history so we don't repeat within the same test
+              sessionHistory.push({
                 topic: questionData.Topic,
                 summary: (questionData.en?.Question || "").substring(0, 40)
               });
+              
+              // Also update fullHistory for the immediate next iteration of this loop
+              fullHistory.push({
+                 topic: questionData.Topic,
+                 summary: (questionData.en?.Question || "").substring(0, 40)
+              });
+
               console.log(`Generated ${i + 1}/${totalRequired} for ${rule.name}`)
               questionGenerated = true;
             } catch (error) {

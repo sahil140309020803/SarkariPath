@@ -24,6 +24,7 @@ import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
 import { getTestAnalysis } from './controllers/GetTestAnalysis.js';
 import { submitTest } from './controllers/SubmitTest.js';
+import { getUserDashboardData } from './controllers/FetchUserDashboard.js';
 
 const app = express();
 const server = http.createServer(app); 
@@ -95,5 +96,8 @@ app.post('/api/submit-test', isAuth, submitTest);
 
 // Test result
 app.get('/api/test-results/:submissionId', isAuth, getTestAnalysis);
+
+// Fetch User Dashboard Details
+app.get('/api/dashboard/:userId', getUserDashboardData);
 
 server.listen(PORT, '0.0.0.0', () => console.log(`Server is running with WebSockets on port ${PORT}`));

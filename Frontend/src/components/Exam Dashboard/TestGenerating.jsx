@@ -98,7 +98,7 @@ const TestGenerating = () => {
                 if(data.test && data.test._id) {
                     const testId = data.test._id;
                     console.log('Navigating to Test ID:', testId);
-                    navigate(`/${exam_cat}/${exam_name}/tests/${testId}`);
+                    navigate(`/tests/${testId}`);
                 } else {
                     toast.error("Test generated but ID missing.");
                 }

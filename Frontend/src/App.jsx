@@ -11,6 +11,7 @@ import { useAuth } from './context/AuthContext'
 import TestInstruction from './components/Test Window/TestInstruction'
 import TestWindow from './pages/TestWindow'
 import Analysis from './pages/Analysis'
+import UserDashboard from './pages/UserDashboard'
 
 const App = () => {
   const {isLoading, setIsLoading } = useAuth();
@@ -23,6 +24,7 @@ const App = () => {
       <Route path='/signup' element={<Authentication initialIsLogin={false} />} />
       <Route path='/login' element={<Authentication initialIsLogin={true} />} />
       <Route path='/admin-page' element={<AdminPage />} />
+      <Route path='/dashboard/:userId' element={<UserDashboard />} />
       <Route path='/:exam_cat/:exam_name' element={<ExamDash />} />
       <Route path='/tests/:testID'>
         <Route path='' element={<TestInstruction />} />
