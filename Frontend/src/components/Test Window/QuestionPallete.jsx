@@ -4,14 +4,14 @@ const statusClasses = {
     answered: 'bg-green-600 text-white shadow-md', // Answered (Green)
     marked_for_review: 'bg-purple-600 text-white shadow-md', // Marked (Purple)
     answered_and_marked: 'bg-purple-600 text-white shadow-md', // Ans & Marked (Pink)
-    not_answered: 'bg-red-600 text-white shadow-md', // Not Answered (Red)
-    not_visited: 'bg-gray-200 text-gray-700 hover:bg-gray-200 shadow-md', // Not Visited (Gray/White)
+    not_answered: 'bg-red-600 dark:bg-rose-600 text-white shadow-md', // Not Answered (Red)
+    not_visited: 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 shadow-md', // Not Visited (Gray/White)
 };
 
 const LegendItem = ({ color, text }) => (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-2">
         <span className={`size-5 rounded-sm ${color}`}></span>
-        <span className="text-gray-600 text-md">{text}</span>
+        <span className="text-gray-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-tight">{text}</span>
     </div>
 );
 
@@ -72,7 +72,7 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
             {/* Palette Content */}
             <div
                 className={`
-          fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-white p-4 border-l border-gray-200 shadow-2xl transition-transform duration-300 ease-in-out
+          fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-white dark:bg-slate-900 p-4 border-l border-gray-200 dark:border-slate-800 shadow-2xl transition-all duration-300 ease-in-out
           ${isPaletteOpen ? 'translate-x-0' : 'translate-x-full'} md:relative md:translate-x-0 md:w-100 md:shadow-lg
         `}
             >
@@ -80,10 +80,10 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
                 {/* Top Status and Submit Area */}
                 <div className="pt-4">
                     <div className="grid grid-cols-2 gap-x-2 gap-y-3 text-sm font-medium mb-10">
-                        <LegendItem color="bg-green-600" text={`Answered (${totalAnswered})`} />
-                        <LegendItem color="bg-red-600" text={`Not Answered (${totalNotAnswered})`} />
-                        <LegendItem color="bg-purple-600" text={`Marked for Review (${totalMarked})`} />
-                        <LegendItem color="bg-gray-100 border border-gray-400" text={`Not Visited (${totalNotVisited})`} />
+                        <LegendItem color="bg-green-600 dark:bg-emerald-600" text={`Answered (${totalAnswered})`} />
+                        <LegendItem color="bg-red-600 dark:bg-rose-600" text={`Not Answered (${totalNotAnswered})`} />
+                        <LegendItem color="bg-purple-600 dark:bg-indigo-600" text={`Marked (${totalMarked})`} />
+                        <LegendItem color="bg-gray-200 dark:bg-slate-800 border border-gray-400 dark:border-slate-700" text={`Not Visited (${totalNotVisited})`} />
                     </div>
                 </div>
 
@@ -92,9 +92,9 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
                     {Object.entries(structuredQuestions).map(([subject, qList]) => (
                         <div key={subject} className="mb-4">
                             {/* Subject Header above the question batch */}
-                            <h4 className="text-sm font-semibold text-gray-700 mb-2 border-b border-gray-200 pb-1">SECTION: {subject}</h4>
+                            <h4 className="text-[11px] font-extrabold text-gray-500 dark:text-slate-500 mb-2 border-b border-gray-200 dark:border-slate-800 pb-1 uppercase tracking-wider">SECTION: {subject}</h4>
 
-                            <div className="grid grid-cols-5 gap-2.5 p-2 bg-white">
+                            <div className="grid grid-cols-5 gap-2.5 p-2 bg-slate-50 dark:bg-slate-800/30 rounded-xl">
                                 {qList.map((q) => {
                                     const status = questionStatus[q.qId] || 'not_visited';
                                     const isCurrent = q.index === currentQuestionIndex;

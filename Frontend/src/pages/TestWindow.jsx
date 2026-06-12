@@ -102,8 +102,8 @@ const TestWindow = () => {
 
     if (!isTestStarted) {
         return (
-            <div className="flex items-center justify-center h-screen bg-gray-100">
-                <div className="text-2xl font-bold text-red-500 p-10 bg-white rounded-xl shadow-2xl">
+            <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-slate-950 transition-colors">
+                <div className="text-2xl font-bold text-red-500 p-10 bg-white dark:bg-slate-900 rounded-xl shadow-2xl border border-transparent dark:border-slate-800">
                     Test not started. Please begin the test.
                 </div>
             </div>
@@ -112,8 +112,8 @@ const TestWindow = () => {
 
     if (isTestEnded) {
         return (
-            <div className="flex items-center justify-center h-screen bg-green-50">
-                <div className="text-4xl font-extrabold text-green-700 p-12 bg-white rounded-2xl shadow-2xl">
+            <div className="flex items-center justify-center h-screen bg-green-50 dark:bg-slate-950 transition-colors">
+                <div className="text-4xl font-extrabold text-green-700 dark:text-emerald-500 p-12 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-transparent dark:border-slate-800">
                     Test Submitted Successfully!
                 </div>
             </div>
@@ -121,37 +121,37 @@ const TestWindow = () => {
     }
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-100">
+        <div className="flex h-screen overflow-hidden bg-gray-100 dark:bg-slate-950 transition-colors">
 
             {/* Question Panel */}
-            <div className="flex-1 overflow-y-auto p-0 transition-all duration-300">
+            <div className="flex-1 overflow-y-auto p-0 transition-all duration-300 custom-scrollbar">
 
                 {/* Top Header Bar  */}
-                <header className="flex justify-between items-center bg-blue-800 text-white py-3 px-4 shadow-lg sticky top-0 z-30">
+                <header className="flex justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors">
                     <div className="flex items-center justify-center space-x-4">
                         <div className="text-4xl text-white font-bold">Sarkari<span className="text-red-500">Path</span></div>
-                        <span className="text-md font-medium text-gray-300 ml-2 hidden sm:inline">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
+                        <span className="text-md font-medium text-gray-300 dark:text-slate-400 ml-2 hidden sm:inline">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
                     </div>
 
                     <div className="flex items-center justify-center space-x-4">
                         {/* Timer */}
-                        <div className="bg-red-600 text-gray-100 font-bold px-4 py-1 rounded-md shadow-lg text-md">
+                        <div className="bg-red-600 dark:bg-rose-600 text-gray-100 font-bold px-4 py-1 rounded-md shadow-lg text-md">
                             <span className="mr-1">Time Left:</span>
                             <span className="text-lg tracking-wider">{formatTime(timeRemaining)}</span>
                         </div>
                         {/* Language Switcher */}
-                        <div className="flex rounded-sm overflow-hidden border border-gray-500 shadow-sm">
+                        <div className="flex rounded-sm overflow-hidden border border-gray-500 dark:border-slate-700 shadow-sm">
                             <button
                                 onClick={() => handleLanguageChange('en')}
                                 disabled={!currentQuestionData || !currentQuestionData.en}
-                                className={`px-3 py-1.5 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
+                                className={`px-3 py-1.5 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'en' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
                             >
                                 English
                             </button>
                             <button
                                 onClick={() => handleLanguageChange('hi')}
                                 disabled={!currentQuestionData || !currentQuestionData.hi}
-                                className={`px-3 py-1 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
+                                className={`px-3 py-1 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
                             >
                                 हिन्दी
                             </button>
@@ -192,23 +192,23 @@ const TestWindow = () => {
                 {/* Question Body */}
                 <div className="p-6">
                     {questionContent ? (
-                        <div className="bg-white p-6 rounded-xl shadow-xl border border-gray-200">
+                        <div className="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-xl border border-gray-200 dark:border-slate-800 transition-colors">
 
-                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
-                                <div className="text-[22px] font-semibold text-gray-800">
-                                    Question <span className="text-blue-700">{currentQuestionNumber}</span>
+                            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 dark:border-slate-800">
+                                <div className="text-[22px] font-semibold text-gray-800 dark:text-slate-100">
+                                    Question <span className="text-blue-700 dark:text-indigo-400">{currentQuestionNumber}</span>
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <div className="text-sm font-semibold text-blue-700 bg-blue-50 px-3 py-1 rounded-md border border-blue-200">
+                                    <div className="text-sm font-semibold text-blue-700 dark:text-indigo-400 bg-blue-50 dark:bg-indigo-900/30 px-3 py-1 rounded-md border border-blue-200 dark:border-indigo-800/50">
                                         Time Spent: {formatTime(activeQuestionDuration)}
                                     </div>
-                                    <div className="text-md font-semibold text-red-600">
-                                        <span className='text-green-800'>Marks: +1</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
+                                    <div className="text-md font-semibold text-red-600 dark:text-rose-400">
+                                        <span className='text-green-800 dark:text-emerald-400'>Marks: +1</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
                                     </div>
                                 </div>
                             </div>
 
-                            <p className="text-[17px] font-semibold mb-8 text-gray-900 leading-snug p-4 bg-gray-100 shadow-md rounded-md border border-gray-200">{questionContent.Question}</p>
+                            <p className="text-[17px] font-semibold mb-8 text-gray-900 dark:text-white leading-snug p-4 bg-gray-100 dark:bg-slate-800 shadow-md rounded-md border border-gray-200 dark:border-slate-700 transition-colors">{questionContent.Question}</p>
 
                             <div className="space-y-3">
                                 {questionContent.options.map((option, index) => {
@@ -218,9 +218,9 @@ const TestWindow = () => {
                                         <div
                                             key={option._id}
                                             className={`
-                        p-4 border rounded-lg cursor-pointer transition-all duration-150 flex items-start space-x-3 shadow-sm
-                        ${isSelected ? 'bg-blue-50 border-blue-600 ring-1 ring-blue-300' : 'hover:bg-gray-100 border-gray-300'}
-                      `}
+                                                p-4 border rounded-lg cursor-pointer transition-all duration-150 flex items-start space-x-3 shadow-sm
+                                                ${isSelected ? 'bg-blue-50 dark:bg-indigo-900/40 border-blue-600 dark:border-indigo-500 ring-1 ring-blue-300 dark:ring-indigo-800' : 'hover:bg-gray-100 dark:hover:bg-slate-800 border-gray-300 dark:border-slate-700'}
+                                            `}
                                             onClick={() => handleSetAnswer(option.text)}
                                         >
                                             <input
@@ -229,10 +229,10 @@ const TestWindow = () => {
                                                 value={option.text}
                                                 checked={isSelected}
                                                 onChange={() => handleSetAnswer(option.text)}
-                                                className="mt-1 h-5 w-5 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                                className="mt-1 h-5 w-5 text-blue-600 dark:text-indigo-500 border-gray-300 dark:border-slate-600 focus:ring-blue-500 dark:focus:ring-indigo-600"
                                             />
-                                            <div className="text-lg text-gray-800">
-                                                <span className="mr-2 font-bold text-blue-700">{optionLabel}.</span>
+                                            <div className="text-lg text-gray-800 dark:text-slate-200">
+                                                <span className="mr-2 font-bold text-blue-700 dark:text-indigo-400">{optionLabel}.</span>
                                                 <span>{option.text}</span>
                                             </div>
                                         </div>
@@ -241,13 +241,13 @@ const TestWindow = () => {
                             </div>
 
                             {/* Action Buttons  */}
-                            <div className="mt-10 flex flex-wrap gap-4 border-t-2 border-gray-300 pt-6 justify-between">
+                            <div className="mt-10 flex flex-wrap gap-4 border-t-2 border-gray-300 dark:border-slate-800 pt-6 justify-between">
 
                                 {/* Previous Button */}
                                 <button
                                     onClick={() => setCurrentQuestionIndex(prev => Math.max(0, prev - 1))}
                                     disabled={currentQuestionIndex === 0}
-                                    className="px-2 py-3 bg-gray-200 text-gray-900 font-semibold rounded-lg shadow-lg disabled:opacity-50 hover:bg-gray-300 transition w-[190px]"
+                                    className="px-2 py-3 bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-slate-100 font-semibold rounded-lg shadow-lg disabled:opacity-50 hover:bg-gray-300 dark:hover:bg-slate-700 transition w-[190px]"
                                 >
                                     &larr; Previous Question
                                 </button>
@@ -262,13 +262,13 @@ const TestWindow = () => {
                                     </button>
                                     <button
                                         onClick={handleClearResponse}
-                                        className="px-4 py-3 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition"
+                                        className="px-4 py-3 bg-gray-200 dark:bg-slate-800 text-gray-800 dark:text-slate-100 font-semibold rounded-lg shadow-lg hover:bg-gray-300 dark:hover:bg-slate-700 transition"
                                     >
                                         Clear Response
                                     </button>
                                     <button
                                         onClick={isLastQuestion ? handleSubmitTest : handleSaveAndNext}
-                                        className={`px-4 py-3 text-white font-semibold rounded-lg shadow-lg transition ${isLastQuestion ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-800'}`}
+                                        className={`px-4 py-3 text-white font-semibold rounded-lg shadow-lg transition ${isLastQuestion ? 'bg-green-600 dark:bg-emerald-600 hover:bg-green-700 dark:hover:bg-emerald-700' : 'bg-blue-600 dark:bg-indigo-600 hover:bg-blue-800 dark:hover:bg-indigo-800'}`}
                                     >
                                         {isLastQuestion ? 'Save & Submit' : 'Save & Next'}
                                     </button>
@@ -279,7 +279,7 @@ const TestWindow = () => {
                                     <button
                                         onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}
                                         disabled={currentQuestionIndex === questions.length - 1}
-                                        className="px-6 py-3 bg-gray-200 text-gray-900 font-semibold rounded-lg shadow-lg disabled:opacity-50 hover:bg-gray-300 transition"
+                                        className="px-6 py-3 bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-slate-100 font-semibold rounded-lg shadow-lg disabled:opacity-50 hover:bg-gray-300 dark:hover:bg-slate-700 transition"
                                     >
                                         Next Question &rarr;
                                     </button>

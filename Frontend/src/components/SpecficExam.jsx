@@ -21,9 +21,9 @@ const SpecficExam = ({ exam, title }) => {
   }
 
   return (
-    <div onClick={() => handleNav()} className='relative w-[100%] p-3 rounded-xl cursor-pointer bg-radial-[at_50%_75%] from-sky-50 via-blue-100 to-cyan-50 to-90% hover:outline-1 hover:-translate-y-1 transition-all duration-500 shadow hover:shadow-lg hover:outline-blue-500 hover:from-sky-200 hover:via-blue-200 hover:to-indigo-100 group flex justify-between items-center'>
-      <div className='group-hover:-translate-y-0.5 transition-all duration-500 font-medium'>{exam}</div>
-      <FaArrowRightLong className='text-gray-700 mr-1 animate-pulse group-hover:rotate-360 transition-all duration-800' />
+    <div onClick={() => handleNav()} className='relative w-[100%] p-3 rounded-xl cursor-pointer bg-slate-50 dark:bg-slate-800 hover:outline-1 hover:-translate-y-1 transition-all duration-500 shadow dark:shadow-none hover:shadow-lg hover:outline-blue-500 dark:hover:outline-cyan-500 hover:bg-slate-100 dark:hover:bg-slate-700 group flex justify-between items-center border border-transparent dark:border-slate-700'>
+      <div className='group-hover:-translate-y-0.5 transition-all duration-500 font-medium text-slate-800 dark:text-slate-100'>{exam}</div>
+      <FaArrowRightLong className='text-slate-500 dark:text-cyan-400 mr-1 animate-pulse group-hover:rotate-360 transition-all duration-800' />
     </div>
   )
 }

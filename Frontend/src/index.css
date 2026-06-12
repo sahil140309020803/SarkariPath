@@ -1,6 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-
+@theme {
+  --color-slate-950: #020617;
+}
 
 /* Custom Scrollbar Styling */
 .custom-scrollbar::-webkit-scrollbar {
@@ -81,9 +84,22 @@
 
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  /* background: radial-gradient(circle, #F0EBEB, #B7C6EB); */
-  background: radial-gradient(circle, #fbf4f4, #e0e5f2);
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background-color: #f8fafc; /* light slate-50 */
+}
+
+/* Base Body Application */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #020617; /* deep slate-950 */
+  color: #f1f5f9;
 }
 
 a {

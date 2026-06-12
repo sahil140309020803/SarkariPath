@@ -32,6 +32,7 @@ const examSchema = new mongoose.Schema({
         ref: 'quizzes',
     }],
     Subjects: { type: Array, required: true },
+    Topics: { type: Object, default: {} },
 }, {
     timestamps: true,
     collection: 'exams'
@@ -63,6 +64,17 @@ const MockTestSchema = new mongoose.Schema({
     TotalMarks: { type: Number, required: true },
     DurationinMinutes: { type: Number, required: true },
     type: { type: String, required: true, enum: ['mock_test', 'quiz'], default: 'mock_test' },
+    leaderboard: [
+        {
+            userId: { type: String, required: true },
+            name: { type: String, default: 'Aspirant' },
+            score: { type: Number, required: true },
+            accuracy: { type: Number, required: true },
+            timeTaken: { type: Number, required: true },
+            submittedAt: { type: Date, default: Date.now }
+        }
+    ],
+    expireAt: { type: Date, index: { expires: 0 } },
 }, {
     timestamps: true,
 });
@@ -87,6 +99,7 @@ const QuizSchema = new mongoose.Schema({
     }],
     DurationinMinutes: { type: Number, required: true, default: 20 },
     TotalMarks: { type: Number, required: true, default: 15 },
+    expireAt: { type: Date, index: { expires: 0 } },
 });
 
 const QuizModel = examDbConnection.models.quizzes || examDbConnection.model('quizzes', QuizSchema);
@@ -146,6 +159,7 @@ const TestSubmissionSchema = new mongoose.Schema({
 
     timeTaken: { type: Number, required: true },
     isQualified: { type: Boolean, default: false }, 
+    expireAt: { type: Date, index: { expires: 0 } },
 
 }, {
     timestamps: true,
@@ -198,7 +212,8 @@ const QuestionSchema = new mongoose.Schema({
         required: true,
         enum: ['Easy', 'Medium', 'Hard'],
         index: true
-    }
+    },
+    expireAt: { type: Date, index: { expires: 0 } },
 }, { timestamps: true });
 
 const QuestionModel = examDbConnection.models.questions || examDbConnection.model('questions', QuestionSchema);

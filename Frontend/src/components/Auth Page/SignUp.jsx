@@ -56,8 +56,8 @@ const SignUp = ({ isLoaded }) => {
         className={`w-full mb-6 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: getDelay(100) }}
       >
-        <div className="font-bold text-3xl text-gray-800 mb-1.5">Get Started</div>
-        <p className="text-sm text-gray-500">Create an account to continue</p>
+        <div className="font-bold text-3xl text-gray-800 dark:text-white mb-1.5 transition-colors">Get Started</div>
+        <p className="text-sm text-gray-500 dark:text-slate-400 transition-colors">Create an account to continue</p>
       </div>
       <div className={`w-full transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: getDelay(200) }}>
         <InputField id="name" label="Full Name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -74,7 +74,7 @@ const SignUp = ({ isLoaded }) => {
       <div className={`w-full mt-auto transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: getDelay(500) }}>
         <button
           type="submit"
-          className="cursor-pointer w-full rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-bold py-3.5 uppercase tracking-wider shadow-lg shadow-indigo-200 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300 flex justify-center items-center gap-5"
+          className="cursor-pointer w-full rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-cyan-600 text-white text-sm font-bold py-3.5 uppercase tracking-wider shadow-lg shadow-indigo-200 dark:shadow-none hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300 flex justify-center items-center gap-5"
         >
           Sign Up
           {isLoading && <AiOutlineLoading3Quarters className="animate-spin" />}

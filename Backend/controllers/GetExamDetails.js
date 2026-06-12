@@ -1,8 +1,8 @@
 import { AI } from "../GenAI/ai.js";
-import { examModel, MockTestModel } from "../models/ExamModel.js";
+import { examModel, MockTestModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
 
-const getExamDetailsUsingAI = async(req, res) => {
+const getExamDetailsUsingAI = async (req, res) => {
     const exam = req.params?.id;
     try {
         const prompt = `You are an AI assistant specialized in providing information about academic and competitive examinations. Your task is to take an exam name as input and return a single, valid JSON object.
@@ -45,14 +45,14 @@ const getExamDetailsUsingAI = async(req, res) => {
         const parsedData = JSON.parse(cleanedJsonString);
 
         res.json({ success: true, ...parsedData });
-    } catch(err) {
-            res.json({success:false, message: err.message});
+    } catch (err) {
+        res.json({ success: false, message: err.message });
     }
 }
 
 const removeSlug = (text) => {
     return text.replaceAll('-', ' ');
-  }
+}
 
 const getExamDetails = async (req, res) => {
     const examName = removeSlug(req.params?.examName);
@@ -60,31 +60,62 @@ const getExamDetails = async (req, res) => {
     try {
         const examData = await examModel.findOne({ Name: examName }).populate('MockTests').lean();
         // console.log(examData); 
-        if(!examData) {
-            return res.json({success: false, message: "Exam not found"});
+        if (!examData) {
+            return res.json({ success: false, message: "Exam not found" });
         }
         const mockTests = examData.MockTests || [];
         // console.log(mockTests);
 
         let testHistory = [];
+        let syllabusProgress = [];
 
         if (userEmail) {
-            const user = await userModel.findOne({ email: userEmail }).select('testHistory');
+            // Fetch test history from TestSubmissionModel
+            const submissions = await TestSubmissionModel.find({ 
+                userId: userEmail, 
+                examId: examData._id 
+            })
+            .populate('testId', 'Title')
+            .sort({ createdAt: -1 })
+            .lean();
 
-            if (user && user.testHistory && user.testHistory.length > 0) {
-                testHistory = user.testHistory.filter(item => 
-                    item.examId.toString() === examData._id.toString()
-                );
+            if (submissions && submissions.length > 0) {
+                testHistory = submissions.map(sub => ({
+                    submissionId: sub._id,
+                    testId: sub.testId?._id,
+                    examId: sub.examId,
+                    status: 'Completed',
+                    title: sub.testId?.Title || 'Unknown Test',
+                    score: sub.totalScore,
+                    maxPossibleScore: sub.maxPossibleScore,
+                    accuracy: sub.accuracy,
+                    attemptedAt: sub.createdAt
+                }));
+            }
 
-                testHistory.sort((a, b) => new Date(b.attemptedAt) - new Date(a.attemptedAt));
+            // Fetch syllabus progress from userModel
+            const user = await userModel.findOne({ email: userEmail }).select('syllabusProgress');
+            if (user && user.syllabusProgress) {
+                const progressEntry = user.syllabusProgress.find(item => item.examId.toString() === examData._id.toString());
+                if (progressEntry && progressEntry.completedTopics) {
+                    syllabusProgress = progressEntry.completedTopics;
+                }
             }
         }
-        
+
         // console.log(`TestHistory for exam ${examName}: ${testHistory}`);
 
-        res.json({ success: true, Subjects: examData.Subjects, MockTests: mockTests, ExamId: examData._id, testHistory });
-    } catch(err) {
-        res.json({success: false, message: err.message});
+        res.json({
+            success: true,
+            Subjects: examData.Subjects,
+            Topics: examData.Topics || {},
+            MockTests: mockTests,
+            ExamId: examData._id,
+            testHistory,
+            syllabusProgress
+        });
+    } catch (err) {
+        res.json({ success: false, message: err.message });
     }
 }
 

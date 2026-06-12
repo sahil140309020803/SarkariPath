@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 import { usersDbConnection } from "../config/mongo_config.js";
 
 const userSchema = new mongoose.Schema({
-    name: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
     testHistory: [
         {
             submissionId: {
@@ -24,7 +24,17 @@ const userSchema = new mongoose.Schema({
             score: { type: Number, required: true },
             maxPossibleScore: { type: Number, required: true },
             accuracy: { type: Number, required: true },
-            attemptedAt: { type: Date, required: true }
+            attemptedAt: { type: Date, required: true },
+        }
+    ],
+    syllabusProgress: [
+        {
+            examId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'exams',
+                required: true
+            },
+            completedTopics: [{ type: String }]
         }
     ]
 }, {
@@ -32,6 +42,6 @@ const userSchema = new mongoose.Schema({
     collection: 'users'
 });
 
-const userModel = usersDbConnection.models.user ||  usersDbConnection.model('User', userSchema);
+const userModel = usersDbConnection.models.user || usersDbConnection.model('User', userSchema);
 
 export default userModel;

@@ -1,30 +1,20 @@
-import React, { useContext } from 'react'
+import React from 'react';
 import LOGO from '../assets/LOGO.png';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import { AppContent } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import { useExam } from '../context/ExamContext';
+import { LogOut, LayoutDashboard, UserCircle, BookOpen } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  // const { scrollToExams, activeList, setActiveList, isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useContext(AppContent);
-
   const { isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useAuth();
-  const {
-    setActiveList,
-} = useExam();
-
-  // const handleScroll = () => {
-  //   navigate('/');
-  //   setActiveList(null);
-  //   scrollToExams.current.scrollIntoView({ behavior: 'smooth' });
-  // }
+  const { setActiveList } = useExam();
 
   const handleLogOut = async () => {
-    if(!userDetails)
-      return;
+    if(!userDetails) return;
     try {
       const { data } = await axios.post(`${backend_url}/api/auth/${userDetails.role}/logout`);
       if(data.success) {
@@ -33,7 +23,7 @@ const Navbar = () => {
         toast.success(data.message);
         navigate('/');
       }
-    }catch(err) {
+    } catch(err) {
       toast.error("Error logging out. Please try again.");
     }
   }
@@ -42,37 +32,81 @@ const Navbar = () => {
     setActiveList(null);
     navigate('/');
   }
+
   const handleExamClick = () => {
     setActiveList(null);
-    navigate("/#exam-categories")
+    navigate("/#exam-categories");
   }
-  // console.log('User Details in Navbar:', userDetails);
 
   return (
-    <div className='min-w-full flex justify-between items-center border-b rounded border-blue-900 pl-7 pr-10 pt-1 pb-1 sticky top-0 shadow-xl shadow-blue-100 z-1 bg-white'>
-      {/* Logo Section */}
-      <div onClick={() => handleLogoClick()}  className='flex justify-center items-center group cursor-pointer'>
-        <img src={LOGO} alt="logo" className='w-12 group-hover:rotate-360 transition-all duration-1200'/>
-        <div className='font-bold text-2xl text-blue-900 group-hover:bg-blend-overlay'>SarkariPath</div>
-      </div>
+    <nav className="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          
+          {/* Logo Section */}
+          <div onClick={handleLogoClick} className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative">
+              <div className="absolute inset-0 bg-blue-500 rounded-full blur/20 group-hover:blur/40 transition-all opacity-20"></div>
+              <img src={LOGO} alt="logo" className="w-12 h-12 relative transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300 object-contain"/>
+            </div>
+            <div className="font-extrabold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
+              Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span>
+            </div>
+          </div>
 
-      {/* Exam Categories */}
-      <div className='flex justify-center items-center gap-5'>
-        <div onClick={() => handleExamClick()} className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Exams</div>
-        {userDetails && userDetails.role === 'admin' && <div onClick={() => navigate('/admin-page')} className='font-semibold text-[18px] p-[5px] rounded pr-3 pl-3 text-blue-900 cursor-pointer hover:text-blue-500 transition-colors duration-400'>Admin Dashboard</div>}
-      </div>
+          {/* Center Navigation Actions */}
+          <div className="hidden md:flex items-center gap-8">
+            <button onClick={handleExamClick} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-cyan-400 font-semibold transition-colors duration-200 text-sm tracking-wide">
+               <BookOpen size={18} />
+               Explore Exams
+            </button>
+            {userDetails?.role === 'admin' && (
+              <button onClick={() => navigate('/admin-page')} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold transition-colors duration-200 text-sm tracking-wide">
+                <LayoutDashboard size={18} />
+                Admin Dashboard
+              </button>
+            )}
+            {userDetails?.role === 'user' && (
+              <button onClick={() => navigate(`/dashboard/${userDetails.email}`)} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 font-semibold transition-colors duration-200 text-sm tracking-wide">
+                <LayoutDashboard size={18} />
+                My Dashboard
+              </button>
+            )}
+          </div>
 
-      {/* Login/SignUp Section */}
-      {!isLoggedIn && <div className='flex justify-between items-center gap-10'>
-        <button onClick={() => navigate('/login')} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-blue-800 hover:bg-blue-700 hover:text-white transition-all duration-600 cursor-pointer font-semibold ease-in-out'>Login</button>
-        <button onClick={() => navigate('/signup')} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-white bg-blue-700 hover:bg-white hover:text-blue-800 transition-all duration-600 cursor-pointer font-semibold'>Sign Up</button>
-      </div>}
-      {isLoggedIn && <div className='flex gap-5'>
-        <div className='size-10 rounded-full bg-linear-to-t from-sky-500 to-indigo-600 text-white font-semibold text-xl pb-0.5 cursor-pointer flex justify-center items-center'>{userDetails && (userDetails.name.split(" ").length > 1 ? userDetails.name.split(" ")[0][0] + userDetails.name.split(" ")[1][0] : userDetails.name[0])}</div>
-        <button onClick={handleLogOut} className='border border-blue-900 p-[6px] pr-4 pl-4 rounded-xl text-blue-800 hover:bg-linear-to-r hover:from-blue-600 hover:to-blue-500 hover:text-white transition-all duration-600 cursor-pointer font-semibold ease-in-out'>Logout</button>
-      </div>}
-    </div>
-  )
+          {/* Right Login/Signup/Profile & Theme Toggle */}
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            {!isLoggedIn ? (
+              <div className="flex items-center gap-3">
+                <button onClick={() => navigate('/login')} className="px-5 py-2.5 rounded-xl text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all text-sm tracking-wide">
+                  Login
+                </button>
+                <button onClick={() => navigate('/signup')} className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white font-semibold shadow hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm tracking-wide border border-transparent">
+                  Sign Up
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-indigo-500 dark:to-cyan-400 text-white font-bold flex justify-center items-center text-sm shadow-sm">
+                    {userDetails?.name ? userDetails.name.substring(0, 2).toUpperCase() : 'U'}
+                  </div>
+                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300 hidden sm:block pr-2">
+                    {userDetails?.name ? userDetails.name.split(' ')[0] : 'User'}
+                  </span>
+                </div>
+                <button onClick={handleLogOut} className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors border border-transparent">
+                  <LogOut size={20} />
+                </button>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  );
 }
 
 export default Navbar;

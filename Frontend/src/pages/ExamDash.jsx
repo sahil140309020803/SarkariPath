@@ -5,7 +5,7 @@ import FeatureCard from '../components/Exam Dashboard/FeatureCard';
 import { FaLayerGroup } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 import { FaBrain } from "react-icons/fa6";
-import { History, ChevronRight } from 'lucide-react'; // Imported for the new table
+import { History, ChevronRight, BookOpen, Layers, Info, ListChecks } from 'lucide-react';
 import AITopicSumm from '../components/Exam Dashboard/AITopicSumm';
 import Section1 from '../components/Exam Dashboard/Section1';
 import Section2 from '../components/Exam Dashboard/Section2';
@@ -13,14 +13,16 @@ import Section3 from '../components/Exam Dashboard/Section3';
 import Difficulty from '../components/Exam Dashboard/Difficulty';
 import CustomizeTopic from '../components/Exam Dashboard/CustomizeTopic';
 import TestGenerating from '../components/Exam Dashboard/TestGenerating';
+import ExamReadinessCard from '../components/Exam Dashboard/ExamReadinessCard';
+import AITopicSummarizerCard from '../components/Exam Dashboard/AITopicSummarizerCard';
 import { useExam } from '../context/ExamContext';
 
 const ExamDash = () => {
   const { exam_cat, exam_name } = useParams();
-  
+
   const {
     setActiveExamPage,
-    showDifficulty, 
+    showDifficulty,
     showCustomTopic,
     showTestGenerate,
     AItopicSummarizer, setAItopicSummarizer,
@@ -28,7 +30,7 @@ const ExamDash = () => {
   } = useExam();
 
   const [activeSection, setActiveSection] = useState(0);
-  const [showHistory, setShowHistory] = useState(true); // New state for history toggle
+  const [showHistory, setShowHistory] = useState(true);
 
   const navigate = useNavigate();
 
@@ -41,25 +43,22 @@ const ExamDash = () => {
   }, []);
 
   const historyData = isExamDataFetched?.testHistory || [];
-  console.log(historyData);
 
+  // Calculate dynamic readiness percentage
+  const TopicsMap = isExamDataFetched?.Topics || {};
+  let totalTopicsCount = 0;
+  for (const subject in TopicsMap) {
+      totalTopicsCount += TopicsMap[subject].length;
+  }
+  const completedTopicsCount = isExamDataFetched?.syllabusProgress?.length || 0;
+  const readinessPercentage = totalTopicsCount > 0 ? Math.round((completedTopicsCount / totalTopicsCount) * 100) : 0;
 
   const features = [
     {
       icon: <FaBrain />,
       title: 'AI Topic Summarizer',
-      desc: 'Get key insights on any topic.'
-    },
-    {
-      icon: <FaLayerGroup />,
-      title: 'Tests Attempted',
-      desc: 'Keep up the great work!'
-    },
-    {
-      icon: <GoGraph />,
-      title: 'Review History',
-      desc: 'Analyze your performance'
-    },
+      desc: 'Get key insights on any topic instantly.'
+    }
   ];
 
   const formatTime = (timestamp) => {
@@ -68,161 +67,174 @@ const ExamDash = () => {
   }
 
   return (
-    <div className='w-full h-full flex flex-col items-center justify-center gap-10 pb-5'>
+    <div className='w-full min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors pb-16'>
       <Navbar />
-      
-      {/* Exam Heading and Features Card */}
-      <div className='flex flex-col gap-12'>
-        {/* Exam name Heading */}
-        <div className='flex flex-col justify-center items-center gap-1'>
-          <div className='font-bold text-4xl bg-radial-[at_50%_75%] from-sky-700 via-blue-600 to-indigo-800 to-90% bg-clip-text text-transparent capitalize'>
+
+      {/* Premium Hero Section */}
+      <div className='relative w-full bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 pt-28 pb-40 px-6 text-center overflow-hidden border-b border-indigo-900/50'>
+        {/* Abstract Background Elements */}
+        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-indigo-500/15 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-fuchsia-600/15 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
+
+        <div className='relative z-10 animate-fadeInUp'>
+          <h1 className='font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-lg capitalize'>
             {removeSlug(exam_name)} Exam
-          </div>
-          <div className='text-gray-500'>Your path to success starts here.</div>
-        </div>
-        
-        {/* AI Features Cards */}
-        <div className='flex justify-center items-center gap-8 flex-wrap'>
-          <FeatureCard 
-            icon={features[0].icon} 
-            title={features[0].title} 
-            desc={features[0].desc} 
-            onClick={() => setAItopicSummarizer(true)} 
-          />
-          {/* Linked onClick to toggle History */}
-          <FeatureCard 
-            icon={features[1].icon} 
-            title={features[1].title} 
-            desc={features[1].desc} 
-          />
-          <FeatureCard 
-            icon={features[2].icon} 
-            title={features[2].title} 
-            desc={features[2].desc} 
-            onClick={() => setShowHistory(prev => !prev)}
-          />
+          </h1>
+          <p className='text-lg md:text-xl text-indigo-200/90 font-medium max-w-2xl mx-auto drop-shadow'>
+            Your path to success starts here. Target your weaknesses and build momentum.
+          </p>
         </div>
       </div>
 
-      {/* Conditionally Rendered Components */}
+      {/* Floating Feature Cards */}
+      <div className='-mt-20 relative z-20 max-w-5xl mx-auto w-full px-6 grid grid-cols-1 lg:grid-cols-2 gap-6 place-items-stretch'>
+          <AITopicSummarizerCard onClick={() => setAItopicSummarizer(true)} />
+           <ExamReadinessCard 
+              completedTopicsCount={completedTopicsCount}
+              totalTopicsCount={totalTopicsCount}
+              onViewDetailedProgress={() => {
+                setActiveSection(2);
+                document.getElementById('navigation-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
+           />
+      </div>
+
+      {/* Overlays */}
       {AItopicSummarizer && <AITopicSumm examContext={exam_name} />}
       {showDifficulty && <Difficulty />}
       {showCustomTopic && <CustomizeTopic />}
       {showTestGenerate && <TestGenerating />}
 
-      {/* Sections Container */}
-      <div className='max-w-[85rem] flex flex-col gap-8 max-h-full m-2 overflow-hidden'>
-        {/* Section Tabs */}
-        <div className='border-b border-gray-400 flex justify-around items-center font-medium text-[18px] text-gray-600 gap-5'>
-          <div onClick={() => setActiveSection(0)} className={`text-center p-5 grow border-b-2 cursor-pointer transition-colors ${activeSection === 0 ? 'text-blue-600 border-b-blue-600' : 'border-b-transparent hover:border-black hover:text-black'}`}>Mock Test</div>
-          <div onClick={() => setActiveSection(1)} className={`text-center p-5 grow border-b-2 cursor-pointer transition-colors ${activeSection === 1 ? 'text-blue-600 border-b-blue-600' : 'border-b-transparent hover:border-black hover:text-black'}`}>Subject Wise Mock Test</div>
-          <div onClick={() => setActiveSection(2)} className={`text-center p-5 grow border-b-2 cursor-pointer transition-colors ${activeSection === 2 ? 'text-blue-600 border-b-blue-600' : 'border-b-transparent hover:border-black hover:text-black'}`}>About</div>
+      {/* Main Content Layout */}
+      <div className='max-w-6xl mx-auto w-full px-6 mt-16 flex flex-col gap-10'>
+
+        {/* Modern Segmented Navigation Tabs */}
+        <div id="navigation-tabs" className="relative bg-white dark:bg-slate-800/80 backdrop-blur border border-gray-200 dark:border-slate-700 p-1.5 rounded-2xl flex flex-col sm:flex-row shadow-sm transition-colors mx-auto w-full max-w-3xl">
+          
+          {/* Sliding Indicator (Desktop Only) */}
+          <div 
+            className="absolute top-1.5 bottom-1.5 left-1.5 rounded-xl bg-indigo-600 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-md hidden sm:block z-0"
+            style={{
+              width: 'calc((100% - 12px) / 3)',
+              transform: `translateX(${activeSection * 100}%)`
+            }}
+          ></div>
+
+          {[
+            { id: 0, label: "Mock Test", icon: <BookOpen size={18} /> },
+            { id: 1, label: "Subject Wise Mock", icon: <Layers size={18} /> },
+            { id: 2, label: "Syllabus Tracker", icon: <ListChecks size={18} /> }
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveSection(tab.id)}
+              className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm md:text-base font-semibold transition-colors duration-300 ${activeSection === tab.id
+                ? 'text-white bg-indigo-600 sm:bg-transparent shadow-md sm:shadow-none'
+                : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 sm:hover:bg-transparent dark:hover:bg-slate-700/50 sm:dark:hover:bg-transparent hover:text-gray-900 sm:hover:text-indigo-600 dark:hover:text-white sm:dark:hover:text-indigo-400'
+                }`}
+            >
+              {tab.icon} {tab.label}
+            </button>
+          ))}
         </div>
 
-        {/* Slider Viewport*/}
-        <div className='w-full h-full'>
-          {/* Slider Track: This element moves */}
-          <div 
-            className={`flex w-full h-full transition-transform duration-500 ease-in-out`}
-            style={{ transform: `translateX(-${activeSection * 100}%)` }}
-          >
-            {/* Slide 1 */}
-            <div className='min-w-full max-h-[45rem] overflow-y-auto flex justify-center items-center'>
+        {/* Dynamic Section Rendering with Fade-in */}
+        <div className="w-full bg-transparent overflow-hidden">
+          {activeSection === 0 && (
+            <div className="animate-in fade-in zoom-in-95 duration-300">
               <Section1 />
             </div>
-            {/* Slide 2 */}
-            <div className='min-w-full max-h-[45rem] overflow-y-auto flex justify-center items-center'>
+          )}
+          {activeSection === 1 && (
+            <div className="animate-in fade-in zoom-in-95 duration-300">
               <Section2 />
             </div>
-            {/* Slide 3 */}
-            <div className='min-w-full h-[0rem] overflow-hidden'>
+          )}
+          {activeSection === 2 && (
+            <div className="animate-in fade-in zoom-in-95 duration-300 bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-200 dark:border-slate-800 shadow-sm transition-colors">
               <Section3 />
             </div>
-          </div>
+          )}
         </div>
-      </div>
 
-
-      {/* --- INTEGRATED RECENT HISTORY TABLE START --- */}
-      {showHistory && (
-        <div className="w-[85rem] animate-fadeIn bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden mb-4">
-          <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-white border border-slate-200 rounded-lg shadow-sm text-slate-500">
-                <History size={20} />
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Recent Test History</h2>
-                <p className="text-xs text-slate-500">Track your performance over time</p>
+        {/* History Table Module */}
+        {showHistory && (
+          <div id="history-module" className="animate-in fade-in duration-500 w-full bg-white dark:bg-slate-900 rounded-3xl shadow-sm dark:shadow-none border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors mt-4">
+            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-slate-900/50 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm text-indigo-500 dark:text-indigo-400 transition-colors">
+                  <History size={22} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100 transition-colors">Recent Test History</h2>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 transition-colors mt-0.5">Track your performance over time</p>
+                </div>
               </div>
             </div>
-            <button className="text-xs font-semibold bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-slate-600 hover:text-blue-600 hover:border-blue-200 transition-colors shadow-sm">
-              View Full Report
-            </button>
-          </div>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-100 text-xs uppercase text-slate-500 tracking-wider">
-                  <th className="px-6 py-4 font-semibold pl-8">Test Name</th>
-                  <th className="px-6 py-4 font-semibold w-1/8">Date Attempted</th>
-                  <th className="px-6 py-4 font-semibold">Score</th>
-                  <th className="px-6 py-4 font-semibold w-1/5 ">Score Percentage</th>
-                  <th className="px-6 py-4 font-semibold">Status</th>
-                  <th className="px-6 py-4 font-semibold text-right pr-8 ">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {historyData.map((row) => (
-                  <tr key={row.submissionId} className="hover:bg-blue-50/30 transition-colors group">
-                    <td className="px-6 py-4 pl-8">
-                      <div className="text-sm font-semibold text-slate-800">{row.title}</div>
-                      <div className="text-xs text-slate-400 font-medium">ID: #{row.submissionId}</div>
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-500 font-medium">{formatTime(row.attemptedAt)}</td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-bold text-slate-800">{row.score} / {row.maxPossibleScore}</div>
-                      <div className="text-[10px] text-slate-400 uppercase font-semibold">Marks</div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col gap-1.5">
-                        <div className="flex justify-between text-xs font-semibold text-slate-600">
-                          <span>{(row.score / row.maxPossibleScore * 100).toFixed(2)}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
-                            className={`h-full rounded-full ${(row.score / row.maxPossibleScore * 100).toFixed(2) > 80 ? 'bg-emerald-500' : (row.score / row.maxPossibleScore * 100).toFixed(2) > 50 ? 'bg-amber-500' : 'bg-red-500'}`} 
-                            style={{ width: (row.score / row.maxPossibleScore * 100).toFixed(2) + '%' }}
-                          ></div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${row.statusColor}`}>
-                        {row.status === 'Completed' && <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5"></span>}
-                        {row.status === 'Paused' && <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-1.5"></span>}
-                        {row.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-right pr-8">
-                      <button onClick={() => navigate(`/analysis/${row.submissionId}`)} className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all inline-flex items-center gap-1">
-                        Analysis <ChevronRight size={14} strokeWidth={3} />
-                      </button>
-                    </td>
+
+            <div className="overflow-x-auto max-h-[450px] overflow-y-auto custom-scrollbar">
+              <table className="w-full text-left border-collapse relative">
+                <thead className="sticky top-0 z-10 bg-slate-50 dark:bg-slate-800/90 backdrop-blur-md shadow-sm">
+                  <tr className="border-b border-slate-100 dark:border-slate-800 text-xs uppercase text-slate-500 dark:text-slate-400 tracking-wider transition-colors">
+                    <th className="px-6 py-5 font-semibold pl-8">Test Matrix</th>
+                    <th className="px-6 py-5 font-semibold w-1/8">Attempted On</th>
+                    <th className="px-6 py-5 font-semibold">Raw Score</th>
+                    <th className="px-6 py-5 font-semibold w-1/5">Percentage</th>
+                    <th className="px-6 py-5 font-semibold">Status</th>
+                    <th className="px-6 py-5 font-semibold text-right pr-8">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-50 dark:divide-slate-800/50">
+                  {historyData.map((row) => (
+                    <tr key={row.submissionId} className="hover:bg-indigo-50/40 dark:hover:bg-slate-800/40 transition-colors group">
+                      <td className="px-6 py-5 pl-8">
+                        <div className="text-base font-bold text-slate-800 dark:text-slate-200 transition-colors">{row.title}</div>
+                        <div className="text-xs text-slate-400 dark:text-slate-500 font-medium transition-colors mt-0.5">#{row.submissionId}</div>
+                      </td>
+                      <td className="px-6 py-5 text-sm text-slate-500 dark:text-slate-400 font-medium transition-colors">{formatTime(row.attemptedAt)}</td>
+                      <td className="px-6 py-5">
+                        <div className="text-base font-bold text-slate-800 dark:text-slate-200 transition-colors">{row.score} <span className='text-sm text-slate-400 font-normal'>/ {row.maxPossibleScore}</span></div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <div className="flex flex-col gap-2 w-full max-w-[140px]">
+                          <div className="flex justify-between text-xs font-bold text-slate-600 dark:text-slate-300 transition-colors">
+                            <span>{(row.score / row.maxPossibleScore * 100).toFixed(1)}%</span>
+                          </div>
+                          <div className="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden transition-colors">
+                            <div
+                              className={`h-full rounded-full ${(row.score / row.maxPossibleScore * 100) > 80 ? 'bg-emerald-500' : (row.score / row.maxPossibleScore * 100) > 50 ? 'bg-indigo-500' : 'bg-rose-500'}`}
+                              style={{ width: (row.score / row.maxPossibleScore * 100).toFixed(2) + '%' }}
+                            ></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-5">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border transition-colors
+                                  ${row.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' :
+                            'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20'}`}>
+                          {row.status === 'Completed' && <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-2"></span>}
+                          {row.status === 'Paused' && <span className="w-1.5 h-1.5 bg-amber-500 rounded-full mr-2"></span>}
+                          {row.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-5 text-right pr-8">
+                        <button onClick={() => navigate(`/analysis/${row.submissionId}`)} className="text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-xl text-sm font-bold transition-all inline-flex items-center gap-1 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                          Analysis <ChevronRight size={16} strokeWidth={3} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="bg-slate-50 dark:bg-slate-800/80 border-t border-slate-100 dark:border-slate-800 p-4 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 transition-colors uppercase tracking-widest">
+              Showing recent {historyData.length} attempts
+            </div>
           </div>
-          <div className="bg-slate-50 border-t border-slate-100 p-3 text-center text-xs text-slate-400">
-             Showing recent {historyData.length} attempts
-          </div>
-        </div>
-      )}
-      {/* --- INTEGRATED RECENT HISTORY TABLE END --- */}
-      
-      <Outlet/>
+        )}
+
+      </div>
+      <Outlet />
     </div>
   )
 }

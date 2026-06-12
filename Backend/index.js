@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 
 import AITopicSummarizer from './controllers/AITopicSummarizer.js';
 import {getExamDetails} from './controllers/GetExamDetails.js';
+import { updateSyllabusProgress } from './controllers/SyllabusController.js';
 
 
 import connectMongoDB from './config/mongo_config.js';
@@ -22,9 +23,10 @@ import { setupSocketHandlers } from './controllers/generationController.js';
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
-import { getTestAnalysis } from './controllers/GetTestAnalysis.js';
+import { getTestAnalysis, getLeaderboard, getWeaknessAnalysis, generateAIInsights } from './controllers/GetTestAnalysis.js';
 import { submitTest } from './controllers/SubmitTest.js';
 import { getUserDashboardData } from './controllers/FetchUserDashboard.js';
+import { getDashboardStats, getAnalyticsStats } from './controllers/AdminDashboard.js';
 
 const app = express();
 const server = http.createServer(app); 
@@ -73,6 +75,10 @@ app.get('/api/is-auth', isAuth, isAuthenticated);
 // Fetch Past Generations Through Admin Page
 app.use('/api/admin/test-generations', isAuth, generationRouter);
 
+// Admin Dashboard stats
+app.get('/api/admin/dashboard', isAuth, getDashboardStats);
+app.get('/api/admin/analytics', isAuth, getAnalyticsStats);
+
 // User Details routes
 app.get('/api/user-details', isAuth, userDetails);
 
@@ -89,15 +95,21 @@ app.use('/api/exam-category', categoryRouter);
 app.use('/api/exams', examRouter);
 
 // Test Window Routes
-app.use('/api/test-window', testWindowRouter); // Assuming test window related routes are in examRouter
+app.use('/api/test-window', testWindowRouter); 
 
 // Submit test
 app.post('/api/submit-test', isAuth, submitTest);
 
 // Test result
 app.get('/api/test-results/:submissionId', isAuth, getTestAnalysis);
+app.get('/api/test-leaderboard/:testId', isAuth, getLeaderboard);
+app.post('/api/weakness-analysis', isAuth, getWeaknessAnalysis);
+app.post('/api/ai-analysis', isAuth, generateAIInsights);
 
 // Fetch User Dashboard Details
 app.get('/api/dashboard/:userId', getUserDashboardData);
+
+// Syllabus Progress Route
+app.post('/api/syllabus/update', isAuth, updateSyllabusProgress);
 
 server.listen(PORT, '0.0.0.0', () => console.log(`Server is running with WebSockets on port ${PORT}`));

@@ -21,19 +21,27 @@ const Difficulty = () => {
     }
 
   return (
-    <div>
-        {/* Wrapper */}
-        <div onClick={() => handleCancel()} className='fixed top-0 left-0 right-0 bottom-0 z-2 bg-black opacity-50'></div>
-        <div className='fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-3 flex flex-col bg-white w-[25rem] rounded-xl'>
-            <div className='flex justify-between items-center p-4 border-b border-gray-400'>
-              <div className='text-lg font-medium '>Select Difficulty</div>
-              <RxCross2 className='hover:text-black text-gray-500 cursor-pointer text-xl' onClick={() => handleCancel()}/>
+    <div className='fixed inset-0 z-[100] flex items-center justify-center p-4'>
+        {/* Backdrop Wrapper */}
+        <div onClick={() => handleCancel()} className='absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity'></div>
+        
+        {/* Modal Content */}
+        <div className='relative z-[110] flex flex-col bg-white dark:bg-slate-900 w-full max-w-md rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 overflow-hidden'>
+            <div className='flex justify-between items-center p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50'>
+              <div className='text-lg font-bold text-slate-800 dark:text-white'>Select Difficulty</div>
+              <button className='p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors' onClick={() => handleCancel()}>
+                <RxCross2 className='size-5'/>
+              </button>
             </div>
+            
             <div className='flex flex-col gap-4 p-6'>
-              <div className='text-center text-gray-800'>Choose the challenge level for your AI-generated mock test.</div>
-              <div onClick={() => handleTest('Easy')} className='border rounded-[8px] text-center p-3 font-bold text-[17px] bg-green-50 text-green-700 border-green-400 cursor-pointer hover:bg-green-100 hover:outline transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-xl'>Easy</div>
-              <div onClick={() => handleTest('Medium')} className='border rounded-[8px] text-center p-3 font-bold text-[17px] bg-yellow-50 text-yellow-700 border-yellow-400 cursor-pointer hover:bg-yellow-100 hover:outline transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-xl'>Medium</div>
-              <div onClick={() => handleTest('Hard')} className='border rounded-[8px] text-center p-3 font-bold text-[17px] bg-red-50 text-red-700 border-red-400 cursor-pointer hover:bg-red-100 hover:outline transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:shadow-xl'>Hard</div>
+              <div className='text-center text-sm font-medium text-slate-600 dark:text-slate-400 mb-2'>Choose the challenge level for your AI-generated mock test.</div>
+              
+              <div onClick={() => handleTest('Easy')} className='border border-emerald-200 dark:border-emerald-500/30 rounded-xl text-center p-4 font-bold text-[17px] bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 cursor-pointer hover:bg-emerald-100 dark:hover:bg-emerald-500/20 hover:border-emerald-300 dark:hover:border-emerald-500/50 transition-all duration-300 ease-in-out hover:-translate-y-0.5 shadow-sm'>Easy</div>
+              
+              <div onClick={() => handleTest('Medium')} className='border border-amber-200 dark:border-amber-500/30 rounded-xl text-center p-4 font-bold text-[17px] bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-500/20 hover:border-amber-300 dark:hover:border-amber-500/50 transition-all duration-300 ease-in-out hover:-translate-y-0.5 shadow-sm'>Medium</div>
+              
+              <div onClick={() => handleTest('Hard')} className='border border-rose-200 dark:border-rose-500/30 rounded-xl text-center p-4 font-bold text-[17px] bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 cursor-pointer hover:bg-rose-100 dark:hover:bg-rose-500/20 hover:border-rose-300 dark:hover:border-rose-500/50 transition-all duration-300 ease-in-out hover:-translate-y-0.5 shadow-sm'>Hard</div>
             </div>
         </div>
     </div>

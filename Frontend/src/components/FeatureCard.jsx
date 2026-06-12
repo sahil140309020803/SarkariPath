@@ -1,20 +1,25 @@
-import React from 'react'
+import React from 'react';
 
-const FeatureCard = ({ icon, title, content }) => {
-  return (
-    <div className='border-t border-t-blue-700 group w-[13rem] h-[14rem] flex flex-col justify-center items-center gap-2 p-4 rounded-xl shadow-xl bg-white shadow-gray-300 hover:shadow-gray-400  cursor-pointer relative hover:-translate-y-1 transition-all duration-500 ease-in-out'>
-        <div className='rounded-full absolute top-0 right-0 m-3 bg-radial-[at_50%_75%] from-sky-500 via-blue-400 to-indigo-900 to-90% p-0.5 transition-transform duration-1000 ease-in-out group-hover:[transform:rotate(360deg)]'>🤖</div>
-        <div className='animate-bounce p-2 rounded-full flex justify-center items-center bg-blue-600 transition-transform duration-5000 ease-in-out]'>
-            {icon}
+const FeatureCard = ({ icon, title, content, delay = "0" }) => {
+    return (
+        <div 
+            className="group relative overflow-hidden rounded-2xl bg-white dark:bg-slate-800/50 backdrop-blur-sm hover:bg-slate-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 p-6 flex flex-col items-start gap-4 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer shadow-lg min-h-[14rem]"
+            style={{ animationDelay: `${delay}ms` }}
+        >
+            <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 group-hover:scale-110 group-hover:bg-slate-200 dark:group-hover:bg-slate-700 transition-all duration-300 shadow-inner">
+                {icon}
+            </div>
+            <div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-black dark:group-hover:text-white">{title}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed group-hover:text-slate-700 dark:group-hover:text-slate-300">
+                    {content}
+                </p>
+            </div>
+            
+            {/* Decorative element */}
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-black/5 dark:from-white/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
         </div>
-        <div className='font-medium text-[17px]'>
-            {title}
-        </div>
-        <div className='text-gray-600 text-center'>
-            {content}
-        </div>
-    </div>
-  )
-}
+    );
+};
 
 export default FeatureCard;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Bars, CirclesWithBar, ThreeDots } from 'react-loader-spinner';
+import { Sparkles } from 'lucide-react';
 import { useExam } from '../../context/ExamContext';
 import io from 'socket.io-client';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -55,8 +56,11 @@ const TestGenerating = () => {
     }, []);
 
     const examId = isExamDataFetched?.ExamId || null;
-    // console.log('Active Subject:', activeSubject);
-    const title = `Quiz: ${activeSubject} - ${new Date().toLocaleDateString()}  ${new Date().toLocaleTimeString()}`;
+    const testTitle = activeTopic 
+        ? `Quiz: ${activeTopic} (${activeSubject})` 
+        : `Quiz: ${activeSubject || "General Awareness"}`;
+    
+    const fullTitle = `${testTitle} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 
     useEffect(() => {
         if (!backend_url) return;
@@ -67,13 +71,15 @@ const TestGenerating = () => {
         newSocket.on('connect', () => {
             setAiText('Connected to AI Engine');
             
-            const subjectName = activeSubject?.name || activeSubject || activeTopic || "General Awareness";
+            // Prioritize activeTopic over activeSubject for specific topic tests
+            const ruleName = activeTopic || activeSubject?.name || activeSubject || "General Awareness";
+            
             console.log('Selected Exam:', activeExamPage);
             const payload = {
-                title: title,
+                title: fullTitle,
                 examId: examId, 
                 type: 'quiz',
-                rules: [{ name: subjectName, count: 5 }],
+                rules: [{ name: ruleName, count: 15 }],
                 difficulty: difficulty || 'Medium',
                 negativeMarks: 0, 
                 duration: 20, 
@@ -119,78 +125,113 @@ const TestGenerating = () => {
 
     const difficultyStyles = {
         Easy: {
-            bg100: 'bg-green-50',
-            bg200: 'bg-green-100',
-            bg300: 'bg-green-200',
-            text700: 'text-green-600',
-            text900: 'text-green-800',
-            shadow: 'shadow-green-200',
-            spinnerColor: '#4ade80',
+            accent: 'emerald',
+            color: '#10b981',
+            glow: 'rgba(16, 185, 129, 0.2)'
         },
         Medium: {
-            bg100: 'bg-yellow-50',
-            bg200: 'bg-yellow-100',
-            bg300: 'bg-yellow-200',
-            text700: 'text-yellow-600',
-            text900: 'text-yellow-800',
-            shadow: 'shadow-yellow-200',
-            spinnerColor: '#facc15',
+            accent: 'indigo',
+            color: '#6366f1',
+            glow: 'rgba(99, 102, 241, 0.2)'
         },
         Hard: {
-            bg100: 'bg-rose-50',
-            bg200: 'bg-rose-100',
-            bg300: 'bg-rose-200',
-            text700: 'text-rose-600',
-            text900: 'text-rose-800',
-            shadow: 'shadow-rose-200',
-            spinnerColor: '#fb7185',
+            accent: 'rose',
+            color: '#f43f5e',
+            glow: 'rgba(244, 63, 94, 0.2)'
         }
     };
 
-    const styles = difficultyStyles[difficulty] || difficultyStyles.Medium;
+    const style = difficultyStyles[difficulty] || difficultyStyles.Medium;
 
     return (
-        <div>
-            <div onClick={() => handleCancel()} className='fixed top-0 left-0 right-0 bottom-0 z-2 bg-black opacity-50'></div>
-            <div className={`fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-3 flex flex-col items-center gap-5 p-2 rounded-xl w-[30rem] ${styles.bg100} transition-all duration-1000`}>
-                <div className='animate-spin mt-4'>
-                    <div className={`absolute p-4 m-2 size-16 rotate-45 ${styles.bg300} blur-sm`}></div>
-                    <div className={`p-4 m-2 size-15 flex justify-center items-center z-1 relative ${styles.bg200} ${styles.text700} rounded-xl font-semibold text-lg`}>AI</div>
-                </div>
-                <div className='flex flex-col justify-center items-center gap-2'>
-                    <div className={`${styles.bg200} ${styles.text700} font-bold p-0.5 shadow-xl pl-5 pr-5 rounded-2xl`}>{(difficulty || 'MEDIUM').toUpperCase()}</div>
-                    <div className={`font-bold text-2xl ${styles.text700} flex justify-end items-end gap-3`}>
-                        <div>Generating Your Quiz</div>
-                        <ThreeDots visible={true} height={30} width={30} color={styles.spinnerColor} />
-                    </div>
-                </div>
-                <div className='flex items-center gap-10'>
-                    <div className={`shadow-2xl border font-semibold rounded-xl p-2 flex flex-col justify-center items-center h-[8rem] w-[7rem] ${styles.text700} ${styles.bg100}`}>
-                        <div className='text-xl font-bold'>{questionCount} / 15</div>
-                        <div className='text-[17px]'>Questions</div>
-                    </div>
-                    <Bars height="30" width="30" color={styles.spinnerColor} ariaLabel="bars-loading" visible={true} />
-                    <div className={`shadow-2xl border font-semibold rounded-xl p-2 flex flex-col justify-center gap-1 items-center h-[8rem] w-[7rem] ${styles.text700} ${styles.bg100}`}>
-                        <div>
-                            <CirclesWithBar height="25" width="25" color={styles.spinnerColor} outerCircleColor={styles.spinnerColor} innerCircleColor={styles.spinnerColor} barColor={styles.spinnerColor} ariaLabel="circles-with-bar-loading" visible={true} />
-                        </div>
-                        <div className='flex flex-col justify-center items-center'>
-                            <div className='text-[17px]'>AI Engine</div>
-                            <div className='animate-pulse text-[13px]'>Processing...</div>
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
+            {/* Non-clickable Backdrop */}
+            <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"></div>
+            
+            {/* Premium Generation Card */}
+            <div className="relative z-10 w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
+                {/* Background Glows */}
+                <div className={`absolute top-0 right-0 w-64 h-64 bg-${style.accent}-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2`}></div>
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2"></div>
+                
+                {/* Header Section */}
+                <div className="flex flex-col items-center text-center relative z-10">
+                    <div className="relative mb-8">
+                        {/* Outer Glow Ring */}
+                        <div className={`absolute inset-0 rounded-full border-2 border-${style.accent}-500/30 animate-ping`}></div>
+                        {/* AI Core Visual */}
+                        <div className={`size-20 rounded-3xl bg-slate-800 border border-slate-700 shadow-2xl flex items-center justify-center relative z-10 transform rotate-12`}>
+                            <div className={`absolute inset-0 bg-${style.accent}-500/20 blur-xl rounded-full`}></div>
+                            <span className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-500`}>AI</span>
                         </div>
                     </div>
+
+                    <div className={`px-4 py-1.5 rounded-full bg-${style.accent}-500/10 border border-${style.accent}-500/20 mb-4`}>
+                        <span className={`text-[10px] font-bold uppercase tracking-[0.2em] text-${style.accent}-400`}>
+                            {difficulty || 'MEDIUM'} DIFFICULTY
+                        </span>
+                    </div>
+
+                    <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">
+                        Generating Your Test
+                    </h2>
+                    <p className="text-slate-400 text-sm max-w-xs mx-auto flex items-center justify-center gap-2">
+                        <ThreeDots visible={true} height={15} width={15} color={style.color} />
+                        {aiText}
+                    </p>
                 </div>
-                <div className={`animate-pulse relative transition-all duration-300 p-3 text-center pl-6 pr-6 ${styles.text700} font-semibold text-lg h-[4rem]`}>{aiText}...</div>
-                <div className='w-full'>
-                    <div className={`border-b p-2 text-lg font-semibold ${styles.text900} mb-5`}>💡 Quiz Tips</div>
-                    <div className={`p-2 animate-bnce pl-4 pr-2 rounded-[8px] m-4 shadow-lg ${styles.bg200} ${styles.shadow} font-medium ${styles.text900} h-[4rem] flex justify-center items-center`}>
-                        {tipText}
+
+                {/* Progress Indicators */}
+                <div className="grid grid-cols-2 gap-4 mt-10 relative z-10">
+                    <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-5 flex flex-col items-center justify-center text-center group transition-all">
+                        <div className="text-3xl font-black text-white mb-1 tracking-tighter">
+                            {questionCount} <span className="text-slate-500 text-lg">/ 15</span>
+                        </div>
+                        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Questions Generated</div>
+                    </div>
+
+                    <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+                        <div className="relative z-10 mb-2">
+                            <CirclesWithBar height="30" width="30" color={style.color} outerCircleColor={style.color} innerCircleColor={style.color} barColor={style.color} visible={true} />
+                        </div>
+                        <div className="relative z-10 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Neural Processing</div>
                     </div>
                 </div>
-                <div onClick={() => handleCancel()} className={`shadow-2xl ${styles.text900} font-semibold text-lg cursor-pointer p-2 pl-5 pr-5 rounded-xl ${styles.bg300} hover:opacity-80`}>Cancel</div>
+
+                {/* Animated Progress Bar */}
+                <div className="mt-8 relative z-10">
+                    <div className="flex justify-between items-end mb-2 px-1">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Overall Progress</span>
+                        <span className={`text-sm font-bold text-${style.accent}-400`}>{Math.round((questionCount / 15) * 100)}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700/30">
+                        <div 
+                            className={`h-full bg-gradient-to-r from-indigo-500 to-${style.accent}-500 transition-all duration-700 ease-out`}
+                            style={{ width: `${(questionCount / 15) * 100}%` }}
+                        ></div>
+                    </div>
+                </div>
+
+                {/* Tips Section */}
+                <div className="mt-8 pt-8 border-t border-slate-800/50 relative z-10">
+                    <div className="flex items-center gap-2 mb-4 px-1">
+                        <div className={`p-1.5 rounded-lg bg-${style.accent}-500/10 text-${style.accent}-400`}>
+                            <Sparkles size={14} />
+                        </div>
+                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Pro Tip</span>
+                    </div>
+                    <div className="bg-slate-800/30 border border-slate-700/30 rounded-2xl p-4 min-h-[80px] flex items-center justify-center text-center italic text-slate-300 text-sm leading-relaxed transition-all duration-500">
+                        "{tipText}"
+                    </div>
+                </div>
+
+                {/* Bottom Status */}
+                <div className="mt-8 text-center text-[10px] font-bold text-slate-600 uppercase tracking-[0.3em] animate-pulse relative z-10">
+                    Do not close this window
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default TestGenerating;

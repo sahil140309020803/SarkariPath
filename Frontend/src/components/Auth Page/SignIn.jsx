@@ -70,10 +70,10 @@ const SignIn = ({ isLoaded }) => {
         className={`w-full mb-6 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: getDelay(100) }}
       >
-        <div className="font-bold text-3xl text-gray-800 mb-1.5">
+        <div className="font-bold text-3xl text-gray-800 dark:text-white mb-1.5 transition-colors">
           {role === 'user' ? 'Welcome Back!' : 'Admin Access'}
         </div>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-slate-400 transition-colors">
           {role === 'user' ? 'Please enter your details to login.' : 'Please enter your admin credentials.'}
         </p>
       </div>
@@ -108,7 +108,7 @@ const SignIn = ({ isLoaded }) => {
       <div className={`w-full mt-auto transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: getDelay(600) }}>
         <button
           type="submit"
-          className={`w-full rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-sm font-bold py-3.5 uppercase tracking-wider shadow-lg shadow-indigo-200 hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300 cursor-pointer flex justify-center items-center gap-5`}
+          className={`w-full rounded-lg border-none bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-cyan-600 text-white text-sm font-bold py-3.5 uppercase tracking-wider shadow-lg shadow-indigo-200 dark:shadow-none hover:-translate-y-0.5 hover:shadow-xl transition-all duration-300 cursor-pointer flex justify-center items-center gap-5`}
           disabled={isLoading}
         >
           {role === 'user' ? 'Login' : 'Admin Login'}

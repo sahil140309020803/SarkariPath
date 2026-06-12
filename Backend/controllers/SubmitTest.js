@@ -1,6 +1,7 @@
 import { MockTestModel, QuestionModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
 
+const MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS = 10 * 60 * 1000;
 
 export const submitTest = async (req, res) => {
     console.log("Payload received:", JSON.stringify(req.body, null, 2));
@@ -124,6 +125,20 @@ export const submitTest = async (req, res) => {
 
         console.log("Calculations finished. Saving submission...");
 
+        // Check for previous attempts to determine expiry and leaderboard eligibility
+        const previousAttemptsCount = await TestSubmissionModel.countDocuments({
+            userId: userEmail,
+            testId: testId
+        });
+
+        let submissionExpireAt = null;
+        if (mockTest.type === 'quiz') {
+            submissionExpireAt = mockTest.expireAt;
+        } else if (mockTest.type === 'mock_test' && previousAttemptsCount > 0) {
+            // Re-attempt for mock test expires in 10 minutes
+            submissionExpireAt = new Date(Date.now() + MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS);
+        }
+
         const newSubmission = new TestSubmissionModel({
             userId: userEmail,
             testId: testId,
@@ -137,11 +152,29 @@ export const submitTest = async (req, res) => {
             skippedCount,
             accuracy,
             timeTaken: timeTaken || 0,
-            isQualified: ((finalScore / maxScore) * 100) >= 80    // Example qualification criteria
+            isQualified: ((finalScore / maxScore) * 100) >= 80,    // Example qualification criteria
+            expireAt: submissionExpireAt
         });
 
         await newSubmission.save();
         console.log("Submission saved successfully:", newSubmission._id);
+
+        // ─── Leaderboard Update (mock_test only, first attempt only) ───
+        if (mockTest.type === 'mock_test' && previousAttemptsCount === 0) {
+            const userName = user ? user.name : 'Aspirant';
+            await MockTestModel.findByIdAndUpdate(testId, {
+                $push: {
+                    leaderboard: {
+                        userId: userEmail,
+                        name: userName,
+                        score: finalScore,
+                        accuracy: accuracy,
+                        timeTaken: timeTaken || 0,
+                        submittedAt: newSubmission.createdAt
+                    }
+                }
+            });
+        }
 
         // Updating user's test history
         await userModel.findOneAndUpdate(
@@ -157,7 +190,8 @@ export const submitTest = async (req, res) => {
                         score: finalScore,
                         maxPossibleScore: maxScore,
                         accuracy: accuracy,
-                        attemptedAt: newSubmission.createdAt
+                        attemptedAt: newSubmission.createdAt,
+                        expireAt: mockTest.expireAt
                     }
                 }
             }

@@ -49,43 +49,52 @@ const AITopicSumm = ({ examContext }) => {
     }
 
   return (
-    <div>
-        {/* Wrapper */}
-        <div onClick={() => setAItopicSummarizer(prev => !prev)} className='fixed top-0 left-0 right-0 bottom-0 z-2 bg-black opacity-50'></div>
-        {/* Actual AI Topic Summarizer component */}
-        <div className='fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-3 flex flex-col bg-white w-[60vw] rounded-xl max-h-[90dvh]'>
-            {/* Heading */}
-            <div className='flex justify-between items-center p-4 border-b border-gray-300'>
-                <div className='font-medium text-xl'>✨ AI Topic Summarizer</div>
-                <RxCross2 className='text-gray-500 cursor-pointer hover:text-black size-5' onClick={() => setAItopicSummarizer(prev => !prev)}/>
-            </div>
-            <div className='flex flex-col gap-5 pl-7 pr-7 border-b pb-8 pt-8 border-gray-300'>
-                {/* Label & Input */}
-                <div className='flex flex-col gap-2'>
-                    <div className='text-gray-800'>Enter any topic from the syllabus to get a concise summary.</div>
-                    <input type="text" placeholder='Ex: Simplification' className='p-2 pl-3 border border-gray-500 text-[17px] rounded-[8px] outline-none' value={topic} onChange={(e) => setTopic(e.target.value)} required/>
+    <div className='fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-0'>
+        {/* Backdrop Wrapper */}
+        <div onClick={() => setAItopicSummarizer(prev => !prev)} className='absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity'></div>
+        
+        {/* Actual AI Topic Summarizer Modal */}
+        <div className='relative z-[110] flex flex-col bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl max-h-[90dvh] shadow-2xl border border-slate-200 dark:border-slate-700 transition-colors overflow-hidden'>
+            
+            {/* Header */}
+            <div className='flex justify-between items-center p-5 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 transition-colors'>
+                <div className='font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2'>
+                    <span className="text-xl">✨</span> AI Topic Summarizer
                 </div>
-                {/* Language & Generate Summary */}
-                <div className='flex flex-col gap-4'>
-                    <div className='flex items-center gap-5'>
-                        <span className='text-gray-800'>Select Language:</span>
-                        <span className='flex items-center gap-1 cursor-pointer'>
-                            <input type="radio" id='lan-eng' name='language' value='english' checked={language === 'english'} onChange={handleChange}/>
-                            <label htmlFor='lan-eng' className='cursor-pointer'>English</label>
-                        </span>
-                        <span className='flex items-center gap-1'>
-                            <input type="radio" id='lan-hindi' name="language" value="hindi" checked={language === 'hindi'} onChange={handleChange}/>
-                            <label htmlFor='lan-hindi' className='cursor-pointer'>Hindi</label>
-                        </span>
+                <button onClick={() => setAItopicSummarizer(prev => !prev)} className='p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors'>
+                    <RxCross2 className='size-5'/>
+                </button>
+            </div>
+            
+            {/* Content Body */}
+            <div className='flex flex-col gap-6 p-6 border-b border-slate-200 dark:border-slate-800 transition-colors'>
+                
+                {/* Topic Input */}
+                <div className='flex flex-col gap-2'>
+                    <label className='text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors'>Enter any topic from the syllabus to get a concise summary.</label>
+                    <input type="text" placeholder='e.g., Simplification, Gravitation, Economics...' className='p-3 border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-white rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 transition-all' value={topic} onChange={(e) => setTopic(e.target.value)} required/>
+                </div>
+                {/* Language & Generate Actions */}
+                <div className='flex flex-col gap-5'>
+                    <div className='flex items-center gap-6 text-sm font-medium'>
+                        <span className='text-slate-600 dark:text-slate-400'>Response Language:</span>
+                        <label className='flex items-center gap-2 cursor-pointer text-slate-800 dark:text-slate-200'>
+                            <input type="radio" name='language' value='english' checked={language === 'english'} onChange={handleChange} className='w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800'/>
+                            English
+                        </label>
+                        <label className='flex items-center gap-2 cursor-pointer text-slate-800 dark:text-slate-200'>
+                            <input type="radio" name="language" value="hindi" checked={language === 'hindi'} onChange={handleChange} className='w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800'/>
+                            Hindi
+                        </label>
                     </div>
-                    <button onClick={() => GenerateContent()} className={`w-full text-center border rounded-[8px] cursor-pointer p-2 bg-radial-[at_50%_75%] from-sky-800 via-blue-600 to-indigo-700 to-90% text-lg font-medium text-white hover:-translate-y-1 transition-all duration-300 hover:shadow-2xl flex gap-6 justify-center items-center`} disabled={loading}>
-                        <span>{loading ? 'Generating' : 'Generate'} Summary</span>
-                        {loading && <RiLoader5Line className='animate-spin size-6'/>}
+                    <button onClick={() => GenerateContent()} className={`w-full text-center rounded-xl cursor-pointer p-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-base font-semibold text-white hover:from-indigo-500 hover:to-blue-400 transition-all duration-300 shadow-md flex gap-3 justify-center items-center ${loading ? 'opacity-70 pointer-events-none' : ''}`} disabled={loading}>
+                        <span>{loading ? 'Generating...' : 'Generate AI Summary'}</span>
+                        {loading && <RiLoader5Line className='animate-spin size-5'/>}
                     </button>
                 </div>
             </div>
-            {/* Generated Result */}
-            <div className='p-5 overflow-auto overflow-x-hidden' dangerouslySetInnerHTML={{ __html: content }}>
+            {/* Generated Result Container */}
+            <div className='p-6 overflow-y-auto custom-scrollbar flex-1 bg-slate-50/50 dark:bg-slate-900 text-slate-800 dark:text-slate-300 text-sm md:text-base prose dark:prose-invert max-w-none' dangerouslySetInnerHTML={{ __html: content || '<p class="text-slate-400 dark:text-slate-500 italic">Your generated summary will appear here...</p>' }}>
             </div>
         </div>
     </div>

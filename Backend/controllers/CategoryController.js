@@ -45,4 +45,23 @@ const deleteCategory = async (req, res) => {
     }
 };
 
-export {addCategory, getCategories, deleteCategory};
+const editCategory = async (req, res) => {
+    const {categoryId} = req.params;
+    const {icon, Name, Description} = req.body;
+    if(!categoryId || !Name || !Description) {
+        return res.json({success: false, message: "Name and Description are required"});
+    }
+    try {
+        const category = await examCatModel.findById(categoryId);
+        if(!category) return res.json({success: false, message: "Category not found"});
+        category.icon = icon !== undefined ? icon : category.icon;
+        category.Name = Name;
+        category.Description = Description;
+        await category.save();
+        return res.json({success: true, message: "Category updated successfully", category});
+    } catch(err) {
+        return res.json({success: false, message: err.message});
+    }
+};
+
+export {addCategory, getCategories, deleteCategory, editCategory};

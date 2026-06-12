@@ -45,6 +45,26 @@ export const AuthProvider = ({ children }) => {
         isAuth();
     }, [isLoggedIn, setIsLoggedIn]);
 
+    const logout = async () => {
+        setIsLoading(true);
+        try {
+            const role = userDetails?.role || 'user';
+            const endpoint = role === 'admin' ? `${backend_url}/api/auth/admin/logout` : `${backend_url}/api/auth/user/logout`;
+            const { data } = await axios.post(endpoint, {}, { withCredentials: true });
+            
+            if (data.success) {
+                setIsLoggedIn(false);
+                setUserDetails(null);
+                setIsLoading(false);
+                return true;
+            }
+        } catch (err) {
+            console.error("Logout failed:", err.message);
+        }
+        setIsLoading(false);
+        return false;
+    };
+
     const value = {
         isLoggedIn,
         setIsLoggedIn,
@@ -52,7 +72,8 @@ export const AuthProvider = ({ children }) => {
         setIsLoading,
         userDetails,
         setUserDetails,
-        backend_url
+        backend_url,
+        logout
     };
 
     return (

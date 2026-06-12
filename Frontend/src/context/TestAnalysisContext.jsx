@@ -70,6 +70,7 @@ export const TestAnalysisProvider = ({ children }) => {
             title: test.ExamId.Name + " - " + test.Title,
             level: test.Difficulty,
             testId: test._id, // Useful for 'Retake Test' button
+            type: test.type || 'mock_test',
 
             attempts: submission.attempts || 1,
             attemptedAt: submission.attemptedAt || "",
@@ -88,7 +89,8 @@ export const TestAnalysisProvider = ({ children }) => {
                 incorrect: submission.incorrectCount || 0,
                 skipped: submission.skippedCount || 0,
                 timeTaken: `${Math.floor((submission.timeTaken || 0) / 60)}m ${(submission.timeTaken || 0) % 60}s`,
-                totalTime: `${test.DurationinMinutes}m`
+                totalTime: `${test.DurationinMinutes}m`,
+                avgTimePerQuestion: (submission.timeTaken || 0) / (test.Questions.length || 1)
             },
             aiInsights: {
                 strengths,
