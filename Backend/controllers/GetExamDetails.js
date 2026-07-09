@@ -107,6 +107,7 @@ const getExamDetails = async (req, res) => {
 
         res.json({
             success: true,
+            ExamName: examData.Name,
             Subjects: examData.Subjects,
             Topics: examData.Topics || {},
             MockTests: mockTests,

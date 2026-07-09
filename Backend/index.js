@@ -39,7 +39,7 @@ connectMongoDB(process.env.EXAM_MONGODB_URI);
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = ['http://localhost:5173', 'http://172.16.170.72:5173'];
+const allowedOrigins = ['http://localhost:5173', 'http://10.11.224.196:5173'];
 app.use(cors({ origin: allowedOrigins, credentials: true }));
 
 // Setup Socket.IO Server

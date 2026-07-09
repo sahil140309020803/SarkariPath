@@ -55,7 +55,7 @@ const Authentication = ({initialIsLogin}) => {
           </button>
         </div>
 
-        <div className="relative h-[480px]">
+        <div className={`relative transition-all duration-500 ease-in-out ${isLogin ? 'h-[400px]' : 'h-[560px]'}`}>
           <div className={`absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out ${isLogin ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}>
             <SignIn isLoaded={isLogin && isLoaded} />
           </div>

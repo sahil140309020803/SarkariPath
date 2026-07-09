@@ -29,7 +29,7 @@ const TestGenerating = () => {
     const navigate = useNavigate();
 
     const { exam_cat, exam_name } = useParams();
-    
+
 
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -46,7 +46,7 @@ const TestGenerating = () => {
 
     useEffect(() => {
         const iterateTipList = async () => {
-            while (true) { 
+            while (true) {
                 const randomIndex = Math.floor(Math.random() * tipsList.length);
                 setTipText(tipsList[randomIndex]);
                 await delay(5000);
@@ -56,10 +56,10 @@ const TestGenerating = () => {
     }, []);
 
     const examId = isExamDataFetched?.ExamId || null;
-    const testTitle = activeTopic 
-        ? `Quiz: ${activeTopic} (${activeSubject})` 
+    const testTitle = activeTopic
+        ? `Quiz: ${activeTopic} (${activeSubject})`
         : `Quiz: ${activeSubject || "General Awareness"}`;
-    
+
     const fullTitle = `${testTitle} - ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 
     useEffect(() => {
@@ -70,20 +70,23 @@ const TestGenerating = () => {
 
         newSocket.on('connect', () => {
             setAiText('Connected to AI Engine');
-            
+
             // Prioritize activeTopic over activeSubject for specific topic tests
             const ruleName = activeTopic || activeSubject?.name || activeSubject || "General Awareness";
-            
+
             console.log('Selected Exam:', activeExamPage);
             const payload = {
                 title: fullTitle,
-                examId: examId, 
+                examId: examId,
                 type: 'quiz',
-                rules: [{ name: ruleName, count: 15 }],
+                rules: [{ name: ruleName, count: 5 }],
                 difficulty: difficulty || 'Medium',
-                negativeMarks: 0, 
-                duration: 20, 
-                totalMarks: 15
+                negativeMarks: 0,
+                duration: 8,
+                totalMarks: 5,
+                subjectName: activeSubject?.name || activeSubject || null,
+                topicName: activeTopic || null,
+                examName: isExamDataFetched?.ExamName || null
             };
 
             newSocket.emit('start_generation', payload);
@@ -101,7 +104,7 @@ const TestGenerating = () => {
             setTimeout(() => {
                 setShowTestGenerate(false);
                 // console.log('Generated Test Data:', data);
-                if(data.test && data.test._id) {
+                if (data.test && data.test._id) {
                     const testId = data.test._id;
                     console.log('Navigating to Test ID:', testId);
                     navigate(`/tests/${testId}`);
@@ -147,13 +150,13 @@ const TestGenerating = () => {
         <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
             {/* Non-clickable Backdrop */}
             <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"></div>
-            
+
             {/* Premium Generation Card */}
             <div className="relative z-10 w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
                 {/* Background Glows */}
                 <div className={`absolute top-0 right-0 w-64 h-64 bg-${style.accent}-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2`}></div>
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2"></div>
-                
+
                 {/* Header Section */}
                 <div className="flex flex-col items-center text-center relative z-10">
                     <div className="relative mb-8">
@@ -172,7 +175,7 @@ const TestGenerating = () => {
                         </span>
                     </div>
 
-                    <h2 className="text-3xl font-extrabold text-white tracking-tight mb-2">
+                    <h2 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
                         Generating Your Test
                     </h2>
                     <p className="text-slate-400 text-sm max-w-xs mx-auto flex items-center justify-center gap-2">
@@ -184,8 +187,8 @@ const TestGenerating = () => {
                 {/* Progress Indicators */}
                 <div className="grid grid-cols-2 gap-4 mt-10 relative z-10">
                     <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-5 flex flex-col items-center justify-center text-center group transition-all">
-                        <div className="text-3xl font-black text-white mb-1 tracking-tighter">
-                            {questionCount} <span className="text-slate-500 text-lg">/ 15</span>
+                        <div className="text-2xl sm:text-3xl font-black text-white mb-1 tracking-tighter">
+                            {questionCount} <span className="text-slate-500 text-base">/ 15</span>
                         </div>
                         <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Questions Generated</div>
                     </div>
@@ -205,7 +208,7 @@ const TestGenerating = () => {
                         <span className={`text-sm font-bold text-${style.accent}-400`}>{Math.round((questionCount / 15) * 100)}%</span>
                     </div>
                     <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-slate-700/30">
-                        <div 
+                        <div
                             className={`h-full bg-gradient-to-r from-indigo-500 to-${style.accent}-500 transition-all duration-700 ease-out`}
                             style={{ width: `${(questionCount / 15) * 100}%` }}
                         ></div>

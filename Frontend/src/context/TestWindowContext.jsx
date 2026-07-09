@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { useContext, createContext, useState, useEffect, useRef } from 'react';
+import { useCallback, useContext, createContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
@@ -26,6 +26,7 @@ export const TestWindowProvider = ({ children }) => {
 
     const [score, setScore] = useState(0);
     const [isTestLoading, setIsLoading] = useState(true);
+    const [testFetchError, setTestFetchError] = useState(null);
     const [isTestStarted, setIsTestStarted] = useState(false);
     const [isTestEnded, setIsTestEnded] = useState(false);
 
@@ -37,7 +38,32 @@ export const TestWindowProvider = ({ children }) => {
     const questionTimesRef = useRef({});
     const [activeQuestionDuration, setActiveQuestionDuration] = useState(0);
     const activeDurationRef = useRef(0);
+    const [language, setLanguage] = useState('en');
 
+    /**
+     * Atomically resets every piece of per-attempt state so that a new
+     * test session always starts from a completely clean slate.
+     * Must be called before loading a new test (whether first or subsequent).
+     */
+    const resetTestSession = useCallback(() => {
+        setActiveTest(null);
+        setQuestions([]);
+        setDuration(0);
+        setMarkingScheme({ correct: 0, incorrect: 0 });
+        setCurrentQuestionIndex(0);
+        setTimeRemaining(0);
+        setUserAnswers({});
+        setQuestionStatus({});
+        setScore(0);
+        setTestFetchError(null);
+        setIsTestStarted(false);
+        setIsTestEnded(false);
+        setActiveQuestionDuration(0);
+        setLanguage('en');
+        // Reset mutable refs that live outside React state
+        questionTimesRef.current = {};
+        activeDurationRef.current = 0;
+    }, []);
 
     useEffect(() => {
 
@@ -49,7 +75,13 @@ export const TestWindowProvider = ({ children }) => {
 
     }, [activeTestID]);
 
-    const fetchActiveTestDetails = async () => {
+     const fetchActiveTestDetails = async () => {
+        // Always start from a clean state so stale flags (isTestEnded,
+        // isTestStarted, old answers, old timer) from a previous attempt
+        // never bleed into the new one.
+        resetTestSession();
+        setIsLoading(true);
+        setTestFetchError(null);
         axios.defaults.withCredentials = true;
 
         try {
@@ -70,11 +102,12 @@ export const TestWindowProvider = ({ children }) => {
                 setIsTestStarted(true);
 
             } else {
-                console.error('Test data not found or success is false.');
+                setTestFetchError(data.message || "Failed to load test details.");
             }
 
         } catch (err) {
             console.error('Failed to fetch active test details:', err);
+            setTestFetchError("Network error. Failed to load test details.");
         } finally {
             setIsLoading(false);
         }
@@ -233,7 +266,7 @@ export const TestWindowProvider = ({ children }) => {
 
             if (data.success) {
                 setIsTestEnded(true);
-                navigate(`/analysis/${data.result._id}`);
+                navigate(`/analysis/${data.result._id}`, { replace: true });
             } else {
                 alert("Submission failed.");
             }
@@ -245,8 +278,6 @@ export const TestWindowProvider = ({ children }) => {
     }
 };
 
-
-    const [language, setLanguage] = useState('en');
 
     const value = {
         activeTest, setActiveTest,
@@ -263,6 +294,9 @@ export const TestWindowProvider = ({ children }) => {
         timeRemaining, formatTime,
         language, setLanguage,
         isTestLoading, setIsLoading,
+        testFetchError,
+        fetchActiveTestDetails,
+        resetTestSession,
         handleSaveAndNext, handleMarkForReview,
         handleClearResponse, handleSubmitTest,
         activeQuestionDuration

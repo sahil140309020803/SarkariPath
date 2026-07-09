@@ -1,41 +1,60 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Search, Bell, Flame, Trophy, BookOpen, BarChart2, Check, ArrowUpRight, Target, Moon, Sun, LayoutDashboard } from 'lucide-react';
+import { Search, Bell, Flame, Trophy, BookOpen, BarChart2, Check, ArrowUpRight, Target, Moon, Sun, LayoutDashboard, Menu, X } from 'lucide-react';
 import axios from 'axios'; 
 import { useAuth } from '../context/AuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import ThemeToggle from '../components/ThemeToggle';
 import LOGO from '../assets/LOGO.png';
+import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 const Navbar = ({ user, streak }) => {
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <nav className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50 transition-colors duration-300">
-      <div className="flex items-center gap-8">
-        <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer transition transform hover:scale-105 group">
-          <div className="relative">
-              <div className="absolute inset-0 bg-blue-500 rounded-full blur/20 group-hover:blur/40 transition-all opacity-20"></div>
-              <img src={LOGO} alt="logo" className="w-10 h-10 relative transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300 object-contain"/>
+    <nav className="bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 px-6 py-4 sticky top-0 z-50 transition-colors duration-300">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer transition transform hover:scale-105 group">
+            <div className="relative">
+                <div className="absolute inset-0 bg-blue-500 rounded-full blur/20 group-hover:blur/40 transition-all opacity-20"></div>
+                <img src={LOGO} alt="logo" className="w-10 h-10 relative transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300 object-contain"/>
+            </div>
+            <span className="text-xl font-bold text-slate-800 dark:text-white tracking-tight transition-colors">Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span></span>
           </div>
-          <span className="text-xl font-bold text-slate-800 dark:text-white tracking-tight transition-colors">Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span></span>
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
+            <a href="#" className="text-blue-600 dark:text-white bg-blue-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-slate-700 transition">Dashboard</a>
+            <a href="#" className="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Exams</a>
+            <a href="#" className="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Mock Tests</a>
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-          <a href="#" className="text-blue-600 dark:text-white bg-blue-50 dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-blue-100 dark:border-slate-700 transition">Dashboard</a>
-          <a href="#" className="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Exams</a>
-          <a href="#" className="hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Mock Tests</a>
+        <div className="flex items-center gap-5">
+          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-full border border-orange-200 dark:border-orange-500/20 shadow-sm dark:shadow-inner transition-colors">
+              <Flame className="w-4 h-4 fill-orange-500" />
+              <span className="text-sm font-bold tracking-wide">{streak} Day Streak</span>
+            </div>
+            <div className="w-10 h-10 bg-gradient-to-tr from-blue-500 to-indigo-500 dark:from-indigo-500 dark:to-purple-500 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer shadow-md dark:shadow-lg dark:shadow-indigo-500/20 hover:ring-2 ring-white dark:ring-slate-900 ring-offset-2 ring-offset-slate-100 dark:ring-offset-slate-900 transition-all">
+              {user ? user.name.substring(0,2).toUpperCase() : 'US'}
+            </div>
+          </div>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-all rounded-lg md:hidden block"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
-      <div className="flex items-center gap-5">
-        <ThemeToggle />
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 px-3 py-1.5 rounded-full border border-orange-200 dark:border-orange-500/20 shadow-sm dark:shadow-inner transition-colors">
-            <Flame className="w-4 h-4 fill-orange-500" />
-            <span className="text-sm font-bold tracking-wide">{streak} Day Streak</span>
-          </div>
-          <div className="w-10 h-10 bg-gradient-to-tr from-blue-500 to-indigo-500 dark:from-indigo-500 dark:to-purple-500 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer shadow-md dark:shadow-lg dark:shadow-indigo-500/20 hover:ring-2 ring-white dark:ring-slate-900 ring-offset-2 ring-offset-slate-100 dark:ring-offset-slate-900 transition-all">
-            {user ? user.name.substring(0,2).toUpperCase() : 'US'}
-          </div>
+      
+      {/* Mobile Menu Panel */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-4 pt-2 pb-2 space-y-2 flex flex-col">
+          <a href="#" className="py-2.5 px-4 rounded-xl text-blue-600 dark:text-white bg-blue-50 dark:bg-slate-800 font-bold transition">Dashboard</a>
+          <a href="#" className="py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold transition-colors">Exams</a>
+          <a href="#" className="py-2.5 px-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold transition-colors">Mock Tests</a>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
@@ -65,7 +84,7 @@ const ProfileCard = ({ user, totalSolved }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-indigo-500/5 opacity-0 group-hover/level:opacity-100 transition-opacity"></div>
         <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-[0.2em] font-black mb-1 transition-colors">Mastery Level</p>
         <div className="flex items-baseline justify-center gap-2 relative z-10">
-            <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400 transition-colors drop-shadow-sm">{getLevel(totalSolved)}</span>
+            <span className="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400 transition-colors drop-shadow-sm">{getLevel(totalSolved)}</span>
         </div>
         <div className="flex items-center justify-center gap-1.5 mt-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider relative z-10">
           <div className="h-px w-4 bg-slate-300 dark:bg-slate-700"></div>
@@ -110,7 +129,7 @@ const SolvedProgress = ({ data }) => {
              <circle cx="65" cy="65" r={radius} fill="none" stroke="#ef4444" strokeWidth="10" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={mounted ? circumference - hardStroke : circumference} className="transition-all duration-1000 ease-out delay-500" style={{ transformOrigin: 'center', transform: `rotate(${(easyPercent + medPercent) * 360}deg)` }}/>
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-             <div className="text-4xl font-black text-slate-800 dark:text-white leading-none tracking-tighter transition-colors">{totalSolved}</div>
+             <div className="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white leading-none tracking-tighter transition-colors">{totalSolved}</div>
              <div className="text-xs text-slate-400 font-medium mt-1 mb-2">/{totalQuestions}</div>
              <div className="flex items-center gap-1 bg-green-50 dark:bg-green-500/10 px-2.5 py-1 rounded-full border border-green-200 dark:border-green-500/20 transition-colors">
                 <Check size={12} strokeWidth={3} className="text-green-500 dark:text-green-400" /> 
@@ -247,7 +266,7 @@ const StudyHeatmap = ({ heatmapData }) => {
       
       <div className="w-full overflow-x-auto pb-4 custom-scrollbar relative z-10">
         <div className="min-w-max flex gap-2">
-            <div className="flex flex-col justify-between py-[2px] pr-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider pt-6 sticky left-0 z-10 h-[8.5rem]" style={{ backgroundColor: 'inherit' }}>
+            <div className="flex flex-col justify-between py-[2px] pr-3 text-[10px] text-slate-500 font-bold uppercase tracking-wider pt-6 sticky left-0 z-10 h-[8.5rem] bg-white dark:bg-slate-900">
                 <span>Sun</span><span>Sat</span>
             </div>
             {months.map((month, mIndex) => (
@@ -355,22 +374,53 @@ const SubjectMastery = ({ data }) => {
 const UserDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [dashboardError, setDashboardError] = useState(null);
   const { backend_url } = useAuth();
   const { userId } = useParams();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data } = await axios.get(`${backend_url}/api/dashboard/${userId}`);
+  const fetchData = async () => {
+    setLoading(true);
+    setDashboardError(null);
+    try {
+      const { data } = await axios.get(`${backend_url}/api/dashboard/${userId}`);
+      if (data.success === false) {
+        setDashboardError(data.message || "Failed to load dashboard statistics.");
+      } else {
         setDashboardData(data);
-      } catch (error) {
-        console.error("Failed to fetch dashboard data", error);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch dashboard data", error);
+      setDashboardError("Network error. Failed to load dashboard statistics.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
   }, [backend_url, userId]);
+
+  if (loading) {
+    return <BeautifulLoadingScreen message="Loading your dashboard statistics..." />;
+  }
+
+  if (dashboardError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors">
+        <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-red-100 dark:border-rose-900/30 max-w-md my-6">
+          <XCircle className="w-12 h-12 text-red-500 dark:text-rose-500 mx-auto mb-4" />
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Error Loading Dashboard</h3>
+          <p className="text-slate-650 dark:text-slate-400 mb-6 text-sm">{dashboardError}</p>
+          <button
+            onClick={fetchData}
+            className="w-full bg-blue-600 dark:bg-indigo-650 text-white py-3 rounded-xl hover:bg-blue-700 dark:hover:bg-indigo-500 transition shadow-md font-bold cursor-pointer text-sm"
+          >
+            Retry Loading
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans selection:bg-blue-200 dark:selection:bg-cyan-500/30 selection:text-slate-900 dark:selection:text-white pb-12 relative transition-colors duration-300">

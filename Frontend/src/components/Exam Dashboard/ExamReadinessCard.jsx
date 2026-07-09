@@ -32,7 +32,7 @@ const ExamReadinessCard = ({ completedTopicsCount, totalTopicsCount, onViewDetai
             </div>
 
             {/* Inner Content Box */}
-            <div className="bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-100 dark:border-slate-700/50 rounded-2xl p-4 sm:p-5 relative z-10 flex flex-col sm:flex-row items-center gap-6 shadow-inner dark:shadow-none transition-colors h-[10.5rem]">
+            <div className="bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-sm border border-slate-100 dark:border-slate-700/50 rounded-2xl p-4 sm:p-5 relative z-10 flex flex-col sm:flex-row items-center gap-6 shadow-inner dark:shadow-none transition-colors h-auto sm:h-[10.5rem]">
 
                 {/* Circular Ring */}
                 <div className="relative size-28 shrink-0">

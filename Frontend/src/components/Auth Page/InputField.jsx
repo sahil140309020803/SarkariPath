@@ -37,7 +37,7 @@ const InputField = ({ id, label, type = 'text', value, onChange, delay }) => {
                     ${isFocused || isFilled
             ? 'text-xs -top-2.5 bg-white dark:bg-slate-900 text-indigo-600 dark:text-cyan-400'
             : 'text-base top-3.5'
-          } peer-focus:text-xs peer-focus:-top-2.5 peer-focus:bg-gray-100 peer-focus:text-indigo-600`}
+          }`}
       >
         {label}
       </label>

@@ -10,7 +10,7 @@ const withTimeout = (promise, ms) => {
 
 // --- CONFIGURABLE QUIZ EXPIRY ---
 // Current setting: 10 minutes (in milliseconds)
-const QUIZ_EXPIRY_DURATION = 10 * 60 * 1000; 
+const QUIZ_EXPIRY_DURATION = 10 * 60 * 1000;
 
 const activeGenerations = new Map();
 
@@ -22,13 +22,26 @@ export const setupSocketHandlers = (socket, io) => {
   });
 
   socket.on('start_generation', async (data) => {
-    const { title, examId, rules, difficulty, negativeMarks, duration, totalMarks, type } = data;
+    const { title, examId, rules, difficulty, negativeMarks, duration, totalMarks, type, subjectName, topicName, examName } = data;
 
     let activeTest;
     const totalRequired = rules.reduce((acc, rule) => acc + (parseInt(rule.count) || 0), 0);
     const testType = type === 'quiz' ? 'quiz' : 'mock_test';
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     try {
+      let examNameOrFallback = examName;
+      let examDoc = null;
+      try {
+        examDoc = await examModel.findById(examId);
+        if (examDoc) {
+          examNameOrFallback = examDoc.Name;
+        }
+      } catch (err) {
+        console.error("Error fetching exam Name in start_generation:", err);
+      }
+      if (!examNameOrFallback) {
+        examNameOrFallback = "Competitive Exam";
+      }
       if (testType === 'quiz') {
         // ... (Your existing quiz creation code) ...
         activeTest = new MockTestModel({
@@ -96,8 +109,15 @@ export const setupSocketHandlers = (socket, io) => {
       for (const rule of rules) {
         const currentTestState = await MockTestModel.findById(activeTest._id).populate('Questions');
 
-        const existingSubjectQuestions = currentTestState.Questions.filter(q => q.Subject === rule.name);
+        const existingSubjectQuestions = currentTestState.Questions.filter(q => q.Subject === rule.name || q.Topic === rule.name);
         const remainingCount = rule.count - existingSubjectQuestions.length;
+
+        let subjectTopics = [];
+        if (testType === 'quiz' && !topicName) {
+          if (examDoc && examDoc.Topics && examDoc.Topics[rule.name]) {
+            subjectTopics = examDoc.Topics[rule.name];
+          }
+        }
 
         // ---------------------------------------------------------
         // 2. FIX: Fetch Global History from previous tests
@@ -126,6 +146,12 @@ export const setupSocketHandlers = (socket, io) => {
         for (let i = 0; i < remainingCount; i++) {
           if (activeGenerations.get(activeTest._id.toString()) === false) throw new Error("Cancelled.");
 
+          let currentTopicName = topicName;
+          if (testType === 'quiz' && !topicName && subjectTopics.length > 0) {
+            const randomIndex = Math.floor(Math.random() * subjectTopics.length);
+            currentTopicName = subjectTopics[randomIndex];
+          }
+
           let questionGenerated = false;
           let retryCount = 0;
           const MAX_RETRIES = 5;
@@ -142,7 +168,16 @@ export const setupSocketHandlers = (socket, io) => {
 
               // 3. Pass fullHistory instead of sessionHistory
               // We pass the current question index (i) to help the AI vary its behavior
-              const prompt = getSingleQuestionPrompt(examId, rule.name, difficulty, lastError, lastResponse, fullHistory, i);
+              const prompt = getSingleQuestionPrompt(
+                examNameOrFallback,
+                (testType === 'quiz' && subjectName) ? subjectName : rule.name,
+                currentTopicName,
+                difficulty,
+                lastError,
+                lastResponse,
+                fullHistory,
+                i
+              );
 
               const result = await withTimeout(AI.generateContent(prompt), 30000);
               const aiResponseString = result.response.candidates[0].content.parts[0].text;
@@ -161,7 +196,8 @@ export const setupSocketHandlers = (socket, io) => {
               const newQuestion = new QuestionModel({
                 ...questionData,
                 ExamId: examId,
-                Subject: rule.name,
+                Subject: (testType === 'quiz' && subjectName) ? subjectName : rule.name,
+                Topic: currentTopicName || questionData.Topic,
                 Difficulty: difficulty,
                 ...(testType === 'quiz' && { expireAt: activeTest.expireAt })
               });
@@ -187,7 +223,8 @@ export const setupSocketHandlers = (socket, io) => {
                 summary: (questionData.en?.Question || "").substring(0, 100)
               });
 
-              console.log(`Generated ${i + 1}/${totalRequired} for ${rule.name}`)
+              const printSubject = (testType === 'quiz' && subjectName) ? subjectName : rule.name;
+              console.log(`Generated ${i + 1}/${totalRequired} for Subject: ${printSubject}, Topic: ${currentTopicName || 'None'}, Exam: ${examNameOrFallback}`)
               questionGenerated = true;
             } catch (error) {
               retryCount++;
@@ -210,9 +247,9 @@ export const setupSocketHandlers = (socket, io) => {
   });
 };
 
-function getSingleQuestionPrompt(exam, subject, difficulty, lastError = "", lastResponse = "", history = [], questionIndex = 0) {
-  const isEnglish = subject.toLowerCase().includes('english');
-  const isHindi = subject.toLowerCase().includes('hindi');
+function getSingleQuestionPrompt(examName, subjectName, topicName, difficulty, lastError = "", lastResponse = "", history = [], questionIndex = 0) {
+  const isEnglish = (subjectName || "").toLowerCase().includes('english') || (topicName && topicName.toLowerCase().includes('english'));
+  const isHindi = (subjectName || "").toLowerCase().includes('hindi') || (topicName && topicName.toLowerCase().includes('hindi'));
 
   const errorFeedback = lastError ? `
 ### ⚠️ FIX PREVIOUS JSON ERROR:
@@ -226,9 +263,16 @@ Previous Response Snippet: ${lastResponse ? `"${lastResponse}..."` : "None"}
     ? `\n### 🛑 EXCLUSION LIST (DO NOT GENERATE ANYTHING SIMILAR TO THESE):\n${recentHistory.map((h, i) => `${i + 1}. [${h.topic}]: ${h.summary}...`).join('\n')}`
     : "";
 
-  return `You are a high-level question developer for the "${exam}" exam.
+  let taskText = "";
+  if (topicName) {
+    taskText = `Create 1 NEW, UNIQUE MCQ for the topic "${topicName}" within the subject "${subjectName}" (${difficulty} level) that is not present in historyList.`;
+  } else {
+    taskText = `Create 1 NEW, UNIQUE MCQ for the subject "${subjectName}" (${difficulty} level) that is not present in historyList.`;
+  }
+
+  return `You are a high-level question developer for the "${examName}" exam.
   Randomness Seed: ${Math.floor(Math.random() * 100000) + 1}
-  Task: Create 1 NEW, UNIQUE MCQ for "${subject}" (${difficulty} level) that is not present in historyList.
+  Task: ${taskText}
 
 ${errorFeedback}
 ${historyList}
@@ -263,7 +307,7 @@ ${historyList}
     "answer": "सही विकल्प का सटीक टेक्स्ट",
     "solution": "विस्तृत हिन्दी व्याख्या"
   }`},
-  "Topic": "Specific sub-topic name"
+  "Topic": "${topicName ? topicName : 'Specific sub-topic name'}"
 }
 FINAL CHECK: Is this question identical to anything in the exclusion list? If yes, change it completely. Return valid JSON.`;
 }

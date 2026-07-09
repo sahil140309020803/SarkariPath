@@ -5,12 +5,12 @@ const SubjectLoader = () => {
   return (
     <div className='w-full h-full animate-pulse'>
         {array.map((_, index) => (
-            <div key={index} className='flex justify-between items-center pt-5 pb-5 border-b border-gray-200'>
+            <div key={index} className='flex justify-between items-center pt-5 pb-5 border-b border-gray-200 dark:border-slate-700/50'>
                 <div className='flex justify-center items-center gap-2'>
-                    <div className='size-5 bg-gray-300 rounded-[6px]'></div>
-                    <div className='w-[15rem] h-5 bg-gray-300 rounded-[6px]'></div>
+                    <div className='size-5 bg-gray-300 dark:bg-slate-700 rounded-[6px]'></div>
+                    <div className='w-[10rem] sm:w-[15rem] h-5 bg-gray-300 dark:bg-slate-700 rounded-[6px]'></div>
                 </div>
-                <div className='w-10 h-5 bg-gray-300 rounded-[6px]'></div>
+                <div className='w-10 h-5 bg-gray-300 dark:bg-slate-700 rounded-[6px]'></div>
             </div>
         ))}
     </div>

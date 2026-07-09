@@ -25,14 +25,14 @@ const Header = () => {
                         </div>
                     )}
                     
-                    <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-800 dark:text-white leading-[1.15] transition-colors">
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-800 dark:text-white leading-[1.15] transition-colors">
                         Your Gateway to <br/>
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 inline-block animate-pulse">
                             Government Exams
                         </span>
                     </h1>
                     
-                    <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed transition-colors">
+                    <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed transition-colors">
                         Master government exam preparation with <strong className="text-slate-900 dark:text-slate-200">AI-powered mock tests</strong>, subject-wise practice, and topic-focused learning designed specifically for your success.
                     </p>
                     
@@ -66,7 +66,7 @@ const Header = () => {
                         </div>
                         <div className="space-y-5">
                             <FeatureCard icon={<Sparkles className="text-indigo-400" size={28}/>} title="AI Subject Practice" content="Master fundamentals through AI-generated questions adapting to you." delay="100" />
-                            <div className="rounded-2xl bg-gradient-to-br from-indigo-100/60 to-purple-100/60 dark:from-indigo-900/60 dark:to-purple-900/60 border border-slate-200/50 dark:border-slate-700/50 p-6 shadow-xl relative overflow-hidden flex flex-col justify-center items-center h-[15rem] transition-colors">
+                            <div className="rounded-2xl bg-gradient-to-br from-indigo-100/60 to-purple-100/60 dark:from-indigo-900/60 dark:to-purple-900/60 border border-slate-200/50 dark:border-slate-700/50 p-6 shadow-xl relative overflow-hidden flex flex-col justify-center items-center h-[12rem] sm:h-[15rem] transition-colors">
                                 <div className="absolute inset-0 opacity-40 dark:opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
                                 <div className="flex flex-col items-center z-10">
                                    <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-indigo-600 to-slate-400 dark:from-white dark:to-slate-400 mb-2 tracking-tighter transition-colors">10k+</div>

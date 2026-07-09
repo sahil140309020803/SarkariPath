@@ -10,10 +10,10 @@ const SubjectList = () => {
     // const { isExamDataFetched, showDifficulty, setShowDifficulty, setActiveSubject, activeSubject, setTopicList, topicList, difficulty, setDifficulty, showCustomTopic, setShowCustomTopic } = useContext(AppContent);
 
     const {
-    isExamDataFetched, setShowDifficulty, setActiveSubject, setTopicList,
-    setDifficulty,
-    setShowCustomTopic, backend_url
-} = useExam();
+        isExamDataFetched, setShowDifficulty, setActiveSubject, setTopicList,
+        setDifficulty, setActiveTopic,
+        setShowCustomTopic, backend_url
+    } = useExam();
 
     const [subjectName, setSubjectName] = useState(null);
     const Subjects = isExamDataFetched?.Subjects;
@@ -32,19 +32,19 @@ const SubjectList = () => {
         setActiveSubject(subjectName);
         try {
             const { data } = await axios.get(`${backend_url}/api/exams/${isExamDataFetched.ExamId}/subjects/${subjectName}/topics`, { withCredentials: true });
-            if(data.success && data.topics) {
+            if (data.success && data.topics) {
                 setTopicList(data.topics);
             } else {
                 setTopicList([]);
             }
-        } catch(err) {
+        } catch (err) {
             console.error("Failed to fetch topics:", err);
             setTopicList([]);
         }
         setShowCustomTopic(prev => !prev);
     }
     return (
-        <div className='w-full h-[40rem] flex flex-col gap-4'>
+        <div className='w-full h-auto flex flex-col gap-4'>
             {Subjects.map((subject, index) => {
                 const isActive = subjectName === subject;
                 return (
@@ -65,9 +65,9 @@ const SubjectList = () => {
                                         <div className='flex items-center gap-1'><span>⌛</span> 20 Minutes</div>
                                     </div>
                                 </div>
-                                <div className='flex justify-between items-center gap-4 mt-2'>
-                                    <div onClick={() => handleTest(subject)} className='grow text-center p-[8px] rounded-xl cursor-pointer bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors duration-200 shadow-sm'>Start Test</div>
-                                    <div onClick={() => handleCustomTopic(subject)} className='text-center p-[8px] pl-4 pr-4 rounded-xl cursor-pointer font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border border-slate-200 dark:border-slate-600'>Customize Topics</div>
+                                <div className='flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-2'>
+                                    <div onClick={() => handleTest(subject)} className='grow text-center py-2.5 rounded-xl cursor-pointer bg-indigo-600 text-white font-bold hover:bg-indigo-700 transition-colors duration-200 shadow-sm text-sm'>Start Test</div>
+                                    <div onClick={() => handleCustomTopic(subject)} className='text-center py-2.5 px-4 rounded-xl cursor-pointer font-bold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200 border border-slate-200 dark:border-slate-600 text-sm'>Customize Topics</div>
                                 </div>
                             </div>
                         </div>

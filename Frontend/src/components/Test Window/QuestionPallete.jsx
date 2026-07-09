@@ -16,7 +16,7 @@ const LegendItem = ({ color, text }) => (
 );
 
 export const QuestionPalette = ({ questions, questionStatus, currentQuestionIndex, setCurrentQuestionIndex, activeTest, handleSubmitTest}) => {
-    const [isPaletteOpen, setIsPaletteOpen] = useState(true);
+    const [isPaletteOpen, setIsPaletteOpen] = useState(window.innerWidth >= 768);
 
     // Group questions by Subject for display headers in the palette
     const structuredQuestions = useMemo(() => {
@@ -59,13 +59,13 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
             {/* Toggle Button for mobile/tablet (Hidden on desktop) */}
             <button
                 onClick={() => setIsPaletteOpen(!isPaletteOpen)}
-                className={`fixed top-4 right-4 z-50 p-3 rounded-full shadow-xl transition-colors md:hidden ${isPaletteOpen ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}`}
+                className={`fixed bottom-24 right-6 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 md:hidden flex items-center justify-center ${isPaletteOpen ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}`}
                 title={isPaletteOpen ? "Hide Palette" : "Show Palette"}
             >
                 {isPaletteOpen ? (
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 ) : (
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2004/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 )}
             </button>
 

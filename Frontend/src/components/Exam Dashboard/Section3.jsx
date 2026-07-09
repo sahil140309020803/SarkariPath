@@ -88,7 +88,7 @@ const Section3 = () => {
             const dynamicProgress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             return (
-          <div key={idx} className='bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 transition-colors shadow-sm'>
+          <div key={idx} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 sm:p-6 transition-colors shadow-sm">
             <div className='flex items-center gap-4 mb-5'>
               <div className='p-3 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700'>
                 {getSubjectIcon(subject)}

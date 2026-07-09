@@ -5,7 +5,7 @@ import Authentication from './pages/Authentication'
 import ExamDash from './pages/ExamDash'
 import { ToastContainer } from 'react-toastify'
 // import { AppContent } from './context/AppContext'
-import Loading from './components/Loading'
+import BeautifulLoadingScreen from './components/BeautifulLoadingScreen'
 import AdminPage from './pages/AdminPage'
 import { useAuth } from './context/AuthContext'
 import TestInstruction from './components/Test Window/TestInstruction'
@@ -33,7 +33,7 @@ const App = () => {
         </Route>
         <Route path='/analysis/:submissionId' element={<Analysis />} />
       </Routes>
-      {isLoading && <Loading />}
+      {isLoading && <BeautifulLoadingScreen message="Initializing session..." />}
     </div>
   )
 }

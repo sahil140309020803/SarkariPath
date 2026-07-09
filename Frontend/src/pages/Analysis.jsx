@@ -9,6 +9,7 @@ import {
 import { useTestAnalysis } from '../context/TestAnalysisContext';
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar.jsx';
+import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 
 
@@ -167,7 +168,7 @@ const ScoreOverview = ({ data }) => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="text-4xl font-bold text-slate-900 dark:text-white transition-colors">{data.title}</div>
+          <div className="text-2xl sm:text-4xl font-bold text-slate-900 dark:text-white transition-colors">{data.title}</div>
           <span className="inline-block px-3 py-1 mt-2 rounded-full bg-blue-100 dark:bg-indigo-900/30 text-blue-700 dark:text-indigo-400 text-xs font-bold border border-blue-200 dark:border-indigo-800">
             {data.level}
           </span>
@@ -201,7 +202,7 @@ const ScoreOverview = ({ data }) => {
                 {/* Performance Grade Card */}
                 <div className={`${grade.bg} p-5 rounded-2xl flex items-center gap-5 border border-blue-100/50 dark:border-blue-900/30 transition-all hover:scale-[1.02] shadow-sm relative overflow-hidden group`}>
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 dark:bg-black/5 rounded-bl-full -translate-y-6 translate-x-6"></div>
-                  <div className={`text-6xl font-black drop-shadow-md ${grade.color} transition-transform group-hover:scale-110 duration-500`}>
+                  <div className={`text-5xl sm:text-6xl font-black drop-shadow-md ${grade.color} transition-transform group-hover:scale-110 duration-500`}>
                     {grade.label}
                   </div>
                   <div className="flex flex-col">
@@ -228,7 +229,7 @@ const ScoreOverview = ({ data }) => {
                       <Zap size={14} /> Solve Pace
                     </div>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tight">
+                      <span className="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white leading-none tracking-tight">
                         {data.stats.avgTimePerQuestion.toFixed(1)}
                       </span>
                       <span className="text-lg font-bold text-slate-600 dark:text-indigo-400">s</span>
@@ -649,26 +650,25 @@ export default function Analysis() {
   }, [submissionId]);
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 dark:border-indigo-400 mx-auto mb-4"></div>
-          <p className="text-slate-600 dark:text-slate-400 font-medium">Analyzing your performance...</p>
-        </div>
-      </div>
-    );
+    return <BeautifulLoadingScreen message="Analyzing your performance..." />;
   }
 
   if (error || !analysisData) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors">
-        <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-red-100 dark:border-rose-900/30 max-w-md">
+        <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-red-100 dark:border-rose-900/30 max-w-md my-6">
           <XCircle className="w-12 h-12 text-red-500 dark:text-rose-500 mx-auto mb-4" />
           <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Error Loading Analysis</h3>
-          <p className="text-slate-600 dark:text-slate-400 mb-6">{error || "Data not available"}</p>
+          <p className="text-slate-650 dark:text-slate-400 mb-6 text-sm">{error || "Data not available"}</p>
+          <button
+            onClick={() => fetchAnalysisData(submissionId)}
+            className="w-full bg-blue-600 dark:bg-indigo-650 text-white py-3 rounded-xl hover:bg-blue-700 dark:hover:bg-indigo-500 transition shadow-md font-bold cursor-pointer text-sm mb-3"
+          >
+            Retry Loading
+          </button>
           <button
             onClick={() => navigate('/')}
-            className="bg-slate-900 dark:bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-slate-800 dark:hover:bg-indigo-500 transition shadow-md"
+            className="w-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 py-3 rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition shadow-sm font-bold cursor-pointer text-sm"
           >
             Go to Home Page
           </button>

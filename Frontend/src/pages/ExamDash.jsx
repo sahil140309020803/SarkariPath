@@ -5,7 +5,7 @@ import FeatureCard from '../components/Exam Dashboard/FeatureCard';
 import { FaLayerGroup } from "react-icons/fa";
 import { GoGraph } from "react-icons/go";
 import { FaBrain } from "react-icons/fa6";
-import { History, ChevronRight, BookOpen, Layers, Info, ListChecks } from 'lucide-react';
+import { History, ChevronRight, BookOpen, Layers, Info, ListChecks, XCircle } from 'lucide-react';
 import AITopicSumm from '../components/Exam Dashboard/AITopicSumm';
 import Section1 from '../components/Exam Dashboard/Section1';
 import Section2 from '../components/Exam Dashboard/Section2';
@@ -16,6 +16,7 @@ import TestGenerating from '../components/Exam Dashboard/TestGenerating';
 import ExamReadinessCard from '../components/Exam Dashboard/ExamReadinessCard';
 import AITopicSummarizerCard from '../components/Exam Dashboard/AITopicSummarizerCard';
 import { useExam } from '../context/ExamContext';
+import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 const ExamDash = () => {
   const { exam_cat, exam_name } = useParams();
@@ -26,7 +27,9 @@ const ExamDash = () => {
     showCustomTopic,
     showTestGenerate,
     AItopicSummarizer, setAItopicSummarizer,
-    isExamDataFetched
+    isExamDataFetched,
+    isExamLoading,
+    examFetchError
   } = useExam();
 
   const [activeSection, setActiveSection] = useState(0);
@@ -40,7 +43,35 @@ const ExamDash = () => {
 
   useEffect(() => {
     setActiveExamPage(exam_name);
-  }, []);
+    return () => {
+      setActiveExamPage(null);
+    };
+  }, [exam_name]);
+
+  if (isExamLoading || (!isExamDataFetched && !examFetchError)) {
+    return <BeautifulLoadingScreen message={`Loading ${removeSlug(exam_name)} Exam Details...`} />;
+  }
+
+  if (examFetchError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 transition-colors">
+        <div className="text-center p-8 bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-red-100 dark:border-rose-900/30 max-w-md my-6">
+          <XCircle className="w-12 h-12 text-red-500 dark:text-rose-500 mx-auto mb-4" />
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">Error Loading Exam Details</h3>
+          <p className="text-slate-650 dark:text-slate-400 mb-6 text-sm">{examFetchError}</p>
+          <button
+            onClick={() => {
+              setActiveExamPage(null); // trigger reset
+              setTimeout(() => setActiveExamPage(exam_name), 50);
+            }}
+            className="w-full bg-blue-600 dark:bg-indigo-650 text-white py-3 rounded-xl hover:bg-blue-700 dark:hover:bg-indigo-500 transition shadow-md font-bold cursor-pointer text-sm"
+          >
+            Retry Loading
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const historyData = isExamDataFetched?.testHistory || [];
 
@@ -71,16 +102,16 @@ const ExamDash = () => {
       <Navbar />
 
       {/* Premium Hero Section */}
-      <div className='relative w-full bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 pt-28 pb-40 px-6 text-center overflow-hidden border-b border-indigo-900/50'>
+      <div className='relative w-full bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 pt-24 pb-32 sm:pb-40 px-6 text-center overflow-hidden border-b border-indigo-900/50'>
         {/* Abstract Background Elements */}
         <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-indigo-500/15 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"></div>
         <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-fuchsia-600/15 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
 
         <div className='relative z-10 animate-fadeInUp'>
-          <h1 className='font-extrabold text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-lg capitalize'>
+          <h1 className='font-extrabold text-3xl sm:text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-lg capitalize'>
             {removeSlug(exam_name)} Exam
           </h1>
-          <p className='text-lg md:text-xl text-indigo-200/90 font-medium max-w-2xl mx-auto drop-shadow'>
+          <p className='text-base sm:text-lg md:text-xl text-indigo-200/90 font-medium max-w-2xl mx-auto drop-shadow'>
             Your path to success starts here. Target your weaknesses and build momentum.
           </p>
         </div>
@@ -109,11 +140,11 @@ const ExamDash = () => {
       <div className='max-w-6xl mx-auto w-full px-6 mt-16 flex flex-col gap-10'>
 
         {/* Modern Segmented Navigation Tabs */}
-        <div id="navigation-tabs" className="relative bg-white dark:bg-slate-800/80 backdrop-blur border border-gray-200 dark:border-slate-700 p-1.5 rounded-2xl flex flex-col sm:flex-row shadow-sm transition-colors mx-auto w-full max-w-3xl">
+        <div id="navigation-tabs" className="relative bg-white dark:bg-slate-800/80 backdrop-blur border border-gray-200 dark:border-slate-700 p-1.5 rounded-2xl flex flex-row shadow-sm transition-colors mx-auto w-full max-w-3xl">
           
-          {/* Sliding Indicator (Desktop Only) */}
+          {/* Sliding Indicator */}
           <div 
-            className="absolute top-1.5 bottom-1.5 left-1.5 rounded-xl bg-indigo-600 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-md hidden sm:block z-0"
+            className="absolute top-1.5 bottom-1.5 left-1.5 rounded-xl bg-indigo-600 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-md z-0"
             style={{
               width: 'calc((100% - 12px) / 3)',
               transform: `translateX(${activeSection * 100}%)`
@@ -121,19 +152,19 @@ const ExamDash = () => {
           ></div>
 
           {[
-            { id: 0, label: "Mock Test", icon: <BookOpen size={18} /> },
-            { id: 1, label: "Subject Wise Mock", icon: <Layers size={18} /> },
-            { id: 2, label: "Syllabus Tracker", icon: <ListChecks size={18} /> }
+            { id: 0, label: "Mock Test", icon: <BookOpen className="w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" /> },
+            { id: 1, label: "Subject Wise Mock", icon: <Layers className="w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" /> },
+            { id: 2, label: "Syllabus Tracker", icon: <ListChecks className="w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" /> }
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveSection(tab.id)}
-              className={`relative z-10 flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm md:text-base font-semibold transition-colors duration-300 ${activeSection === tab.id
-                ? 'text-white bg-indigo-600 sm:bg-transparent shadow-md sm:shadow-none'
-                : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 sm:hover:bg-transparent dark:hover:bg-slate-700/50 sm:dark:hover:bg-transparent hover:text-gray-900 sm:hover:text-indigo-600 dark:hover:text-white sm:dark:hover:text-indigo-400'
+              className={`relative z-10 flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 px-1 sm:px-4 rounded-xl text-[9px] xs:text-[11px] sm:text-sm md:text-base font-bold transition-colors duration-300 ${activeSection === tab.id
+                ? 'text-white bg-transparent shadow-none'
+                : 'text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400'
                 }`}
             >
-              {tab.icon} {tab.label}
+              {tab.icon} <span className="truncate">{tab.label}</span>
             </button>
           ))}
         </div>
@@ -151,7 +182,7 @@ const ExamDash = () => {
             </div>
           )}
           {activeSection === 2 && (
-            <div className="animate-in fade-in zoom-in-95 duration-300 bg-white dark:bg-slate-900 rounded-3xl p-8 border border-gray-200 dark:border-slate-800 shadow-sm transition-colors">
+            <div className="animate-in fade-in zoom-in-95 duration-300 bg-transparent sm:bg-white sm:dark:bg-slate-900 rounded-3xl p-0 sm:p-8 border border-none sm:border-gray-200 sm:dark:border-slate-800 shadow-none sm:shadow-sm transition-colors">
               <Section3 />
             </div>
           )}

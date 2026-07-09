@@ -38,7 +38,7 @@ const ExamsList = ({ examList, title }) => {
           <div className="p-3 bg-indigo-50 dark:bg-slate-800 text-indigo-600 dark:text-cyan-400 rounded-full mb-4 transition-colors">
              <Target size={28} />
           </div>
-          <h2 className='font-extrabold text-3xl text-slate-800 dark:text-white text-center tracking-tight mb-2 transition-colors'>
+          <h2 className='font-extrabold text-2xl sm:text-3xl text-slate-800 dark:text-white text-center tracking-tight mb-2 transition-colors'>
             Select Your Exam
           </h2>
           <p className='text-slate-500 dark:text-slate-400 font-medium text-center max-w-sm transition-colors'>

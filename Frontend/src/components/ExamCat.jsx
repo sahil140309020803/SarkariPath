@@ -14,10 +14,10 @@ const ExamCat = () => {
               <div className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 dark:bg-slate-800 border border-blue-200 dark:border-slate-700 text-blue-700 dark:text-cyan-400 font-semibold text-sm transition-colors'>
                  <Compass size={16} className="text-blue-600 dark:text-cyan-400" /> Discover Your Path
               </div>
-              <h2 className='font-extrabold text-4xl sm:text-5xl text-slate-800 dark:text-white tracking-tight transition-colors'>
+              <h2 className='font-extrabold text-2xl sm:text-4xl md:text-5xl text-slate-800 dark:text-white tracking-tight transition-colors'>
                 Popular Exam Categories
               </h2>
-              <p className='text-slate-500 dark:text-slate-400 text-lg sm:text-xl max-w-2xl font-medium transition-colors'>
+              <p className='text-slate-500 dark:text-slate-400 text-base sm:text-lg md:text-xl max-w-2xl font-medium transition-colors'>
                 Choose from our most popular government exam categories and start your journey towards success today.
               </p>
             </div>

@@ -4,7 +4,11 @@ import { usersDbConnection } from "../config/mongo_config.js";
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false },
+    googleId: { type: String, unique: true, sparse: true },
+    provider: { type: String, enum: ['local', 'google'], default: 'local' },
+    emailVerified: { type: Boolean, default: false },
+    profilePicture: { type: String },
     testHistory: [
         {
             submissionId: {
