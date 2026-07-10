@@ -9,39 +9,7 @@ const userSchema = new mongoose.Schema({
     provider: { type: String, enum: ['local', 'google'], default: 'local' },
     emailVerified: { type: Boolean, default: false },
     verifiedAt: { type: Date },
-    profilePicture: { type: String },
-    testHistory: [
-        {
-            submissionId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true
-            },
-            testId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true
-            },
-            examId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true
-            },
-            status: { type: String, enum: ['Paused', 'Completed'], required: true },
-            title: { type: String, required: true },
-            score: { type: Number, required: true },
-            maxPossibleScore: { type: Number, required: true },
-            accuracy: { type: Number, required: true },
-            attemptedAt: { type: Date, required: true },
-        }
-    ],
-    syllabusProgress: [
-        {
-            examId: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'exams',
-                required: true
-            },
-            completedTopics: [{ type: String }]
-        }
-    ]
+    profilePicture: { type: String }
 }, {
     timestamps: true,
     collection: 'users'

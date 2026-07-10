@@ -1,4 +1,6 @@
 import userModel from "../models/userModel.js";
+import userStatisticsModel from "../models/userStatisticsModel.js";
+import { examModel } from "../models/ExamModel.js";
 
 export const updateSyllabusProgress = async (req, res) => {
     try {
@@ -13,38 +15,83 @@ export const updateSyllabusProgress = async (req, res) => {
             return res.json({ success: false, message: "User not found" });
         }
 
-        // Initialize if doesn't exist (for existing users)
-        if (!user.syllabusProgress) {
-            user.syllabusProgress = [];
+        const exam = await examModel.findById(examId);
+        if (!exam) {
+            return res.json({ success: false, message: "Exam not found" });
         }
 
-        const progressIndex = user.syllabusProgress.findIndex(p => p.examId.toString() === examId);
-        
-        if (progressIndex === -1) {
-            // Exam not found in progress, add it with the topic
-            user.syllabusProgress.push({
-                examId,
-                completedTopics: [topicName]
-            });
-        } else {
-            // Exam found, toggle topic
-            const topicIndex = user.syllabusProgress[progressIndex].completedTopics.indexOf(topicName);
-            if (topicIndex === -1) {
-                user.syllabusProgress[progressIndex].completedTopics.push(topicName);
-            } else {
-                user.syllabusProgress[progressIndex].completedTopics.splice(topicIndex, 1);
+        // Find the subject for topicName inside the exam.Topics object
+        let subjectName = "General";
+        if (exam.Topics && typeof exam.Topics === 'object') {
+            for (const [subjectKey, topicsList] of Object.entries(exam.Topics)) {
+                if (Array.isArray(topicsList) && topicsList.includes(topicName)) {
+                    subjectName = subjectKey;
+                    break;
+                }
             }
         }
 
-        await user.save();
+        let stats = await userStatisticsModel.findOne({ userId: user._id });
+        if (!stats) {
+            stats = new userStatisticsModel({
+                userId: user._id,
+                testsAttempted: 0,
+                averageScore: 0,
+                currentStreak: 0,
+                longestStreak: 0,
+                studyHistory: [],
+                syllabusProgress: []
+            });
+        }
+
+        let examEntry = stats.syllabusProgress.find(p => p.examId.toString() === examId);
+        if (!examEntry) {
+            examEntry = {
+                examId: exam._id,
+                examName: exam.Name,
+                progress: [
+                    {
+                        subjectName,
+                        completedTopics: [topicName]
+                    }
+                ],
+                updatedAt: new Date()
+            };
+            stats.syllabusProgress.push(examEntry);
+        } else {
+            let subjectEntry = examEntry.progress.find(s => s.subjectName === subjectName);
+            if (!subjectEntry) {
+                subjectEntry = {
+                    subjectName,
+                    completedTopics: [topicName]
+                };
+                examEntry.progress.push(subjectEntry);
+            } else {
+                const topicIndex = subjectEntry.completedTopics.indexOf(topicName);
+                if (topicIndex === -1) {
+                    subjectEntry.completedTopics.push(topicName);
+                } else {
+                    subjectEntry.completedTopics.splice(topicIndex, 1);
+                }
+            }
+            examEntry.updatedAt = new Date();
+        }
+
+        await stats.save();
         
-        // Return the updated completed topics for this exam
-        const updatedProgress = user.syllabusProgress.find(p => p.examId.toString() === examId);
+        // Flatten completed topics across all subjects to return to frontend
+        const updatedExamEntry = stats.syllabusProgress.find(p => p.examId.toString() === examId);
+        const completedTopicsList = updatedExamEntry.progress.reduce((acc, sub) => {
+            if (sub.completedTopics) {
+                acc.push(...sub.completedTopics);
+            }
+            return acc;
+        }, []);
 
         return res.json({ 
             success: true, 
             message: "Progress updated", 
-            completedTopics: updatedProgress.completedTopics 
+            completedTopics: completedTopicsList 
         });
 
     } catch (err) {

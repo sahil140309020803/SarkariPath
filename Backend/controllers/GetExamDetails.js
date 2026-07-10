@@ -1,6 +1,7 @@
 import { AI } from "../GenAI/ai.js";
 import { examModel, MockTestModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
+import userStatisticsModel from "../models/userStatisticsModel.js";
 
 const getExamDetailsUsingAI = async (req, res) => {
     const exam = req.params?.id;
@@ -93,12 +94,20 @@ const getExamDetails = async (req, res) => {
                 }));
             }
 
-            // Fetch syllabus progress from userModel
-            const user = await userModel.findOne({ email: userEmail }).select('syllabusProgress');
-            if (user && user.syllabusProgress) {
-                const progressEntry = user.syllabusProgress.find(item => item.examId.toString() === examData._id.toString());
-                if (progressEntry && progressEntry.completedTopics) {
-                    syllabusProgress = progressEntry.completedTopics;
+            // Fetch syllabus progress from UserStatistics
+            const userDoc = await userModel.findOne({ email: userEmail }).select('_id');
+            if (userDoc) {
+                const stats = await userStatisticsModel.findOne({ userId: userDoc._id }).select('syllabusProgress');
+                if (stats && stats.syllabusProgress) {
+                    const progressEntry = stats.syllabusProgress.find(item => item.examId.toString() === examData._id.toString());
+                    if (progressEntry && progressEntry.progress) {
+                        syllabusProgress = progressEntry.progress.reduce((acc, sub) => {
+                            if (sub.completedTopics) {
+                                acc.push(...sub.completedTopics);
+                            }
+                            return acc;
+                        }, []);
+                    }
                 }
             }
         }

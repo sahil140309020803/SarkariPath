@@ -1,5 +1,6 @@
 import { MockTestModel, QuestionModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
+import userStatisticsModel from "../models/userStatisticsModel.js";
 
 const MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS = 10 * 60 * 1000;
 
@@ -176,26 +177,84 @@ export const submitTest = async (req, res) => {
             });
         }
 
-        // Updating user's test history
-        await userModel.findOneAndUpdate(
-            { email: userEmail },
-            {
-                $push: {
-                    testHistory: {
-                        submissionId: newSubmission._id,
-                        testId: testId,
-                        examId: mockTest.ExamId,
-                        status: 'Completed',
-                        title: mockTest.Title,
-                        score: finalScore,
-                        maxPossibleScore: maxScore,
-                        accuracy: accuracy,
-                        attemptedAt: newSubmission.createdAt,
-                        expireAt: mockTest.expireAt
+        // Updating user statistics (UserStatistics collection)
+        try {
+            if (user) {
+                let stats = await userStatisticsModel.findOne({ userId: user._id });
+                if (!stats) {
+                    stats = new userStatisticsModel({
+                        userId: user._id,
+                        testsAttempted: 0,
+                        averageScore: 0,
+                        currentStreak: 0,
+                        longestStreak: 0,
+                        dailyStatistics: [],
+                        syllabusProgress: []
+                    });
+                }
+
+                // Increment tests attempted
+                stats.testsAttempted += 1;
+
+                // Update rolling average score using the formula:
+                // stats.averageScore = ((oldAverage * oldTests) + testSubmission.accuracy) / (oldTests + 1)
+                const oldTestsCount = stats.testsAttempted - 1;
+                const oldAverage = stats.averageScore || 0;
+                stats.averageScore = ((oldAverage * oldTestsCount) + accuracy) / stats.testsAttempted;
+
+                // Total study time conversion
+                const minutes = Math.ceil((timeTaken || 0) / 60);
+
+                // Date string helpers (local timezone)
+                const getLocalDateString = (date) => {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+
+                const todayStr = getLocalDateString(new Date());
+                const yesterdayStr = getLocalDateString(new Date(Date.now() - 24 * 60 * 60 * 1000));
+
+                let todayEntry = stats.dailyStatistics.find(h => h.date === todayStr);
+                const isFirstStudyOfToday = !todayEntry;
+                if (todayEntry) {
+                    todayEntry.studyMinutes += minutes;
+                    todayEntry.testsAttempted += 1;
+                } else {
+                    stats.dailyStatistics.push({
+                        date: todayStr,
+                        testsAttempted: 1,
+                        studyMinutes: minutes
+                    });
+                }
+
+                // Streak calculation logic
+                stats.dailyStatistics.sort((a, b) => a.date.localeCompare(b.date));
+                const historyBeforeToday = stats.dailyStatistics.filter(h => h.date !== todayStr);
+                const lastStudyEntry = historyBeforeToday.length > 0 ? historyBeforeToday[historyBeforeToday.length - 1] : null;
+
+                if (!lastStudyEntry) {
+                    stats.currentStreak = 1;
+                } else if (lastStudyEntry.date === yesterdayStr) {
+                    if (isFirstStudyOfToday) {
+                        stats.currentStreak += 1;
+                    }
+                } else {
+                    if (isFirstStudyOfToday) {
+                        stats.currentStreak = 1;
                     }
                 }
+
+                // Longest Streak calculation
+                stats.longestStreak = Math.max(stats.longestStreak || 0, stats.currentStreak || 0);
+
+                await stats.save();
+                console.log("UserStatistics updated successfully for user:", user._id);
             }
-        ).catch(err => console.error("Failed to update user stats:", err.message));
+        } catch (err) {
+            console.error("Failed to update UserStatistics:", err.message);
+        }
 
         res.status(200).json({ success: true, result: newSubmission });
 

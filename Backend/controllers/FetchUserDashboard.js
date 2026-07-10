@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import userModel from '../models/userModel.js';
-import { TestSubmissionModel, QuestionModel, examModel } from '../models/ExamModel.js';
+import userStatisticsModel from '../models/userStatisticsModel.js';
+import { TestSubmissionModel, examModel } from '../models/ExamModel.js';
 
 export const getUserDashboardData = async (req, res) => {
     const { userId } = req.params;
@@ -8,13 +9,13 @@ export const getUserDashboardData = async (req, res) => {
     try {
         let user;
         if (mongoose.Types.ObjectId.isValid(userId)) {
-            user = await userModel.findById(userId).select('-password');
+            user = await userModel.findById(userId).select('name email');
         }
         if (!user) {
-            user = await userModel.findOne({ email: userId }).select('-password');
+            user = await userModel.findOne({ email: userId }).select('name email');
         }
         if (!user) {
-            user = await userModel.findOne({ email: { $regex: userId, $options: 'i' } }).select('-password');
+            user = await userModel.findOne({ email: { $regex: userId, $options: 'i' } }).select('name email');
         }
 
         if (!user) {
@@ -24,200 +25,70 @@ export const getUserDashboardData = async (req, res) => {
 
         console.log(`✅ Found User: ${user.name} (ID: ${user._id})`);
 
+        // Get or instantiate UserStatistics
+        let stats = await userStatisticsModel.findOne({ userId: user._id });
+        if (!stats) {
+            stats = new userStatisticsModel({
+                userId: user._id,
+                testsAttempted: 0,
+                averageScore: 0,
+                currentStreak: 0,
+                longestStreak: 0,
+                dailyStatistics: [],
+                syllabusProgress: []
+            });
+            await stats.save();
+        }
+
+        // Fetch recent 5 test submissions
         const possibleUserIds = [
-            user._id,
             user._id.toString(),
             user.email
         ];
+        const recentSubmissions = await TestSubmissionModel.find({ 
+            userId: { $in: possibleUserIds } 
+        })
+        .populate('testId', 'Title')
+        .sort({ createdAt: -1 })
+        .limit(5)
+        .lean();
 
-        const [totalQuestionsStats, submissionAnalytics] = await Promise.all([
-            QuestionModel.aggregate([
-                { $group: { _id: "$Difficulty", count: { $sum: 1 } } }
-            ]),
-
-            TestSubmissionModel.aggregate([
-                { 
-                    $match: { 
-                        userId: { $in: possibleUserIds }
-                    } 
-                },
-                {
-                    $facet: {
-                        "subjectStats": [
-                            { $unwind: "$sectionAnalysis" },
-                            { 
-                                $group: {
-                                    _id: "$sectionAnalysis.subject",
-                                    avgAccuracy: { $avg: "$sectionAnalysis.accuracy" },
-                                    totalAttempts: { $sum: 1 }
-                                }
-                            },
-                            { $sort: { avgAccuracy: -1 } }
-                        ],
-                        "dailyActivity": [
-                            { 
-                                $group: {
-                                    _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-                                    count: { $sum: 1 }
-                                }
-                            },
-                            { $sort: { _id: 1 } }
-                        ],
-                        "solvedStats": [
-                            { $unwind: "$responses" },
-                            { $match: { "responses.status": "correct" } },
-                            { 
-                                $group: { 
-                                    _id: "$responses.questionId",
-                                    difficulty: { $first: "unknown" }
-                                } 
-                            },
-                            {
-                                $lookup: {
-                                    from: "questions",
-                                    localField: "_id",
-                                    foreignField: "_id",
-                                    as: "qDetails"
-                                }
-                            },
-                            { $unwind: "$qDetails" },
-                            {
-                                $group: {
-                                    _id: "$qDetails.Difficulty",
-                                    count: { $sum: 1 }
-                                }
-                            }
-                        ],
-                        "globalStats": [
-                            {
-                                $group: {
-                                    _id: null,
-                                    totalTests: { $sum: 1 },
-                                    totalQuestionsSolved: { $sum: "$correctCount" },
-                                    avgAccuracy: { $avg: "$accuracy" }
-                                }
-                            }
-                        ]
-                    }
-                }
-            ])
-        ]);
-
-        const analytics = submissionAnalytics[0];
-
-        const totalMap = {};
-        totalQuestionsStats.forEach(item => totalMap[item._id] = item.count);
-
-        const solvedMap = {};
-        if (analytics.solvedStats) {
-            analytics.solvedStats.forEach(item => solvedMap[item._id] = item.count);
-        }
-
-        const solvedProgress = {
-            totalSolved: (solvedMap['Easy']||0) + (solvedMap['Medium']||0) + (solvedMap['Hard']||0),
-            totalQuestions: (totalMap['Easy']||0) + (totalMap['Medium']||0) + (totalMap['Hard']||0),
-            details: {
-                easy: { count: solvedMap['Easy'] || 0, total: totalMap['Easy'] || 0 },
-                medium: { count: solvedMap['Medium'] || 0, total: totalMap['Medium'] || 0 },
-                hard: { count: solvedMap['Hard'] || 0, total: totalMap['Hard'] || 0 },
-            }
-        };
-
-        const subjectMastery = {
-            subjects: (analytics.subjectStats || []).slice(0, 3).map(sub => ({
-                subject: sub._id,
-                accuracy: Math.round(sub.avgAccuracy)
-            })),
-            focusArea: (analytics.subjectStats && analytics.subjectStats.length > 0)
-                ? analytics.subjectStats.sort((a,b) => a.avgAccuracy - b.avgAccuracy)[0]._id 
-                : "None"
-        };
-
-        const heatmapData = (analytics.dailyActivity || []).map(day => ({
-            date: day._id,
-            count: day.count,
-            intensity: day.count >= 4 ? 4 : day.count
-        }));
-        
-        const totalSubmissions = heatmapData.reduce((sum, day) => sum + day.count, 0);
-
-        const history = user.testHistory || [];
-        
+        // Get unique exams mapped to names for recent activity title formatting
         const uniqueExamIds = [...new Set(
-            history
-                .map(h => h.examId)
+            recentSubmissions
+                .map(sub => sub.examId)
                 .filter(id => id && mongoose.Types.ObjectId.isValid(id))
         )];
 
         const exams = await examModel.find({ _id: { $in: uniqueExamIds } }).select('Name');
-        
         const examMap = {};
         exams.forEach(exam => {
             examMap[exam._id.toString()] = exam.Name;
         });
 
-        const recentActivity = history
-            .sort((a, b) => new Date(b.attemptedAt) - new Date(a.attemptedAt))
-            .slice(0, 5)
-            .map(test => {
-                const examName = examMap[test.examId?.toString()] || "Custom Test";
-                return {
-                    title: `${examName} - ${test.title}`, 
-                    qs: `${test.score}/${test.maxPossibleScore} Marks`,
-                    time: test.attemptedAt,
-                    score: `${Math.round(test.accuracy)}%`,
-                    status: test.status
-                };
-            });
-        
-        const globalParams = analytics.globalStats[0] || { totalTests: 0, totalQuestionsSolved: 0, avgAccuracy: 0 };
-
-        // Current Streak calculation
-        let currentStreak = 0;
-        let maxStreak = 0;
-        let lastDate = null;
-        heatmapData.sort((a, b) => new Date(a.date) - new Date(b.date));
-        heatmapData.forEach(day => {
-            const dayDate = new Date(day.date);
-            if (!lastDate) {
-                lastDate = dayDate;
-                currentStreak = 1;
-            } else {
-                const diffTime = dayDate - lastDate;
-                const diffDays = diffTime / (1000 * 60 * 60 * 24);
-                if (diffDays === 1) {
-                    currentStreak++;
-                } else if (diffDays > 1) {
-                    currentStreak = 1;
-                }
-            }
-            lastDate = dayDate;
-            maxStreak = Math.max(maxStreak, currentStreak);
+        const recentActivity = recentSubmissions.map(test => {
+            const examName = examMap[test.examId?.toString()] || "Custom Test";
+            return {
+                title: `${examName} - ${test.testId?.Title || 'Mock Test'}`, 
+                qs: `${test.correctCount}/${test.maxPossibleScore} Marks`,
+                time: test.createdAt,
+                score: `${Math.round(test.accuracy)}%`,
+                status: 'Completed'
+            };
         });
 
-        
-        res.status(200).json({
+        return res.status(200).json({
+            success: true,
             user: {
                 name: user.name,
                 handle: user.email.split('@')[0],
-                rank: '-',
-                rankTotal: '-'
+                email: user.email
             },
-            communityStats: {
-                tests: globalParams.totalTests,
-                questions: globalParams.totalQuestionsSolved,
-                avgScore: Math.round(globalParams.avgAccuracy * 10) / 10,
-                badges: 6
-            },
-            solvedProgress,
-            subjectMastery,
-            currentStreak,
-            heatmap: {
-                data: heatmapData,
-                totalSubmissions,
-                activeDays: heatmapData.length,
-                maxStreak: maxStreak
-            },
+            testsAttempted: stats.testsAttempted,
+            averageScore: Math.round(stats.averageScore * 10) / 10,
+            currentStreak: stats.currentStreak,
+            longestStreak: stats.longestStreak,
+            dailyStatistics: stats.dailyStatistics,
             recentActivity
         });
 
