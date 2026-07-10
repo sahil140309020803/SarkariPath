@@ -55,11 +55,14 @@ const SignIn = ({ isLoaded }) => {
           autoClose: 2500
         });
         navigate('/');
+      } else if (data.unverified) {
+        toast.info(data.message || "Please verify your email.");
+        navigate('/verify-email', { state: { email } });
       } else {
         toast.error(data.message);
       }
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.response?.data?.message || err.message);
     }
     setIsLoading(false);
   }
@@ -69,7 +72,7 @@ const SignIn = ({ isLoaded }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full h-full justify-start items-center text-center">
       <div
-        className={`w-full mb-6 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        className={`w-full mb-4 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: getDelay(100) }}
       >
         <div className="font-bold text-2xl sm:text-3xl text-gray-800 dark:text-white mb-1.5 transition-colors">
@@ -87,6 +90,16 @@ const SignIn = ({ isLoaded }) => {
         <InputField id="password" label="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
 
+      <div className={`w-full text-right mb-4 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: getDelay(350) }}>
+        <button
+          type="button"
+          onClick={() => navigate('/forgot-password')}
+          className="text-xs sm:text-sm font-semibold text-indigo-600 hover:text-indigo-750 dark:text-cyan-400 dark:hover:text-cyan-300 transition-colors cursor-pointer"
+        >
+          Forgot Password?
+        </button>
+      </div>
+
       <div className={`w-full mt-auto transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: getDelay(400) }}>
         <button
           type="submit"
@@ -102,7 +115,7 @@ const SignIn = ({ isLoaded }) => {
           <span className="px-3 text-xs text-gray-500 dark:text-slate-400 font-semibold uppercase tracking-wider">or</span>
           <div className="flex-1 border-t border-gray-300 dark:border-slate-700"></div>
         </div>
-        
+
         <div className="relative w-full max-w-[350px] mx-auto h-[44px] rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.01] shadow-sm hover:shadow">
           {/* Custom Styled Google button UI */}
           <button

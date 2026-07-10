@@ -50,7 +50,7 @@ const Navbar = () => {
               <div className="absolute inset-0 bg-blue-500 rounded-full blur/20 group-hover:blur/40 transition-all opacity-20"></div>
               <img src={LOGO} alt="logo" className="w-12 h-12 relative transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300 object-contain" />
             </div>
-            <div className="font-extrabold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
+            <div className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
               Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span>
             </div>
           </div>

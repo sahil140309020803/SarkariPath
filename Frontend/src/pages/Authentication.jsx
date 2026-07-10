@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 
-const Authentication = ({initialIsLogin}) => {
+const Authentication = ({ initialIsLogin }) => {
   const [isLogin, setIsLogin] = useState(initialIsLogin);
   const [isLoaded, setIsLoaded] = useState(false);
   // const {isLoggedIn, setIsLoggedIn} = useContext(AppContent);
@@ -24,7 +24,7 @@ const Authentication = ({initialIsLogin}) => {
   }, []);
 
   useEffect(() => {
-    if(isLoggedIn) {
+    if (isLoggedIn) {
       navigate('/');
     }
   }, [isLoggedIn]);
@@ -34,7 +34,7 @@ const Authentication = ({initialIsLogin}) => {
       <div className={`w-full max-w-xl max-h-[96dvh] bg-white dark:bg-slate-900 rounded-2xl border border-gray-200 dark:border-slate-800 shadow-2xl shadow-gray-300 dark:shadow-none relative overflow-hidden p-8 transition-all duration-700 ease-out flex flex-col gap-3 ${isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
 
         <div className={`flex flex-col items-center justify-center transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-          <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-200 mb-4">
+          <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center  mb-2">
             <img src={LOGO} alt="logo" className='w-16 h-16 text-white' />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white transition-colors">SarkariPath</h2>

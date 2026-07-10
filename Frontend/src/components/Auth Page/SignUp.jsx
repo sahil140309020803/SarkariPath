@@ -21,7 +21,7 @@ const SignUp = ({ isLoaded }) => {
   const { isLoggedIn, setIsLoggedIn, backend_url } = useAuth();
   const { theme } = useTheme();
   const navigate = useNavigate();
-  
+
 
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
   const getDelay = (base) => isLoaded ? `${base}ms` : '0ms';
@@ -61,17 +61,13 @@ const SignUp = ({ isLoaded }) => {
       await delay(1500);
       const { data } = await axios.post(`${backend_url}/api/auth/user/register`, { name, email, password });
       if (data.success) {
-        setIsLoggedIn(true);
-        toast.success(data.message, {
-          autoClose: 2500
-        });
-        navigate('/');
+        toast.success(data.message || "Registration successful! Please verify your email.");
+        navigate('/verify-email', { state: { email } });
       } else {
         toast.error(data.message);
       }
-
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.response?.data?.message || err.message);
     }
     setIsLoading(false);
   }
@@ -80,7 +76,7 @@ const SignUp = ({ isLoaded }) => {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col w-full h-full justify-start items-center text-center">
       <div
-        className={`w-full mb-6 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+        className={`w-full mb-2 transition-all duration-500 ease-out ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         style={{ transitionDelay: getDelay(100) }}
       >
         <div className="font-bold text-2xl sm:text-3xl text-gray-800 dark:text-white mb-1.5 transition-colors">Get Started</div>
@@ -113,7 +109,7 @@ const SignUp = ({ isLoaded }) => {
           <span className="px-3 text-xs text-gray-500 dark:text-slate-400 font-semibold uppercase tracking-wider">or</span>
           <div className="flex-1 border-t border-gray-300 dark:border-slate-700"></div>
         </div>
-        
+
         <div className="relative w-full max-w-[350px] mx-auto h-[44px] rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.01] shadow-sm hover:shadow">
           {/* Custom Styled Google button UI */}
           <button

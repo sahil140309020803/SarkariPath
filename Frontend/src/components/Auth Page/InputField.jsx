@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaUser, FaUserShield, FaEye, FaEyeSlash  } from "react-icons/fa";
+import { FaUser, FaUserShield, FaEye, FaEyeSlash } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
 
@@ -10,7 +10,7 @@ const InputField = ({ id, label, type = 'text', value, onChange, delay }) => {
 
   return (
     <div
-      className="relative w-full my-3 transition-all duration-500 ease-out"
+      className="relative w-full my-2 transition-all duration-500 ease-out"
       style={{ transitionDelay: delay }}
     >
       <div className='flex'>

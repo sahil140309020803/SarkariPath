@@ -4,6 +4,12 @@ import userModel from "../models/userModel.js";
 import adminModel from "../models/adminModel.js";
 import { OAuth2Client } from 'google-auth-library';
 import fs from 'fs';
+import otpModel from "../models/otpModel.js";
+import { sendOtpEmail, sendForgotPasswordOtpEmail } from "../utils/emailService.js";
+
+const generateOtp = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+};
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -50,18 +56,27 @@ const register = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await new userModel({name, email, password:hashedPassword});
+        const user = new userModel({name, email, password:hashedPassword, emailVerified: false});
         await user.save();
 
-        const token = jwt.sign({email: email, role: 'user'}, process.env.JWT_SECRET, {expiresIn: '1d'});
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none": "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000, // milliseconds i.e 1 day
-        })
+        // Delete previous OTP if any
+        await otpModel.deleteOne({ email });
 
-        return res.json({success: true, message: "User created successfully", token: token, role: 'user'});
+        // Generate 6-digit OTP
+        const otp = generateOtp();
+
+        // Store OTP
+        const otpRecord = new otpModel({ email, otp });
+        await otpRecord.save();
+
+        // Send OTP using Nodemailer
+        await sendOtpEmail(email, otp);
+
+        return res.json({
+            success: true, 
+            unverified: true, 
+            message: "OTP sent to your email. Please verify."
+        });
     } catch(err) {
         return res.json({success: false, message: err.message});
     }
@@ -98,9 +113,34 @@ const userLogin = async (req, res) => {
         if(!user) {
             return res.json({success: false, message: "User not found"});
         }
+
+        if (user.provider === 'google' || user.googleId) {
+            return res.json({
+                success: false,
+                message: "This account is linked with Google. Please use Continue with Google to sign in."
+            });
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) {
             return res.json({success: false, message: "Invalid Password"});
+        }
+
+        if(!user.emailVerified) {
+            // Delete previous OTP if any
+            await otpModel.deleteOne({ email });
+
+            // Generate 6-digit OTP
+            const otp = generateOtp();
+
+            // Store OTP
+            const otpRecord = new otpModel({ email, otp });
+            await otpRecord.save();
+
+            // Send OTP using Nodemailer
+            await sendOtpEmail(email, otp);
+
+            return res.json({ success: false, unverified: true, email: email, message: "Email is not verified. A new OTP has been sent." });
         }
 
         const token = jwt.sign({email: email, role: 'user'}, process.env.JWT_SECRET, {expiresIn: '1d'});
@@ -115,6 +155,86 @@ const userLogin = async (req, res) => {
 
     } catch(err) {
         return res.json({success: false, message: err.message});
+    }
+}
+
+const verifyOtp = async (req, res) => {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+        return res.json({ success: false, message: "Email and OTP are required" });
+    }
+
+    try {
+        const otpRecord = await otpModel.findOne({ email });
+        if (!otpRecord) {
+            return res.json({ success: false, message: "OTP expired or invalid" });
+        }
+
+        if (otpRecord.otp !== otp) {
+            return res.json({ success: false, message: "Invalid OTP" });
+        }
+
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        user.emailVerified = true;
+        user.verifiedAt = new Date();
+        await user.save();
+
+        await otpModel.deleteOne({ email });
+
+        const token = jwt.sign({ email: email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+            maxAge: 1 * 24 * 60 * 60 * 1000,
+        });
+
+        return res.json({
+            success: true,
+            message: "Email verified successfully",
+            token: token,
+            role: 'user',
+            userDetails: {
+                name: user.name,
+                email: user.email,
+                role: 'user'
+            }
+        });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+}
+
+const resendOtp = async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+        return res.json({ success: false, message: "Email is required" });
+    }
+
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+        if (user.emailVerified) {
+            return res.json({ success: false, message: "Email is already verified" });
+        }
+
+        await otpModel.deleteOne({ email });
+
+        const otp = generateOtp();
+        const otpRecord = new otpModel({ email, otp });
+        await otpRecord.save();
+
+        await sendOtpEmail(email, otp);
+
+        return res.json({ success: true, message: "OTP resent successfully" });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 }
 
@@ -279,11 +399,142 @@ const googleLogin = async (req, res) => {
     }
 };
 
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+        return res.json({ success: false, message: "Email is required" });
+    }
+
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "No account found with this email address." });
+        }
+
+        if (user.provider === "google") {
+            return res.json({
+                success: false,
+                message: "This account was created using Google Sign-In. Please use Continue with Google to access your account. Password reset is not available for Google accounts."
+            });
+        }
+
+        // Generate 6-digit OTP
+        const otp = generateOtp();
+
+        // Delete previous OTP if any
+        await otpModel.deleteOne({ email });
+
+        // Store new OTP
+        const otpRecord = new otpModel({ email, otp });
+        await otpRecord.save();
+
+        // Send OTP using Nodemailer
+        await sendForgotPasswordOtpEmail(email, otp);
+
+        return res.json({ success: true, message: "OTP sent to your email. Please verify." });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+};
+
+const verifyForgotPasswordOtp = async (req, res) => {
+    const { email, otp } = req.body;
+    if (!email || !otp) {
+        return res.json({ success: false, message: "Email and OTP are required" });
+    }
+
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "No account found with this email address." });
+        }
+
+        if (user.provider === "google") {
+            return res.json({ success: false, message: "Password reset is not available for Google accounts." });
+        }
+
+        const otpRecord = await otpModel.findOne({ email });
+        if (!otpRecord) {
+            return res.json({ success: false, message: "OTP has expired." });
+        }
+
+        if (otpRecord.otp !== otp) {
+            return res.json({ success: false, message: "Invalid OTP." });
+        }
+
+        // Check expiration
+        const expiryTime = 5 * 60 * 1000;
+        const timeElapsed = Date.now() - new Date(otpRecord.createdAt).getTime();
+        if (timeElapsed > expiryTime) {
+            await otpModel.deleteOne({ email });
+            return res.json({ success: false, message: "OTP has expired." });
+        }
+
+        return res.json({ success: true, message: "OTP verified. Please reset your password." });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+};
+
+const resetPassword = async (req, res) => {
+    const { email, otp, password } = req.body;
+    if (!email || !otp || !password) {
+        return res.json({ success: false, message: "All fields are required" });
+    }
+
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "No account found with this email address." });
+        }
+
+        if (user.provider === "google") {
+            return res.json({ success: false, message: "Password reset is not available for Google accounts." });
+        }
+
+        const otpRecord = await otpModel.findOne({ email });
+        if (!otpRecord) {
+            return res.json({ success: false, message: "OTP has expired." });
+        }
+
+        if (otpRecord.otp !== otp) {
+            return res.json({ success: false, message: "Invalid OTP." });
+        }
+
+        // Check expiration
+        const expiryTime = 5 * 60 * 1000;
+        const timeElapsed = Date.now() - new Date(otpRecord.createdAt).getTime();
+        if (timeElapsed > expiryTime) {
+            await otpModel.deleteOne({ email });
+            return res.json({ success: false, message: "OTP has expired." });
+        }
+
+        // Hash new password using bcrypt
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Update User password
+        user.password = hashedPassword;
+        await user.save();
+
+        // Delete used OTP
+        await otpModel.deleteOne({ email });
+
+        return res.json({ success: true, message: "Password updated successfully." });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+};
+
 export {
     adminLogin,
     register,
     userLogin,
     logout,
     isAuthenticated,
-    googleLogin
+    googleLogin,
+    verifyOtp,
+    resendOtp,
+    forgotPassword,
+    verifyForgotPasswordOtp,
+    resetPassword
 };
