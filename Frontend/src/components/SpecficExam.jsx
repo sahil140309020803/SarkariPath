@@ -17,7 +17,7 @@ const SpecficExam = ({ exam, title }) => {
   const handleNav = async () => {
     setIsExamDataFetched(null);
     await delay(500);
-    navigate(`/${createSlug(title)}/${createSlug(exam)}`)
+    navigate(`/c/${createSlug(exam)}`)
   }
 
   return (

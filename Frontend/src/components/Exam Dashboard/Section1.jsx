@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useTestWindow } from '../../context/TestWindowContext';
 
 const Section1 = () => {
-  const { exam_cat, exam_name } = useParams();
   const {
     isExamDataFetched,
     setDifficulty,

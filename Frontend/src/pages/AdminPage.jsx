@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 // --- Imports from the parent 'components' folder ---
 import Sidebar from '../components/AdminPage/Sidebar';
@@ -27,6 +28,10 @@ export default function AdminPage() {
         };
         checkUserRole();
     }, [userDetails, navigate]);
+
+    if (!userDetails || userDetails.role !== 'admin') {
+        return <BeautifulLoadingScreen message="Verifying admin credentials..." />;
+    }
 
     const renderPage = () => {
         switch (activePage) {

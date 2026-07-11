@@ -4,10 +4,12 @@ import { Users, CheckCircle, FileText, Sparkles, Eye, Trash2, PlusCircle, Settin
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useUser } from '../../context/UserContext';
+import BeautifulLoadingScreen from '../BeautifulLoadingScreen';
 
 const Dashboard = () => {
     const chartRef = useRef(null);
     const { backend_url } = useUser();
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState({
         stats: { totalUsers: 0, activeExams: 0, publishedTests: 0, aiQuizzes: 0 },
         testsPerExam: { labels: [], data: [] },
@@ -26,6 +28,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchDashboardData = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`${backend_url}/api/admin/dashboard`, { withCredentials: true });
                 if (response.data.success) {
@@ -33,6 +36,8 @@ const Dashboard = () => {
                 }
             } catch (error) {
                 console.error("Failed to fetch dashboard data:", error);
+            } finally {
+                setLoading(false);
             }
         };
         fetchDashboardData();
@@ -104,6 +109,10 @@ const Dashboard = () => {
             });
         }
     }, [data.testsPerExam]);
+
+    if (loading) {
+        return <BeautifulLoadingScreen message="Authenticating Admin..." />;
+    }
     const handleDownloadReport = () => {
         toast.info("Generating system report...");
         setTimeout(() => {
@@ -168,7 +177,7 @@ const Dashboard = () => {
                         {/* ========================================== */}
                         {/* START: BULK DELETE TRIGGER ICON */}
                         {/* ========================================== */}
-                        <button 
+                        <button
                             onClick={() => setShowBulkDeleteModal(true)}
                             className="opacity-0 group-hover:opacity-100 p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all duration-300"
                             title="Bulk Cleanup"
@@ -249,7 +258,7 @@ const Dashboard = () => {
                                     </div>
                                     <h3 className="text-xl font-bold text-gray-800 dark:text-white">Bulk Quiz Cleanup</h3>
                                 </div>
-                                <button 
+                                <button
                                     onClick={() => setShowBulkDeleteModal(false)}
                                     className="p-1 hover:bg-gray-100 dark:hover:bg-slate-800 rounded-full transition-colors text-gray-400 hover:text-gray-600 dark:hover:text-white"
                                 >
@@ -264,8 +273,8 @@ const Dashboard = () => {
                             <div className="space-y-4">
                                 <div>
                                     <label className="block text-[10px] font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest mb-2">Target Date Range (Up to)</label>
-                                    <input 
-                                        type="date" 
+                                    <input
+                                        type="date"
                                         value={bulkDeleteDate}
                                         onChange={(e) => setBulkDeleteDate(e.target.value)}
                                         className="w-full bg-gray-50 dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm outline-none focus:border-red-500 transition-colors dark:text-white"
@@ -284,13 +293,13 @@ const Dashboard = () => {
                         </div>
 
                         <div className="p-6 bg-gray-50 dark:bg-slate-800/50 border-t border-gray-100 dark:border-slate-800 flex gap-3">
-                            <button 
+                            <button
                                 onClick={() => setShowBulkDeleteModal(false)}
                                 className="flex-1 px-4 py-3 text-sm font-semibold text-gray-600 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700 rounded-xl transition-colors"
                             >
                                 Cancel
                             </button>
-                            <button 
+                            <button
                                 onClick={handleBulkDeleteQuizzes}
                                 disabled={isBulkDeleting || !bulkDeleteDate}
                                 className="flex-[2] px-4 py-3 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-red-500/25 flex items-center justify-center gap-2"

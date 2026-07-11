@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const TestGenerator = () => {
     const { examCatList, backend_url } = useExam();
-    
+
     const [socket, setSocket] = useState(null);
     const [subjects, setSubjects] = useState([{ name: '', count: 1 }]);
     const [recentGenerations, setRecentGenerations] = useState([]);
@@ -46,36 +46,36 @@ const TestGenerator = () => {
     }
     console.log('recentGenerations', recentGenerations);
 
-    const handleDeleteGeneration = async(testId) => {
-        if(!confirm('Are you sure you want to discard this test generation? This action cannot be undone.')) {
+    const handleDeleteGeneration = async (testId) => {
+        if (!confirm('Are you sure you want to discard this test generation? This action cannot be undone.')) {
             return;
         }
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/delete/${testId}`);
             if (data.success) {
-                toast.success('Test generation discarded successfully', {autoClose: 2000});
+                toast.success('Test generation discarded successfully', { autoClose: 2000 });
                 setPreviewTest(null);
                 fetchGenerations();
             } else {
                 alert(data.message);
             }
-        }catch(err) {
+        } catch (err) {
             alert('Failed to discard test generation');
         }
     }
 
-    const handlePublishGeneration = async(testId) => {
+    const handlePublishGeneration = async (testId) => {
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/publish/${testId}`);
             if (data.success) {
-                toast.success('Test generation published successfully', {autoClose: 2000});
+                toast.success('Test generation published successfully', { autoClose: 2000 });
                 fetchGenerations();
             } else {
                 alert(data.message);
             }
-        }catch(err) {
+        } catch (err) {
             alert('Failed to publish test generation');
         }
     }
@@ -97,7 +97,7 @@ const TestGenerator = () => {
             setIsLoading(false);
             setProgress({ count: 0, total: 0 });
             alert(data.message);
-            
+
             const newTest = {
                 title: data.test.Title,
                 date: new Date(data.test.createdAt),
@@ -148,9 +148,9 @@ const TestGenerator = () => {
             if (data.success && data.Subjects) {
                 let initialSubjects = data.Subjects.map(sub => ({ name: sub, count: 1 }));
                 setSubjects(initialSubjects.length > 0 ? initialSubjects : [{ name: '', count: 1 }]);
-                
+
                 // Now attempt to get AI recommendation for question counts
-                if(data.Subjects.length > 0) {
+                if (data.Subjects.length > 0) {
                     try {
                         const curExam = availableExams.find(e => e._id === examId);
                         const examName = curExam ? curExam.Name : 'Competitive Exam';
@@ -165,10 +165,10 @@ const TestGenerator = () => {
                                 count: aiResp.data.countsMap[sub.name] || 1
                             }));
                             setSubjects(initialSubjects);
-                            toast.success("AI auto-populated question breakdown based on latest syllabus!", {autoClose: 2000});
+                            toast.success("AI auto-populated question breakdown based on latest syllabus!", { autoClose: 2000 });
                         }
                     } catch (e) {
-                         console.error("AI question count distribution failed", e);
+                        console.error("AI question count distribution failed", e);
                     }
                 }
             } else {
@@ -200,7 +200,7 @@ const TestGenerator = () => {
 
         setIsLoading(true);
         setProgress({ count: 0, total: totalQuestions });
-        
+
         socket.emit('start_generation', {
             title,
             examId: selectedExam,
@@ -258,7 +258,7 @@ const TestGenerator = () => {
                     <div>
                         <div className="flex justify-between items-center mb-4">
                             <h4 className="text-sm font-semibold text-gray-800 dark:text-slate-200">Subjects Breakdown</h4>
-                            {isAiLoadingCounts && <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2.5 py-1 rounded-full animate-pulse flex items-center gap-1.5"><Sparkles size={12}/> AI analyzing syllabus...</span>}
+                            {isAiLoadingCounts && <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2.5 py-1 rounded-full animate-pulse flex items-center gap-1.5"><Sparkles size={12} /> AI analyzing syllabus...</span>}
                         </div>
                         <div id="subject-list" className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
                             {subjects.map((s, i) => (
@@ -276,28 +276,28 @@ const TestGenerator = () => {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* --- RIGHT SIDE: AI GENERATION --- */}
                 <div className="bg-white dark:bg-slate-900 p-8 rounded-xl border border-gray-200 dark:border-slate-800 shadow-lg dark:shadow-none transition-colors">
                     <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-200 transition-colors">AI Generation</h3>
                     <p className="text-sm text-gray-500 mt-1">Click the button to start the AI-powered test creation process.</p>
-                    
+
                     <button onClick={handleGenerate} disabled={isLoading || !selectedExam || totalQuestions === 0 || !title} className="mt-4 w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 flex items-center justify-center disabled:bg-indigo-400">
                         {isLoading ? <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div> : <Sparkles size={20} className="mr-2" />}
                         {isLoading ? `Generating (${progress.count}/${progress.total})...` : 'Generate with AI'}
                     </button>
 
                     {isLoading && (
-                      <div className="mt-4">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5">
-                          <div className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${(progress.total > 0 ? (progress.count / progress.total) * 100 : 0)}%` }}></div>
+                        <div className="mt-4">
+                            <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                <div className="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${(progress.total > 0 ? (progress.count / progress.total) * 100 : 0)}%` }}></div>
+                            </div>
                         </div>
-                      </div>
                     )}
-                    
+
                     <div className="mt-8">
                         <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-200 transition-colors">History</h3>
-                        <div className="space-y-3 mt-4 max-h-[65vh] overflow-y-auto pr-3">
+                        <div className="space-y-3 mt-4 max-h-[42dvh] overflow-y-auto custom-scrollbar pr-3">
                             {recentGenerations.length > 0 ? recentGenerations.map((gen, index) => (
                                 <div key={index} className={`flex items-center justify-between p-3 rounded-lg transition ${gen.Status === 'Published' ? 'border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40' : ''} ${gen.Status === 'Draft' ? 'border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/40' : ''}`}>
                                     <div>
@@ -330,7 +330,7 @@ const TestGenerator = () => {
                     <button onClick={() => setPreviewLang('en')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>English</button>
                     <button onClick={() => setPreviewLang('hi')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>हिन्दी (Hindi)</button>
                 </div>
-                
+
                 <div className="prose prose-sm max-w-none">
                     <ol className="list-decimal ml-6.5 space-y-6">
                         {previewTest?.Questions?.map((q) => {

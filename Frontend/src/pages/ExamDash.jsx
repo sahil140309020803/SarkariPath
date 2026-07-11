@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams, Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import FeatureCard from '../components/Exam Dashboard/FeatureCard';
 import { FaLayerGroup } from "react-icons/fa";
@@ -19,7 +19,7 @@ import { useExam } from '../context/ExamContext';
 import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 const ExamDash = () => {
-  const { exam_cat, exam_name } = useParams();
+  const { exam_name } = useParams();
 
   const {
     setActiveExamPage,
@@ -50,6 +50,10 @@ const ExamDash = () => {
 
   if (isExamLoading || (!isExamDataFetched && !examFetchError)) {
     return <BeautifulLoadingScreen message={`Loading ${removeSlug(exam_name)} Exam Details...`} />;
+  }
+
+  if (examFetchError === "Exam not found") {
+    return <Navigate to="/404" replace />;
   }
 
   if (examFetchError) {

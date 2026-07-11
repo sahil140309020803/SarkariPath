@@ -28,8 +28,6 @@ const TestGenerating = () => {
     const [aiText, setAiText] = useState('Initializing Connection');
     const navigate = useNavigate();
 
-    const { exam_cat, exam_name } = useParams();
-
 
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
