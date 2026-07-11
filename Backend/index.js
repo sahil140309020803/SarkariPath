@@ -6,7 +6,7 @@ import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 
 import AITopicSummarizer from './controllers/AITopicSummarizer.js';
-import {getExamDetails} from './controllers/GetExamDetails.js';
+import { getExamDetails } from './controllers/GetExamDetails.js';
 import { updateSyllabusProgress } from './controllers/SyllabusController.js';
 
 
@@ -19,7 +19,7 @@ import userDetails from './controllers/UserDetails.js';
 import categoryRouter from './routers/ExamCategory.js';
 import examRouter from './routers/HandleExams.js';
 import fetchAllUsers from './controllers/FetchAllUsers.js';
-import { setupSocketHandlers } from './controllers/generationController.js'; 
+import { setupSocketHandlers } from './controllers/generationController.js';
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
@@ -29,7 +29,7 @@ import { getUserDashboardData } from './controllers/FetchUserDashboard.js';
 import { getDashboardStats, getAnalyticsStats } from './controllers/AdminDashboard.js';
 
 const app = express();
-const server = http.createServer(app); 
+const server = http.createServer(app);
 const PORT = process.env.PORT || 4000;
 
 // Connect Databases
@@ -54,7 +54,7 @@ const io = new Server(server, {
 // Listen for WebSocket connections
 io.on('connection', (socket) => {
     console.log('A user connected via WebSocket:', socket.id);
-    setupSocketHandlers(socket, io); 
+    setupSocketHandlers(socket, io);
 
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
@@ -95,7 +95,7 @@ app.use('/api/exam-category', categoryRouter);
 app.use('/api/exams', examRouter);
 
 // Test Window Routes
-app.use('/api/test-window', testWindowRouter); 
+app.use('/api/test-window', testWindowRouter);
 
 // Submit test
 app.post('/api/submit-test', isAuth, submitTest);
@@ -107,7 +107,7 @@ app.post('/api/weakness-analysis', isAuth, getWeaknessAnalysis);
 app.post('/api/ai-analysis', isAuth, generateAIInsights);
 
 // Fetch User Dashboard Details
-app.get('/api/dashboard/:userId', getUserDashboardData);
+app.get('/api/dashboard', isAuth, getUserDashboardData);
 
 // Syllabus Progress Route
 app.post('/api/syllabus/update', isAuth, updateSyllabusProgress);

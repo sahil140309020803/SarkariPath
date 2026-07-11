@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { examDbConnection } from "../config/mongo_config.js";
 
 const examCatSchema = new mongoose.Schema({
-    icon: { type: String },
     Name: { type: String, required: true, unique: true },
     Description: { type: String, required: true },
     Exams: [{
@@ -69,7 +68,7 @@ const MockTestSchema = new mongoose.Schema({
             userId: { type: String, required: true },
             name: { type: String, default: 'Aspirant' },
             score: { type: Number, required: true },
-            accuracy: { type: Number, required: true },
+            percentage: { type: Number, required: true },
             timeTaken: { type: Number, required: true },
             submittedAt: { type: Date, default: Date.now }
         }

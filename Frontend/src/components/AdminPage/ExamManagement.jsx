@@ -39,7 +39,6 @@ const ExamManagement = () => {
     const [Exam, setExam] = useState('');
 
     const [newCategory, setNewCategory] = useState({
-        icon: '',
         Name: '',
         Description: ''
     });
@@ -144,7 +143,7 @@ const ExamManagement = () => {
         e.stopPropagation();
         setIsEditCatMode(true);
         setEditingCatId(cat._id);
-        setNewCategory({ icon: cat.icon, Name: cat.Name, Description: cat.Description });
+        setNewCategory({ Name: cat.Name, Description: cat.Description });
         setIsCatModalOpen(true);
     };
 
@@ -152,7 +151,7 @@ const ExamManagement = () => {
         setIsCatModalOpen(false);
         setIsEditCatMode(false);
         setEditingCatId(null);
-        setNewCategory({ icon: '', Name: '', Description: '' });
+        setNewCategory({ Name: '', Description: '' });
     };
 
     // Topics Modal Logic
@@ -333,9 +332,8 @@ const ExamManagement = () => {
                     </div>
                     <div className='space-y-3.5 overflow-y-auto max-h-[24rem] pr-2 custom-scrollbar z-10 pt-2'>
                         {examCatList && examCatList.map(cat => (
-                            <div key={cat._id} onClick={() => setActiveCatSection(cat)} className={`flex justify-between items-center p-5 rounded-2xl transition-all duration-300 cursor-pointer group flex-shrink-0 ${activeCatSection._id === cat._id ? 'bg-gradient-to-r from-indigo-500 to-purple-600 border border-transparent text-white shadow-xl shadow-indigo-500/20 scale-[1.02] ring-2 ring-indigo-500/20 ring-offset-2 dark:ring-offset-slate-900' : 'bg-white/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:-translate-y-0.5 hover:shadow-md'}`}>
+                            <div key={cat._id} onClick={() => setActiveCatSection(cat)} className={`flex justify-between items-center p-5 rounded-2xl transition-all duration-300 cursor-pointer group flex-shrink-0 ${activeCatSection._id === cat._id ? 'bg-gradient-to-r from-indigo-500 to-purple-600 border border-transparent text-white' : 'bg-white/70 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 hover:-translate-y-0.5 hover:shadow-md'}`}>
                                 <div className="flex items-center space-x-4">
-                                    <div className="text-2xl">{cat.icon}</div>
                                     <div>
                                         <h3 className="font-semibold">{cat.Name}</h3>
                                         {activeCatSection._id !== cat._id && <p className="text-xs text-slate-400 mt-1">{cat.Exams?.length || 0} Exams</p>}
@@ -465,10 +463,6 @@ const ExamManagement = () => {
             <Modal isOpen={isCatModalOpen} onClose={closeCatModal} title={isEditCatMode ? "Edit Category" : "Add New Category"} maxWidth="max-w-lg">
                 <form onSubmit={handleAddCategory} className='flex flex-col gap-4 mt-2'>
                     <div>
-                        <label className="block mb-1.5 text-sm font-semibold text-slate-700 dark:text-slate-300">Category Icon (Emoji)</label>
-                        <input type="text" value={newCategory.icon} onChange={(e) => setNewCategory({ ...newCategory, icon: e.target.value })} className="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 w-full p-2.5 transition" required placeholder="e.g. 🏦" />
-                    </div>
-                    <div>
                         <label className="block mb-1.5 text-sm font-semibold text-slate-700 dark:text-slate-300">Category Name</label>
                         <input type="text" value={newCategory.Name} onChange={(e) => setNewCategory({ ...newCategory, Name: e.target.value })} className="bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 w-full p-2.5 transition" required placeholder="e.g. Banking" />
                     </div>
@@ -559,7 +553,7 @@ const ExamManagement = () => {
                     <button onClick={() => setPreviewLang('en')} className={`font-bold py-2.5 px-6 rounded-xl text-sm transition-all ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}`}>English</button>
                     <button onClick={() => setPreviewLang('hi')} className={`font-bold py-2.5 px-6 rounded-xl text-sm transition-all ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/25' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'}`}>हिन्दी (Hindi)</button>
                 </div>
-                
+
                 <div className="max-h-[65vh] overflow-y-auto px-2 custom-scrollbar">
                     <div className="space-y-8">
                         {previewTest?.Questions?.map((q, idx) => {

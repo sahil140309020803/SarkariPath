@@ -7,7 +7,7 @@ import {
   Sparkles, AlertCircle, User, LayoutList, Trophy, Zap, Loader2, BrainCircuit
 } from 'lucide-react';
 import { useTestAnalysis } from '../context/TestAnalysisContext';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 import Navbar from '../components/Navbar.jsx';
 import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
@@ -88,7 +88,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
                   <th className="py-3 px-2 text-center w-16">Rank</th>
                   <th className="py-3 px-2">Aspirant</th>
                   <th className="py-3 px-2">Score</th>
-                  <th className="py-3 px-2">Accuracy</th>
+                  <th className="py-3 px-2">Percentage</th>
                   <th className="py-3 px-2">Time</th>
                 </tr>
               </thead>
@@ -108,7 +108,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
                     </td>
                     <td className="py-4 px-2 font-semibold text-slate-700 dark:text-slate-200">{user.name}</td>
                     <td className="py-4 px-2 font-bold text-blue-600 dark:text-indigo-400">{user.score}</td>
-                    <td className="py-4 px-2 text-slate-600 dark:text-slate-400 font-medium">{user.accuracy}%</td>
+                    <td className="py-4 px-2 text-slate-600 dark:text-slate-400 font-medium">{user.percentage}%</td>
                     <td className="py-4 px-2 text-slate-500 dark:text-slate-500 text-xs italic">
                       {user.time ? `${Math.floor(user.time / 60)}m ${user.time % 60}s` : 'N/A'}
                     </td>
@@ -594,7 +594,7 @@ export default function Analysis() {
   const { submissionId } = useParams();
   const navigate = useNavigate();
   const { analysisData, isLoading, error, fetchAnalysisData } = useTestAnalysis();
-  const { backend_url } = useAuth();
+  const { backend_url } = useUser();
 
   const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { useCallback, useContext, createContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useUser } from './UserContext';
 
 
 
@@ -30,7 +30,7 @@ export const TestWindowProvider = ({ children }) => {
     const [isTestStarted, setIsTestStarted] = useState(false);
     const [isTestEnded, setIsTestEnded] = useState(false);
 
-    const { userDetails } = useAuth();
+    const { userDetails } = useUser();
 
     const navigate = useNavigate();
 

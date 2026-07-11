@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 import axios from 'axios';
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 
 const Analytics = () => {
     const engagementRef = useRef(null);
     const funnelRef = useRef(null);
     const popularityRef = useRef(null);
-    const { backend_url } = useAuth();
+    const { backend_url } = useUser();
 
     const [data, setData] = useState({
         overallStats: { avgScore: 0, avgTime: 0, completionRate: 0 },

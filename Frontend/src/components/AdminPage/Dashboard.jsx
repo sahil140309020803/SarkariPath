@@ -3,11 +3,11 @@ import Chart from 'chart.js/auto';
 import { Users, CheckCircle, FileText, Sparkles, Eye, Trash2, PlusCircle, Settings2, Trophy, ArrowUpRight } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 
 const Dashboard = () => {
     const chartRef = useRef(null);
-    const { backend_url } = useAuth();
+    const { backend_url } = useUser();
     const [data, setData] = useState({
         stats: { totalUsers: 0, activeExams: 0, publishedTests: 0, aiQuizzes: 0 },
         testsPerExam: { labels: [], data: [] },

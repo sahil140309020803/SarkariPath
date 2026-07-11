@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 // import { AppContent } from "../../context/AppContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from "../../context/AuthContext";
+import { useUser } from "../../context/UserContext";
 import { GoogleLogin } from '@react-oauth/google';
 import { useTheme } from "../../context/ThemeContext";
 
@@ -15,7 +15,7 @@ const SignIn = ({ isLoaded }) => {
   const [isLoading, setIsLoading] = useState(false);
   // const { backend_url, isLoggedIn, setIsLoggedIn } = useContext(AppContent);
 
-  const { setIsLoggedIn, backend_url } = useAuth();
+  const { setIsLoggedIn, backend_url } = useUser();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const delay = ms => new Promise(resolve => setTimeout(resolve, ms));

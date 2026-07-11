@@ -4,7 +4,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from 'axios';
 import { RiLoader5Line } from "react-icons/ri";
 import { useExam } from '../../context/ExamContext';
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 
 const AITopicSumm = ({ examContext }) => {
     // const { AItopicSummarizer,setAItopicSummarizer, backend_url } = useContext(AppContent);
@@ -13,7 +13,7 @@ const AITopicSumm = ({ examContext }) => {
     AItopicSummarizer, setAItopicSummarizer
 } = useExam();
 
-    const { backend_url } = useAuth();
+    const { backend_url } = useUser();
 
     const [language, setLanguage] = useState('english');
     const [topic, setTopic] = useState('');

@@ -4,14 +4,14 @@ import SignIn from '../components/Auth Page/SignIn';
 import SignUp from '../components/Auth Page/SignUp';
 // import { AppContent } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 
 
 const Authentication = ({ initialIsLogin }) => {
   const [isLogin, setIsLogin] = useState(initialIsLogin);
   const [isLoaded, setIsLoaded] = useState(false);
   // const {isLoggedIn, setIsLoggedIn} = useContext(AppContent);
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useUser();
 
 
   const navigate = useNavigate();

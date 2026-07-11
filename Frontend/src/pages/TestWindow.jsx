@@ -148,16 +148,15 @@ const TestWindow = () => {
     }
 
     return (
-        <div className="flex h-screen overflow-hidden bg-gray-100 dark:bg-slate-950 transition-colors">
+        <div className="flex h-screen overflow-hidden bg-blue-50 dark:bg-slate-950 transition-colors">
 
-            {/* Question Panel */}
-            <div className="flex-1 overflow-y-auto p-0 transition-all duration-300 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto p-0 transition-all duration-300 custom-scrollbar ">
 
                 {/* Top Header Bar  */}
                 <header className="flex flex-col sm:flex-row justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
-                    <div className="flex items-center justify-between sm:justify-start w-full sm:w-auto">
+                    <div className="flex items-center justify-between gap-4 sm:justify-start w-full sm:w-auto">
                         <div className="text-3xl sm:text-4xl text-white font-bold">Sarkari<span className="text-red-500">Path</span></div>
-                        <span className="text-xs sm:text-md font-medium text-gray-300 dark:text-slate-400 ml-2 hidden md:inline truncate max-w-[200px] lg:max-w-[400px]">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
+                        <span className="text-sm sm:text-lg font-medium text-gray-300 dark:text-slate-400 ml-2 hidden md:inline truncate max-w-[200px] lg:max-w-[400px]">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
@@ -219,7 +218,7 @@ const TestWindow = () => {
                 {/* Question Body */}
                 <div className="p-2 sm:p-6">
                     {questionContent ? (
-                        <div className="bg-white dark:bg-slate-900 p-4 sm:p-6 rounded-xl shadow-xl border border-gray-205 dark:border-slate-800/80 transition-colors">
+                        <div className="bg-slate-100 dark:bg-slate-900 p-4 sm:p-6 rounded-xl shadow-xl border border-gray-300 dark:border-slate-800/80 transition-colors">
 
                             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b border-gray-200 dark:border-slate-800 gap-3">
                                 <div className="text-xl sm:text-[22px] font-semibold text-gray-800 dark:text-slate-100">
@@ -246,7 +245,7 @@ const TestWindow = () => {
                                             key={option._id}
                                             className={`
                                                 p-3 sm:p-4 border rounded-lg cursor-pointer transition-all duration-150 flex items-start space-x-3 shadow-sm
-                                                ${isSelected ? 'bg-blue-50 dark:bg-indigo-900/40 border-blue-600 dark:border-indigo-500 ring-1 ring-blue-300 dark:ring-indigo-800' : 'hover:bg-gray-100 dark:hover:bg-slate-800 border-gray-300 dark:border-slate-700'}
+                                                ${isSelected ? 'bg-blue-50 dark:bg-indigo-900/40 border-blue-600 dark:border-indigo-500 ring-1 ring-blue-300 dark:ring-indigo-800' : 'hover:bg-gray-200 dark:hover:bg-slate-800 border-gray-300 dark:border-slate-700'}
                                             `}
                                             onClick={() => handleSetAnswer(option.text)}
                                         >
@@ -280,7 +279,7 @@ const TestWindow = () => {
                                     >
                                         &larr; Prev
                                     </button>
-                                    
+
                                     {/* Next Button (Mobile only) */}
                                     <button
                                         onClick={() => setCurrentQuestionIndex(prev => Math.min(questions.length - 1, prev + 1))}

@@ -4,18 +4,24 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 import InputField from '../components/Auth Page/InputField';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
-  const { backend_url } = useAuth();
+  const { isLoggedIn, backend_url } = useUser();
 
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [otpValues, setOtpValues] = useState(['', '', '', '', '', '']);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isResending, setIsResending] = useState(false);

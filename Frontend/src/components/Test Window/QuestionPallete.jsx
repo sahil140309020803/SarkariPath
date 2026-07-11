@@ -15,7 +15,7 @@ const LegendItem = ({ color, text }) => (
     </div>
 );
 
-export const QuestionPalette = ({ questions, questionStatus, currentQuestionIndex, setCurrentQuestionIndex, activeTest, handleSubmitTest}) => {
+export const QuestionPalette = ({ questions, questionStatus, currentQuestionIndex, setCurrentQuestionIndex, activeTest, handleSubmitTest }) => {
     const [isPaletteOpen, setIsPaletteOpen] = useState(window.innerWidth >= 768);
 
     // Group questions by Subject for display headers in the palette
@@ -80,9 +80,9 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
                 {/* Top Status and Submit Area */}
                 <div className="pt-4">
                     <div className="grid grid-cols-2 gap-x-2 gap-y-3 text-sm font-medium mb-10">
-                        <LegendItem color="bg-green-600 dark:bg-emerald-600" text={`Answered (${totalAnswered})`} />
-                        <LegendItem color="bg-red-600 dark:bg-rose-600" text={`Not Answered (${totalNotAnswered})`} />
-                        <LegendItem color="bg-purple-600 dark:bg-indigo-600" text={`Marked (${totalMarked})`} />
+                        <LegendItem color="bg-green-600 " text={`Answered (${totalAnswered})`} />
+                        <LegendItem color="bg-red-600" text={`Not Answered (${totalNotAnswered})`} />
+                        <LegendItem color="bg-purple-600" text={`Marked (${totalMarked})`} />
                         <LegendItem color="bg-gray-200 dark:bg-slate-800 border border-gray-400 dark:border-slate-700" text={`Not Visited (${totalNotVisited})`} />
                     </div>
                 </div>
@@ -103,7 +103,7 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
                                         <div
                                             key={q.qId}
                                             className={`
-                                        flex items-center justify-center h-9 w-full text-sm font-bold rounded-lg cursor-pointer transition-all duration-150 
+                                        flex items-center justify-center h-9 w-full text-sm font-bold rounded-lg cursor-pointer transition-all duration-150 hover:bg-slate-300 dark:hover:bg-slate-700 
                                         ${statusClasses[status]} 
                                         ${isCurrent ? 'ring-2 ring-yellow-500 scale-105 border' : ''}
                                     `}

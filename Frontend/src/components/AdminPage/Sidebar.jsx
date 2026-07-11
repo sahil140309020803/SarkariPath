@@ -1,11 +1,11 @@
 import React from 'react';
 import { LayoutDashboard, Folder, FileText, Settings2, Users, BarChart3, LogOut } from 'lucide-react';
 import { FiAlignJustify } from "react-icons/fi";
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
-    const { logout } = useAuth();
+    const { logout } = useUser();
     const navigate = useNavigate();
 
     const handleLogout = async () => {

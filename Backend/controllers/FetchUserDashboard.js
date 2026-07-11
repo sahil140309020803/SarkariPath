@@ -4,18 +4,18 @@ import userStatisticsModel from '../models/userStatisticsModel.js';
 import { TestSubmissionModel, examModel } from '../models/ExamModel.js';
 
 export const getUserDashboardData = async (req, res) => {
-    const { userId } = req.params;
+    const { userEmail } = req.body;
 
     try {
         let user;
-        if (mongoose.Types.ObjectId.isValid(userId)) {
-            user = await userModel.findById(userId).select('name email');
+        if (mongoose.Types.ObjectId.isValid(userEmail)) {
+            user = await userModel.findById(userEmail).select('name email');
         }
         if (!user) {
-            user = await userModel.findOne({ email: userId }).select('name email');
+            user = await userModel.findOne({ email: userEmail }).select('name email');
         }
         if (!user) {
-            user = await userModel.findOne({ email: { $regex: userId, $options: 'i' } }).select('name email');
+            user = await userModel.findOne({ email: { $regex: userEmail, $options: 'i' } }).select('name email');
         }
 
         if (!user) {
@@ -45,13 +45,13 @@ export const getUserDashboardData = async (req, res) => {
             user._id.toString(),
             user.email
         ];
-        const recentSubmissions = await TestSubmissionModel.find({ 
-            userId: { $in: possibleUserIds } 
+        const recentSubmissions = await TestSubmissionModel.find({
+            userId: { $in: possibleUserIds }
         })
-        .populate('testId', 'Title')
-        .sort({ createdAt: -1 })
-        .limit(5)
-        .lean();
+            .populate('testId', 'Title')
+            .sort({ createdAt: -1 })
+            .limit(10)
+            .lean();
 
         // Get unique exams mapped to names for recent activity title formatting
         const uniqueExamIds = [...new Set(
@@ -69,13 +69,55 @@ export const getUserDashboardData = async (req, res) => {
         const recentActivity = recentSubmissions.map(test => {
             const examName = examMap[test.examId?.toString()] || "Custom Test";
             return {
-                title: `${examName} - ${test.testId?.Title || 'Mock Test'}`, 
+                id: test._id,
+                title: `${examName} - ${test.testId?.Title || 'Mock Test'}`,
                 qs: `${test.correctCount}/${test.maxPossibleScore} Marks`,
                 time: test.createdAt,
-                score: `${Math.round(test.accuracy)}%`,
+                score: ((test.totalScore / test.maxPossibleScore) * 100).toFixed(2),
                 status: 'Completed'
             };
         });
+
+        const syllabusProgressList = [];
+        if (stats.syllabusProgress && stats.syllabusProgress.length > 0) {
+            const examIds = stats.syllabusProgress.map(p => p.examId);
+            const examsData = await examModel.find({ _id: { $in: examIds } }).select('Name Topics').lean();
+            const examMap = new Map(examsData.map(e => [e._id.toString(), e]));
+
+            for (const entry of stats.syllabusProgress) {
+                const examDoc = examMap.get(entry.examId.toString());
+                if (!examDoc) continue;
+
+                // Count total topics in the exam
+                let totalTopics = 0;
+                if (examDoc.Topics && typeof examDoc.Topics === 'object') {
+                    for (const topicsList of Object.values(examDoc.Topics)) {
+                        if (Array.isArray(topicsList)) {
+                            totalTopics += topicsList.length;
+                        }
+                    }
+                }
+
+                // Count completed topics in stats.syllabusProgress entry
+                let completedTopics = 0;
+                if (entry.progress && Array.isArray(entry.progress)) {
+                    for (const subjectProgress of entry.progress) {
+                        if (subjectProgress.completedTopics && Array.isArray(subjectProgress.completedTopics)) {
+                            completedTopics += subjectProgress.completedTopics.length;
+                        }
+                    }
+                }
+
+                // Calculate percentage
+                const percentage = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+
+                syllabusProgressList.push({
+                    examId: entry.examId,
+                    examName: entry.examName,
+                    percentage: Math.min(100, percentage)
+                });
+            }
+        }
 
         return res.status(200).json({
             success: true,
@@ -89,7 +131,8 @@ export const getUserDashboardData = async (req, res) => {
             currentStreak: stats.currentStreak,
             longestStreak: stats.longestStreak,
             dailyStatistics: stats.dailyStatistics,
-            recentActivity
+            recentActivity,
+            syllabusProgress: syllabusProgressList
         });
 
     } catch (error) {

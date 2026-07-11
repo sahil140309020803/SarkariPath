@@ -57,6 +57,30 @@ const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = new userModel({name, email, password:hashedPassword, emailVerified: false});
+        
+        // Generate unique username
+        const baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+        const suffix = user._id.toString().slice(-6);
+        let username = `${baseUsername}_${suffix}`;
+        
+        let isUnique = false;
+        let suffixLength = 6;
+        while (!isUnique) {
+            const duplicate = await userModel.findOne({ username });
+            if (!duplicate) {
+                isUnique = true;
+            } else {
+                if (suffixLength === 6) {
+                    suffixLength = 8;
+                    const longSuffix = user._id.toString().slice(-8);
+                    username = `${baseUsername}_${longSuffix}`;
+                } else {
+                    const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+                    username = `${baseUsername}_${randomSuffix}`;
+                }
+            }
+        }
+        user.username = username;
         await user.save();
 
         // Delete previous OTP if any
@@ -350,6 +374,30 @@ const googleLogin = async (req, res) => {
                     emailVerified,
                     profilePicture: picture
                 });
+                
+                // Generate unique username
+                const baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+                const suffix = user._id.toString().slice(-6);
+                let username = `${baseUsername}_${suffix}`;
+                
+                let isUnique = false;
+                let suffixLength = 6;
+                while (!isUnique) {
+                    const duplicate = await userModel.findOne({ username });
+                    if (!duplicate) {
+                        isUnique = true;
+                    } else {
+                        if (suffixLength === 6) {
+                            suffixLength = 8;
+                            const longSuffix = user._id.toString().slice(-8);
+                            username = `${baseUsername}_${longSuffix}`;
+                        } else {
+                            const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+                            username = `${baseUsername}_${randomSuffix}`;
+                        }
+                    }
+                }
+                user.username = username;
                 await user.save();
                 log(`New user successfully created: ID=${user._id}`);
             }
@@ -525,6 +573,49 @@ const resetPassword = async (req, res) => {
     }
 };
 
+const updateProfile = async (req, res) => {
+    const { userEmail, name, username } = req.body;
+    
+    if (!name || !username) {
+        return res.json({ success: false, message: "Name and username are required." });
+    }
+
+    const cleanUsername = username.toLowerCase().trim().replace(/[^a-z0-9_]/g, '');
+    if (cleanUsername !== username) {
+        return res.json({ success: false, message: "Username can only contain letters, numbers, and underscores." });
+    }
+
+    try {
+        const user = await userModel.findOne({ email: userEmail });
+        if (!user) {
+            return res.json({ success: false, message: "User not found." });
+        }
+
+        if (cleanUsername !== user.username) {
+            const existingUsername = await userModel.findOne({ username: cleanUsername });
+            if (existingUsername) {
+                return res.json({ success: false, message: "Username already exists. Please choose a different one." });
+            }
+        }
+
+        user.name = name;
+        user.username = cleanUsername;
+        await user.save();
+
+        return res.json({ 
+            success: true, 
+            message: "Profile updated successfully.",
+            user: {
+                name: user.name,
+                username: user.username,
+                email: user.email
+            }
+        });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
+    }
+};
+
 export {
     adminLogin,
     register,
@@ -536,5 +627,6 @@ export {
     resendOtp,
     forgotPassword,
     verifyForgotPasswordOtp,
-    resetPassword
+    resetPassword,
+    updateProfile
 };

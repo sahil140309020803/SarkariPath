@@ -5,7 +5,7 @@ import axios from "axios";
 // import { AppContent } from "../../context/AppContext";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../../context/AuthContext";
+import { useUser } from "../../context/UserContext";
 import { GoogleLogin } from '@react-oauth/google';
 import { useTheme } from "../../context/ThemeContext";
 
@@ -18,7 +18,7 @@ const SignUp = ({ isLoaded }) => {
   // const {backend_url, isLoggedIn, setIsLoggedIn} = useContext(AppContent)
 
 
-  const { isLoggedIn, setIsLoggedIn, backend_url } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, backend_url } = useUser();
   const { theme } = useTheme();
   const navigate = useNavigate();
 

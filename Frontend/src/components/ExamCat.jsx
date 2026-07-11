@@ -25,7 +25,7 @@ const ExamCat = () => {
             {/* Exam Categories Grid */}
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
               {examCatList && examCatList.map((category) => (
-                <ExamCard key={category._id} icon={category.icon} title={category.Name} content={category.Description} examList={category.Exams}/>
+                <ExamCard key={category._id} title={category.Name} content={category.Description} examList={category.Exams}/>
               ))}
             </div>
         </div>

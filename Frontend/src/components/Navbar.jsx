@@ -1,16 +1,17 @@
 import React from 'react';
 import LOGO from '../assets/LOGO.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 import { useExam } from '../context/ExamContext';
-import { LogOut, LayoutDashboard, UserCircle, BookOpen, Menu, X } from 'lucide-react';
+import { LogOut, LayoutDashboard, UserCircle, BookOpen, Menu, X, Flame } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url } = useAuth();
+  const location = useLocation();
+  const { isLoggedIn, setIsLoggedIn, userDetails, setUserDetails, backend_url, fetchUserDashboardData, dashboardData } = useUser();
   const { setActiveList } = useExam();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
@@ -39,8 +40,20 @@ const Navbar = () => {
     navigate("/#exam-categories");
   }
 
+  const handleDashboardClick = () => {
+    if (userDetails?.role === 'admin') {
+      navigate(`/admin-page`);
+    } else {
+      if (location.pathname === '/dashboard') {
+        fetchUserDashboardData();
+      } else {
+        navigate(`/dashboard`);
+      }
+    }
+  }
+
   return (
-    <nav className="w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-all duration-300">
+    <nav className="w-full bg-white dark:bg-slate-900 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
 
@@ -68,7 +81,7 @@ const Navbar = () => {
               </button>
             )}
             {userDetails?.role === 'user' && (
-              <button onClick={() => navigate(`/dashboard/${userDetails.email}`)} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 font-semibold transition-colors duration-200 text-sm tracking-wide">
+              <button onClick={() => handleDashboardClick()} className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-400 font-semibold transition-colors duration-200 text-sm tracking-wide">
                 <LayoutDashboard size={18} />
                 My Dashboard
               </button>
@@ -77,6 +90,25 @@ const Navbar = () => {
 
           {/* Right Login/Signup/Profile & Theme Toggle */}
           <div className="flex items-center gap-4">
+            {userDetails?.role === 'user' && isLoggedIn && (
+              <div className="flex items-center gap-1.5 select-none cursor-pointer py-1 mx-2">
+                {(dashboardData?.currentStreak || 0) > 0 ? (
+                  <div className='hover:bg-orange-500/10 rounded-xl px-3 py-2 transition-colors duration-200 flex justify-center items-center gap-1.5'>
+                    <Flame className="w-6 h-6 text-orange-500 fill-orange-500" />
+                    <span className="text-orange-500 dark:text-orange-400 font-semibold text-sm sm:text-lg leading-none">
+                      {dashboardData.currentStreak}
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center gap-1.5 hover:bg-slate-500/10 rounded-xl px-3 py-2 transition-colors duration-200">
+                    <Flame className="w-6 h-6 text-slate-400 dark:text-slate-500" />
+                    <span className="text-slate-400 dark:text-slate-500 font-semibold text-sm sm:text-lg leading-none">
+                      0
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
             <ThemeToggle />
             {!isLoggedIn ? (
               <div className="hidden sm:flex items-center gap-3">
@@ -89,7 +121,9 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+
+                {/* User Profile */}
+                <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-indigo-500 dark:to-cyan-400 text-white font-bold flex justify-center items-center text-sm shadow-sm">
                     {userDetails?.name ? userDetails.name.substring(0, 1).toUpperCase() : 'U'}
                   </div>
@@ -129,7 +163,7 @@ const Navbar = () => {
             </button>
           )}
           {userDetails?.role === 'user' && (
-            <button onClick={() => { navigate(`/dashboard/${userDetails.email}`); setIsMobileMenuOpen(false); }} className="w-full text-left flex items-center gap-2 py-3 px-4 rounded-xl text-slate-600 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+            <button onClick={() => { handleDashboardClick(); setIsMobileMenuOpen(false); }} className="w-full text-left flex items-center gap-2 py-3 px-4 rounded-xl text-slate-600 dark:text-slate-300 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <LayoutDashboard size={18} />
               My Dashboard
             </button>

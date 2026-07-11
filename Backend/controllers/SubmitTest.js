@@ -123,6 +123,9 @@ export const submitTest = async (req, res) => {
         const accuracy = correctCount + incorrectCount > 0
             ? parseFloat(((correctCount / (correctCount + incorrectCount)) * 100).toFixed(2))
             : 0;
+        const currentAverageScore = maxScore > 0
+            ? parseFloat(((finalScore / maxScore) * 100).toFixed(2))
+            : 0;
 
         console.log("Calculations finished. Saving submission...");
 
@@ -169,7 +172,7 @@ export const submitTest = async (req, res) => {
                         userId: userEmail,
                         name: userName,
                         score: finalScore,
-                        accuracy: accuracy,
+                        percentage: currentAverageScore,
                         timeTaken: timeTaken || 0,
                         submittedAt: newSubmission.createdAt
                     }
@@ -197,10 +200,10 @@ export const submitTest = async (req, res) => {
                 stats.testsAttempted += 1;
 
                 // Update rolling average score using the formula:
-                // stats.averageScore = ((oldAverage * oldTests) + testSubmission.accuracy) / (oldTests + 1)
+                // stats.averageScore = ((oldAverage * oldTests) + currentAverageScore) / (oldTests + 1)
                 const oldTestsCount = stats.testsAttempted - 1;
                 const oldAverage = stats.averageScore || 0;
-                stats.averageScore = ((oldAverage * oldTestsCount) + accuracy) / stats.testsAttempted;
+                stats.averageScore = ((oldAverage * oldTestsCount) + currentAverageScore) / stats.testsAttempted;
 
                 // Total study time conversion
                 const minutes = Math.ceil((timeTaken || 0) / 60);

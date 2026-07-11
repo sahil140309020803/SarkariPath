@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import LOGO from '../assets/LOGO.png';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
@@ -9,7 +9,7 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 const VerifyEmail = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setIsLoggedIn, backend_url } = useAuth();
+  const { isLoggedIn, setIsLoggedIn, backend_url } = useUser();
 
   const [email, setEmail] = useState('');
   const [otpValues, setOtpValues] = useState(['', '', '', '', '', '']);
@@ -19,6 +19,12 @@ const VerifyEmail = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const otpRefs = useRef([]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     // Implement SEO Page Title

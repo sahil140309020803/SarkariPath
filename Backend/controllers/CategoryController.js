@@ -1,7 +1,7 @@
 import {examCatModel, examModel} from "../models/ExamModel.js";
 
 const addCategory = async (req, res) => {
-    const {icon, Name, Description} = req.body;
+    const {Name, Description} = req.body;
     if(!Name || !Description) {
         return res.json({success: false, message: "All Fields are required"});
     }
@@ -10,7 +10,7 @@ const addCategory = async (req, res) => {
         if(existingCategory) {
             return res.json({success: false, message: "Category already exists"});
         }
-        const category = await new examCatModel({icon, Name, Description});
+        const category = await new examCatModel({Name, Description});
         await category.save();
         return res.json({success: true, message: "Category added successfully", category});
     } catch(err) {
@@ -47,14 +47,13 @@ const deleteCategory = async (req, res) => {
 
 const editCategory = async (req, res) => {
     const {categoryId} = req.params;
-    const {icon, Name, Description} = req.body;
+    const {Name, Description} = req.body;
     if(!categoryId || !Name || !Description) {
         return res.json({success: false, message: "Name and Description are required"});
     }
     try {
         const category = await examCatModel.findById(categoryId);
         if(!category) return res.json({success: false, message: "Category not found"});
-        category.icon = icon !== undefined ? icon : category.icon;
         category.Name = Name;
         category.Description = Description;
         await category.save();

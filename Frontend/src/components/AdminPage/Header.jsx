@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Bell, CheckCircle, FileText, ExternalLink } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 import ThemeToggle from '../ThemeToggle';
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ const Header = () => {
     const [notificationsOpen, setNotificationsOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const notificationRef = useRef(null);
-    const { userDetails, backend_url } = useAuth();
+    const { userDetails, backend_url } = useUser();
 
     const fetchNotifications = async () => {
         if (!backend_url) return;

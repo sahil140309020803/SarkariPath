@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useUser } from '../../context/UserContext';
 
 const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [searchUsers, setSearchUsers] = useState([]);
-    const {isLoggedIn, backend_url} = useAuth();
+    const {isLoggedIn, backend_url} = useUser();
 
     const convertDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };

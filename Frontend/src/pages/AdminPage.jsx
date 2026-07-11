@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 
 // --- Imports from the parent 'components' folder ---
 import Sidebar from '../components/AdminPage/Sidebar';
@@ -16,7 +16,7 @@ import ExamManagement from '../components/AdminPage/ExamManagement';
 export default function AdminPage() {
     const [activePage, setActivePage] = useState('dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-    const { userDetails } = useAuth();
+    const { userDetails } = useUser();
     const navigate = useNavigate();
 
     useEffect(() => {

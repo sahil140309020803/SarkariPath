@@ -1,16 +1,16 @@
 import React from 'react';
 import FeatureCard from './FeatureCard';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useUser } from '../context/UserContext';
 import { Sparkles, BrainCircuit, Target, ArrowRight, Bot } from 'lucide-react';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { isLoggedIn, userDetails } = useAuth();
+    const { isLoggedIn, userDetails } = useUser();
     const name = userDetails?.name || '';
 
     return (
-        <div className="relative overflow-hidden bg-slate-50 dark:bg-slate-900 w-full flex flex-col justify-center items-center py-24 px-4 md:px-8 transition-colors duration-300 border-none">
+        <div className="relative overflow-hidden bg-blue-50/80 dark:bg-slate-900 w-full flex flex-col justify-center items-center py-24 px-4 md:px-8 transition-colors duration-300 border-none">
             {/* Background Effects */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-pulse"></div>
             <div className="absolute top-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-pulse" style={{ animationDelay: '2s' }}></div>
@@ -42,7 +42,7 @@ const Header = () => {
                                 Start Free Prep <ArrowRight size={20} />
                             </button>
                         ) : (
-                            <button onClick={() => navigate(`/dashboard/${userDetails.email}`)} className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 text-white font-semibold flex items-center justify-center gap-2 transform hover:-translate-y-1 transition-all duration-300 shadow-md">
+                            <button onClick={() => navigate(`/dashboard`)} className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 text-white font-semibold flex items-center justify-center gap-2 transform hover:-translate-y-1 transition-all duration-300 shadow-md">
                                 View Dashboard <ArrowRight size={20} />
                             </button>
                         )}
@@ -51,7 +51,7 @@ const Header = () => {
                         </button>
                     </div>
 
-                    <div className="flex items-center gap-3 mt-4 text-sm text-slate-600 dark:text-slate-400 font-medium bg-white/40 dark:bg-slate-800/40 px-5 py-2.5 rounded-lg border border-slate-200/60 dark:border-slate-700/60 backdrop-blur-sm transition-colors">
+                    <div className="flex items-center gap-3 mt-4 text-sm text-slate-600 dark:text-slate-400 font-medium bg-white dark:bg-slate-800/40 px-5 py-2.5 rounded-lg border border-slate-200 shadow-sm dark:border-slate-700/60 backdrop-blur-sm transition-colors">
                         <Sparkles size={16} className="text-yellow-400" />
                         Powered by Advanced Generative AI
                     </div>

@@ -35,7 +35,7 @@ export const getLeaderboard = async (req, res) => {
             rank: skip + idx + 1,
             name: entry.name,
             score: entry.score,
-            accuracy: entry.accuracy,
+            percentage: entry.percentage,
             time: entry.timeTaken
         }));
 
