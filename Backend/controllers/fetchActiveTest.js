@@ -1,9 +1,12 @@
-import { MockTestModel } from "../models/ExamModel.js";
+import { MockTestModel, QuizModel } from "../models/ExamModel.js";
 
 const fetchActiveTest = async (req, res) => {
     const testID = req.params?.testID;
     try {
-        const testData = await MockTestModel.findById(testID).populate('ExamId').populate('Questions').lean();
+        let testData = await MockTestModel.findById(testID).populate('ExamId').populate('Questions').lean();
+        if(!testData) {
+            testData = await QuizModel.findById(testID).populate('ExamId').populate('Questions').lean();
+        }
         if(!testData) {
             return res.json({success: false, message: "Test not found"});
         }

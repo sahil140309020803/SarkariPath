@@ -6,6 +6,8 @@ import Modal from './Modal';
 import { toast } from "react-toastify";
 import axios from 'axios';
 
+const USE_AI_SCHEDULER = true;
+
 const TestGenerator = () => {
     const { examCatList, backend_url } = useExam();
 
@@ -14,13 +16,17 @@ const TestGenerator = () => {
     const [recentGenerations, setRecentGenerations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [previewTest, setPreviewTest] = useState(null);
+    const [previewLang, setPreviewLang] = useState('en');
+    const [isValidating, setIsValidating] = useState(false);
+    const [validationReport, setValidationReport] = useState([]);
+    const [applyingCorrectionId, setApplyingCorrectionId] = useState(null);
+    const [regeneratingQuestionId, setRegeneratingQuestionId] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedExam, setSelectedExam] = useState('');
     const [availableExams, setAvailableExams] = useState([]);
     const [title, setTitle] = useState('');
     const [negativeMarks, setNegativeMarks] = useState('');
     const [difficulty, setDifficulty] = useState('Medium');
-    const [previewLang, setPreviewLang] = useState('en');
     const [progress, setProgress] = useState({ count: 0, total: 0 });
     const [isAiLoadingCounts, setIsAiLoadingCounts] = useState(false);
 
@@ -201,7 +207,7 @@ const TestGenerator = () => {
         setIsLoading(true);
         setProgress({ count: 0, total: totalQuestions });
 
-        socket.emit('start_generation', {
+        const payload = {
             title,
             examId: selectedExam,
             rules: subjects.filter(s => s.name && s.count > 0),
@@ -209,7 +215,98 @@ const TestGenerator = () => {
             negativeMarks: parseFloat(negativeMarks) || 0,
             duration: 60,
             totalMarks: totalQuestions
-        });
+        };
+
+        if (USE_AI_SCHEDULER) {
+            axios.post(`${backend_url}/api/admin/mock/generate`, {
+                ...payload,
+                socketId: socket.id
+            }, { withCredentials: true }).catch(err => {
+                console.error("Admin Generator POST failed:", err);
+                setIsLoading(false);
+                toast.error(`Admin generator error: ${err.message}`);
+            });
+        } else {
+            socket.emit('start_generation', payload);
+        }
+    };
+
+    const handleAIValidate = async () => {
+        if (!previewTest || !backend_url) return;
+        setIsValidating(true);
+        setValidationReport([]);
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.post(`${backend_url}/api/admin/mock/validate`, {
+                testId: previewTest._id
+            });
+            if (data.success) {
+                setValidationReport(data.issues || []);
+                if (data.issues && data.issues.length > 0) {
+                    toast.warning(`AI found ${data.issues.length} question(s) with errors!`);
+                } else {
+                    toast.success("AI Validation Passed! 100% correct questions.");
+                }
+            } else {
+                toast.error(data.message || "Failed to validate test.");
+            }
+        } catch (err) {
+            console.error("AI Validation error:", err);
+            toast.error(`Validation error: ${err.message}`);
+        } finally {
+            setIsValidating(false);
+        }
+    };
+
+    const handleApplyCorrection = async (questionId, correctedPayload) => {
+        if (!previewTest || !backend_url) return;
+        setApplyingCorrectionId(questionId);
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.post(`${backend_url}/api/admin/mock/apply-correction`, {
+                testId: previewTest._id,
+                questionId,
+                correctedPayload
+            });
+            if (data.success && data.test) {
+                setPreviewTest(data.test);
+                setValidationReport(prev => prev.filter(issue => issue.questionId !== questionId));
+                setRecentGenerations(prev => prev.map(gen => gen._id === data.test._id ? data.test : gen));
+                toast.success("Correction applied successfully!");
+            } else {
+                toast.error(data.message || "Failed to apply correction.");
+            }
+        } catch (err) {
+            console.error("Apply correction error:", err);
+            toast.error(`Apply correction error: ${err.message}`);
+        } finally {
+            setApplyingCorrectionId(null);
+        }
+    };
+
+    const handleRegenerateQuestion = async (questionId) => {
+        if (!previewTest || !backend_url) return;
+        setRegeneratingQuestionId(questionId);
+        axios.defaults.withCredentials = true;
+        try {
+            const { data } = await axios.post(`${backend_url}/api/admin/mock/regenerate-question`, {
+                testId: previewTest._id,
+                questionId
+            });
+            if (data.success && data.test) {
+                setPreviewTest(data.test);
+                setValidationReport(prev => prev.filter(issue => issue.questionId !== questionId));
+                setRecentGenerations(prev => prev.map(gen => gen._id === data.test._id ? data.test : gen));
+                toast.success("Question regenerated successfully!");
+            } else {
+                toast.error(data.message || "Failed to regenerate question.");
+            }
+        } catch (err) {
+            console.error("Regenerate question error:", err);
+            toast.error(`Regenerate question error: ${err.message}`);
+        } finally {
+            setRegeneratingQuestionId(null);
+        }
     };
 
     return (
@@ -325,10 +422,31 @@ const TestGenerator = () => {
                 </div>
             </div>
 
-            <Modal isOpen={!!previewTest} onClose={() => setPreviewTest(null)} title={previewTest?.ExamId?.Name + ' - ' + previewTest?.Title}>
-                <div className="flex justify-center gap-2 mb-4 border-b dark:border-slate-800 pb-4 transition-colors">
-                    <button onClick={() => setPreviewLang('en')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>English</button>
-                    <button onClick={() => setPreviewLang('hi')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>हिन्दी (Hindi)</button>
+            <Modal isOpen={!!previewTest} onClose={() => { setPreviewTest(null); setValidationReport([]); }} title={previewTest?.ExamId?.Name + ' - ' + previewTest?.Title}>
+                <div className="flex justify-between items-center mb-4 border-b dark:border-slate-800 pb-4 transition-color">
+                    <div className="flex gap-2">
+                        <button onClick={() => setPreviewLang('en')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>English</button>
+                        <button onClick={() => setPreviewLang('hi')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>हिन्दी (Hindi)</button>
+                    </div>
+                    <div>
+                        <button
+                            onClick={handleAIValidate}
+                            disabled={isValidating}
+                            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-1.5 text-sm transition disabled:bg-purple-400 mr-6"
+                        >
+                            {isValidating ? (
+                                <>
+                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-1"></div>
+                                    Auditing...
+                                </>
+                            ) : (
+                                <>
+                                    <Sparkles size={16} />
+                                    Validate with AI
+                                </>
+                            )}
+                        </button>
+                    </div>
                 </div>
 
                 <div className="prose prose-sm max-w-none">
@@ -340,20 +458,85 @@ const TestGenerator = () => {
                             const displayData = langData || fallbackLangData;
                             if (!displayData) return null;
 
+                            const issue = validationReport.find(i => i.questionId === q._id);
+                            const correctedLangData = (issue && issue.proposedCorrection) 
+                                ? (previewLang === 'hi' ? issue.proposedCorrection.hi : issue.proposedCorrection.en)
+                                : null;
+
                             return (
-                                <li key={q._id} className="space-y-2 pb-2">
-                                    <p className="font-semibold text-gray-900 dark:text-white transition-colors">{displayData.Question}</p>
-                                    <ul className="list-none pl-4 space-y-1">
-                                        {displayData.options.map((opt, oi) => (
-                                            <li key={oi} className="text-gray-700 dark:text-slate-300 transition-colors">
-                                                <strong className="mr-2 text-gray-900 dark:text-white transition-colors">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <p className="!mt-3 text-sm">
-                                        <strong className="text-green-700 dark:text-green-400 transition-colors">Answer: {displayData.answer}</strong>
-                                    </p>
-                                    <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
+                                <li key={q._id} className="space-y-3 pb-6 border-b dark:border-slate-800 last:border-0 transition-colors">
+                                    <div className="flex justify-between items-start gap-4">
+                                        <div className="flex-1 space-y-2">
+                                            <p className="font-semibold text-gray-900 dark:text-white transition-colors">{displayData.Question}</p>
+                                            <ul className="list-none pl-4 space-y-1">
+                                                {displayData.options.map((opt, oi) => (
+                                                    <li key={oi} className={`text-gray-700 dark:text-slate-300 transition-colors ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
+                                                        <strong className="mr-2 text-gray-900 dark:text-white transition-colors">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <p className="!mt-3 text-sm">
+                                                <strong className="text-green-700 dark:text-green-400 transition-colors">Answer: {displayData.answer}</strong>
+                                            </p>
+                                            <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
+                                        </div>
+                                    </div>
+
+                                    {issue && (
+                                        <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 rounded-xl space-y-3">
+                                            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-sm">
+                                                <Sparkles size={16} />
+                                                <span>AI-Detected Issue:</span>
+                                            </div>
+                                            <p className="text-xs text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/10 p-2.5 rounded-lg border border-amber-200/50 dark:border-amber-900/20">{issue.issue}</p>
+
+                                            {correctedLangData && (
+                                                <div className="p-3 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-lg space-y-2 text-xs">
+                                                    <div className="text-green-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-semibold">AI Proposed Correction:</div>
+                                                    <p className="font-semibold text-gray-900 dark:text-white">{correctedLangData.Question}</p>
+                                                    <ul className="list-none pl-3 space-y-1">
+                                                        {correctedLangData.options.map((opt, oi) => (
+                                                            <li key={oi} className={`text-gray-700 dark:text-slate-300 ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
+                                                                <strong className="mr-1.5">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                    <p className="font-bold text-green-700 dark:text-emerald-400">Answer: {correctedLangData.answer}</p>
+                                                    <div className="prose-xs text-slate-500" dangerouslySetInnerHTML={{ __html: correctedLangData.solution }} />
+                                                </div>
+                                            )}
+
+                                            <div className="flex justify-end gap-2">
+                                                <button 
+                                                    onClick={() => handleRegenerateQuestion(q._id)}
+                                                    disabled={regeneratingQuestionId === q._id}
+                                                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-indigo-400 cursor-pointer"
+                                                >
+                                                    {regeneratingQuestionId === q._id ? (
+                                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                                    ) : (
+                                                        <Sparkles size={14} />
+                                                    )}
+                                                    Regenerate Question
+                                                </button>
+
+                                                {issue.proposedCorrection && (
+                                                    <button 
+                                                        onClick={() => handleApplyCorrection(q._id, issue.proposedCorrection)}
+                                                        disabled={applyingCorrectionId === q._id}
+                                                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-green-400 cursor-pointer"
+                                                    >
+                                                        {applyingCorrectionId === q._id ? (
+                                                            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                                        ) : (
+                                                            <CheckCircle size={14} />
+                                                        )}
+                                                        Apply AI Correction
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                 </li>
                             );
                         })}

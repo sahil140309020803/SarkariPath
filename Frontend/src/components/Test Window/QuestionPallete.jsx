@@ -20,28 +20,43 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
 
     // Group questions by Subject for display headers in the palette
     const structuredQuestions = useMemo(() => {
-        if (!activeTest || !activeTest.Structure || !questions.length) return {};
+        if (!activeTest || !questions.length) return {};
 
         const groups = {};
-        let questionIndex = 0;
 
-        activeTest.Structure.forEach(section => {
-            const subject = section.Subject;
-            if (!groups[subject]) {
-                groups[subject] = [];
-            }
+        if (activeTest.Structure && activeTest.Structure.length > 0) {
+            let questionIndex = 0;
+            activeTest.Structure.forEach(section => {
+                const subject = section.Subject;
+                if (!groups[subject]) {
+                    groups[subject] = [];
+                }
 
-            const numQs = section.QuestionCount;
+                const numQs = section.QuestionCount;
 
-            for (let i = 0; i < numQs && questionIndex < questions.length; i++) {
+                for (let i = 0; i < numQs && questionIndex < questions.length; i++) {
+                    groups[subject].push({
+                        qId: questions[questionIndex]._id,
+                        index: questionIndex,
+                        number: questionIndex + 1,
+                    });
+                    questionIndex++;
+                }
+            });
+        } else {
+            // Fallback for Quizzes: group dynamically by question's Subject
+            questions.forEach((q, idx) => {
+                const subject = q.Subject || "General";
+                if (!groups[subject]) {
+                    groups[subject] = [];
+                }
                 groups[subject].push({
-                    qId: questions[questionIndex]._id,
-                    index: questionIndex,
-                    number: questionIndex + 1,
+                    qId: q._id,
+                    index: idx,
+                    number: idx + 1,
                 });
-                questionIndex++;
-            }
-        });
+            });
+        }
         return groups;
     }, [activeTest, questions]);
 

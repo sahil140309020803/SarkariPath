@@ -12,7 +12,7 @@ const Modal = ({ isOpen, onClose, title, children, maxWidth = 'max-w-2xl' }) => 
                     <h3 className="text-xl font-semibold text-gray-800 dark:text-white transition-colors">{title}</h3>
                     <button onClick={onClose} className="text-gray-500 hover:text-gray-800 dark:text-slate-400 dark:hover:text-white transition-colors"><X size={24} /></button>
                 </div>
-                <div className="max-h-[70vh] overflow-y-auto">{children}</div>
+                <div className="max-h-[70vh] custom-scrollbar overflow-y-auto">{children}</div>
             </div>
         </div>
     );

@@ -49,7 +49,7 @@ const TestWindow = () => {
 
 
     const removeSlug = (text) => {
-        return text.replaceAll('-', ' ');
+        return text ? text.replaceAll('-', ' ') : '';
     }
 
     // Get current question data based on selected language
@@ -156,7 +156,9 @@ const TestWindow = () => {
                 <header className="flex flex-col sm:flex-row justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
                     <div className="flex items-center justify-between gap-4 sm:justify-start w-full sm:w-auto">
                         <div className="text-3xl sm:text-4xl text-white font-bold">Sarkari<span className="text-red-500">Path</span></div>
-                        <span className="text-sm sm:text-lg font-medium text-gray-300 dark:text-slate-400 ml-2 hidden md:inline truncate max-w-[200px] lg:max-w-[400px]">Mock Test: {removeSlug(activeTest.ExamId?.Name)} {activeTest.Title}</span>
+                        <span className="text-sm sm:text-lg font-medium text-gray-300 dark:text-slate-400 ml-2 hidden md:inline truncate max-w-[200px] lg:max-w-[400px]">
+                            {activeTest.type === 'mock_test' ? 'Mock Test' : 'Quiz'}: {activeTest.ExamId?.Name ? removeSlug(activeTest.ExamId.Name) : ''} {activeTest.Title}
+                        </span>
                     </div>
 
                     <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">

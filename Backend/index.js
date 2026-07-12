@@ -27,6 +27,9 @@ import { getTestAnalysis, getLeaderboard, getWeaknessAnalysis, generateAIInsight
 import { submitTest } from './controllers/SubmitTest.js';
 import { getUserDashboardData } from './controllers/FetchUserDashboard.js';
 import { getDashboardStats, getAnalyticsStats } from './controllers/AdminDashboard.js';
+import { generateAdminMock } from './controllers/AdminMockGenerationController.js';
+import { validateMock, applyCorrection, regenerateQuestion } from './controllers/AdminMockValidationController.js';
+import { generateUserQuiz } from './controllers/QuizGenerationController.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -50,6 +53,7 @@ const io = new Server(server, {
         credentials: true
     }
 });
+app.set('socketio', io);
 
 // Listen for WebSocket connections
 io.on('connection', (socket) => {
@@ -96,6 +100,13 @@ app.use('/api/exams', examRouter);
 
 // Test Window Routes
 app.use('/api/test-window', testWindowRouter);
+
+// New Quiz/Mock Generation Routes
+app.post('/api/admin/mock/generate', isAuth, generateAdminMock);
+app.post('/api/admin/mock/validate', isAuth, validateMock);
+app.post('/api/admin/mock/apply-correction', isAuth, applyCorrection);
+app.post('/api/admin/mock/regenerate-question', isAuth, regenerateQuestion);
+app.post('/api/quiz/generate', isAuth, generateUserQuiz);
 
 // Submit test
 app.post('/api/submit-test', isAuth, submitTest);

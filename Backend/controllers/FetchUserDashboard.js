@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import userModel from '../models/userModel.js';
 import userStatisticsModel from '../models/userStatisticsModel.js';
-import { TestSubmissionModel, examModel } from '../models/ExamModel.js';
+import { TestSubmissionModel, examModel, MockTestModel, QuizModel } from '../models/ExamModel.js';
 
 export const getUserDashboardData = async (req, res) => {
     const { userEmail } = req.body;
@@ -48,10 +48,19 @@ export const getUserDashboardData = async (req, res) => {
         const recentSubmissions = await TestSubmissionModel.find({
             userId: { $in: possibleUserIds }
         })
-            .populate('testId', 'Title')
             .sort({ createdAt: -1 })
             .limit(10)
             .lean();
+
+        const testIds = recentSubmissions.map(sub => sub.testId).filter(Boolean);
+        const [mockTestsFound, quizzesFound] = await Promise.all([
+            MockTestModel.find({ _id: { $in: testIds } }).select('Title').lean(),
+            QuizModel.find({ _id: { $in: testIds } }).select('Title').lean()
+        ]);
+
+        const titleMap = {};
+        mockTestsFound.forEach(t => titleMap[t._id.toString()] = t.Title);
+        quizzesFound.forEach(t => titleMap[t._id.toString()] = t.Title);
 
         // Get unique exams mapped to names for recent activity title formatting
         const uniqueExamIds = [...new Set(
@@ -68,9 +77,10 @@ export const getUserDashboardData = async (req, res) => {
 
         const recentActivity = recentSubmissions.map(test => {
             const examName = examMap[test.examId?.toString()] || "Custom Test";
+            const testTitle = titleMap[test.testId?.toString()] || 'Mock Test';
             return {
                 id: test._id,
-                title: `${examName} - ${test.testId?.Title || 'Mock Test'}`,
+                title: `${examName} - ${testTitle}`,
                 qs: `${test.correctCount}/${test.maxPossibleScore} Marks`,
                 time: test.createdAt,
                 score: ((test.totalScore / test.maxPossibleScore) * 100).toFixed(2),

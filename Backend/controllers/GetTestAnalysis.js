@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MockTestModel, TestSubmissionModel } from "../models/ExamModel.js";
+import { MockTestModel, QuizModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
 import { AI } from "../GenAI/ai.js";
 
@@ -14,7 +14,14 @@ export const getLeaderboard = async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid Test ID" });
         }
 
-        const test = await MockTestModel.findById(testId).select('leaderboard type').lean();
+        let test = await MockTestModel.findById(testId).select('leaderboard type').lean();
+        if (!test) {
+            test = await QuizModel.findById(testId).select('expireAt').lean();
+            if (test) {
+                test.type = 'quiz';
+                test.leaderboard = [];
+            }
+        }
         if (!test) return res.status(404).json({ success: false, message: "Test not found" });
 
         // Quiz tests never have a leaderboard
@@ -56,10 +63,21 @@ export const getTestAnalysis = async (req, res) => {
             return res.status(404).json({ success: false, message: "Submission not found" });
         }
 
-        const test = await MockTestModel.findById(submission.testId)
+        let test = await MockTestModel.findById(submission.testId)
             .populate('Questions')
             .populate('ExamId')
             .lean();
+
+        if (!test) {
+            test = await QuizModel.findById(submission.testId)
+                .populate('Questions')
+                .populate('ExamId')
+                .lean();
+            if (test) {
+                test.type = 'quiz';
+                test.leaderboard = [];
+            }
+        }
 
         if (!test) {
             return res.status(404).json({ success: false, message: "Test details not found" });
@@ -168,7 +186,13 @@ export const generateAIInsights = async (req, res) => {
         const submission = await TestSubmissionModel.findById(submissionId).lean();
         if (!submission) return res.status(404).json({ success: false, message: "Submission not found" });
 
-        const test = await MockTestModel.findById(submission.testId).lean();
+        let test = await MockTestModel.findById(submission.testId).lean();
+        if (!test) {
+            test = await QuizModel.findById(submission.testId).lean();
+            if (test) {
+                test.type = 'quiz';
+            }
+        }
 
         const dataForAI = {
             testTitle: test.Title,

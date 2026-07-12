@@ -5,6 +5,9 @@ import { useExam } from '../../context/ExamContext';
 import io from 'socket.io-client';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+
+const USE_AI_SCHEDULER = true;
 
 const TestGenerating = () => {
     const {
@@ -26,6 +29,11 @@ const TestGenerating = () => {
     const [selectedExam, setSelectedExam] = useState('');
     const [socket, setSocket] = useState(null);
     const [aiText, setAiText] = useState('Initializing Connection');
+    const [waitingStatus, setWaitingStatus] = useState({
+        isWaiting: false,
+        position: 0,
+        estimatedSeconds: 0
+    });
     const navigate = useNavigate();
 
 
@@ -77,23 +85,48 @@ const TestGenerating = () => {
                 title: fullTitle,
                 examId: examId,
                 type: 'quiz',
-                rules: [{ name: ruleName, count: 5 }],
+                rules: [{ name: ruleName, count: 15 }],
                 difficulty: difficulty || 'Medium',
                 negativeMarks: 0,
-                duration: 8,
-                totalMarks: 5,
+                duration: 15,
+                totalMarks: 15,
                 subjectName: activeSubject?.name || activeSubject || null,
                 topicName: activeTopic || null,
                 examName: isExamDataFetched?.ExamName || null
             };
 
-            newSocket.emit('start_generation', payload);
+            if (USE_AI_SCHEDULER) {
+                axios.post(`${backend_url}/api/quiz/generate`, {
+                    ...payload,
+                    socketId: newSocket.id
+                }, { withCredentials: true }).catch(err => {
+                    console.error("Scheduler POST failed:", err);
+                    setAiText('Failed to queue quiz generation');
+                    toast.error(`Queue error: ${err.message}`);
+                });
+            } else {
+                newSocket.emit('start_generation', payload);
+            }
         });
 
         newSocket.on('generation_progress', (data) => {
-            setQuestionCount(data.count);
-            const textIndex = Math.min(Math.floor((data.count / 15) * aiTextList.length), aiTextList.length - 1);
-            setAiText(aiTextList[textIndex] || 'Generating Questions');
+            if (data.status === 'waiting') {
+                setWaitingStatus({
+                    isWaiting: true,
+                    position: data.queuePosition,
+                    estimatedSeconds: data.estimatedWaitSeconds
+                });
+                setAiText(`Waiting in Queue (Position: ${data.queuePosition})`);
+            } else if (data.status === 'generating') {
+                setWaitingStatus(prev => ({ ...prev, isWaiting: false }));
+                setQuestionCount(data.generatedQuestions);
+                const textIndex = Math.min(Math.floor((data.generatedQuestions / 15) * aiTextList.length), aiTextList.length - 1);
+                setAiText(aiTextList[textIndex] || `Generating Questions (${data.generatedQuestions}/15)`);
+            } else {
+                setQuestionCount(data.count);
+                const textIndex = Math.min(Math.floor((data.count / 15) * aiTextList.length), aiTextList.length - 1);
+                setAiText(aiTextList[textIndex] || 'Generating Questions');
+            }
         });
 
         newSocket.on('generation_complete', (data) => {
@@ -143,6 +176,78 @@ const TestGenerating = () => {
     };
 
     const style = difficultyStyles[difficulty] || difficultyStyles.Medium;
+
+    if (waitingStatus.isWaiting) {
+        return (
+            <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
+                {/* Non-clickable Backdrop */}
+                <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"></div>
+
+                {/* Premium Waiting Card */}
+                <div className="relative z-10 w-full max-w-lg bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8 shadow-2xl overflow-hidden">
+                    {/* Background Glows */}
+                    <div className={`absolute top-0 right-0 w-64 h-64 bg-${style.accent}-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2`}></div>
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-indigo-500/10 rounded-full blur-[60px] translate-y-1/2 -translate-x-1/2"></div>
+
+                    {/* Header Section */}
+                    <div className="flex flex-col items-center text-center relative z-10">
+                        <div className="relative mb-8">
+                            <div className={`absolute inset-0 rounded-full border-2 border-${style.accent}-500/30 animate-pulse`}></div>
+                            <div className={`size-20 rounded-3xl bg-slate-800 border border-slate-700 shadow-2xl flex items-center justify-center relative z-10`}>
+                                <div className={`absolute inset-0 bg-${style.accent}-500/20 blur-xl rounded-full`}></div>
+                                <span className={`text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-500`}>WAIT</span>
+                            </div>
+                        </div>
+
+                        <div className={`px-4 py-1.5 rounded-full bg-${style.accent}-500/10 border border-${style.accent}-500/20 mb-4`}>
+                            <span className={`text-[10px] font-bold uppercase tracking-[0.2em] text-${style.accent}-400`}>
+                                Generating AI Quiz...
+                            </span>
+                        </div>
+
+                        <h2 className="text-xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+                            You are currently waiting
+                        </h2>
+                        <p className="text-slate-400 text-sm max-w-xs mx-auto mb-6">
+                            Gemini API limits are active. We are queuing requests to avoid failures.
+                        </p>
+                    </div>
+
+                    {/* Queue Status Grid */}
+                    <div className="grid grid-cols-2 gap-4 mt-4 relative z-10">
+                        <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-5 flex flex-col items-center justify-center text-center">
+                            <div className="text-3xl sm:text-4xl font-black text-white mb-1 tracking-tighter">
+                                {waitingStatus.position}
+                            </div>
+                            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Queue Position</div>
+                        </div>
+
+                        <div className="bg-slate-800/50 border border-slate-700/50 rounded-3xl p-5 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                            <div className="text-2xl sm:text-3xl font-black text-indigo-400 mb-1 tracking-tighter">
+                                ~{waitingStatus.estimatedSeconds}s
+                            </div>
+                            <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Estimated Wait</div>
+                        </div>
+                    </div>
+
+                    {/* Loader Ring */}
+                    <div className="mt-8 flex justify-center">
+                        <ThreeDots visible={true} height={40} width={40} color={style.color} />
+                    </div>
+
+                    {/* Cancel Button */}
+                    <div className="mt-8 flex justify-center relative z-10">
+                        <button
+                            onClick={handleCancel}
+                            className="px-6 py-2.5 rounded-full bg-slate-800 border border-slate-700 text-slate-300 font-semibold text-xs hover:bg-slate-700 hover:text-white transition-all uppercase tracking-widest"
+                        >
+                            Cancel & Leave Queue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">

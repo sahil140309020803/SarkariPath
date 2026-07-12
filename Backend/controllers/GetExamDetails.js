@@ -1,5 +1,5 @@
 import { AI } from "../GenAI/ai.js";
-import { examModel, MockTestModel, TestSubmissionModel } from "../models/ExamModel.js";
+import { examModel, MockTestModel, QuizModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
 import userStatisticsModel from "../models/userStatisticsModel.js";
 
@@ -76,17 +76,26 @@ const getExamDetails = async (req, res) => {
                 userId: userEmail, 
                 examId: examData._id 
             })
-            .populate('testId', 'Title')
             .sort({ createdAt: -1 })
             .lean();
 
             if (submissions && submissions.length > 0) {
+                const testIds = submissions.map(sub => sub.testId).filter(Boolean);
+                const [mockTestsFound, quizzesFound] = await Promise.all([
+                    MockTestModel.find({ _id: { $in: testIds } }).select('Title').lean(),
+                    QuizModel.find({ _id: { $in: testIds } }).select('Title').lean()
+                ]);
+
+                const titleMap = {};
+                mockTestsFound.forEach(t => titleMap[t._id.toString()] = t.Title);
+                quizzesFound.forEach(t => titleMap[t._id.toString()] = t.Title);
+
                 testHistory = submissions.map(sub => ({
                     submissionId: sub._id,
-                    testId: sub.testId?._id,
+                    testId: sub.testId,
                     examId: sub.examId,
                     status: 'Completed',
-                    title: sub.testId?.Title || 'Unknown Test',
+                    title: titleMap[sub.testId?.toString()] || 'Unknown Test',
                     score: sub.totalScore,
                     maxPossibleScore: sub.maxPossibleScore,
                     accuracy: sub.accuracy,

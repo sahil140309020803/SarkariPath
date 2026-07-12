@@ -98,7 +98,10 @@ const QuizSchema = new mongoose.Schema({
     }],
     DurationinMinutes: { type: Number, required: true, default: 20 },
     TotalMarks: { type: Number, required: true, default: 15 },
+    status: { type: String, enum: ['Waiting', 'Active', 'Generating', 'Completed', 'Failed'], default: 'Waiting' },
     expireAt: { type: Date, index: { expires: 0 } },
+}, {
+    timestamps: true
 });
 
 const QuizModel = examDbConnection.models.quizzes || examDbConnection.model('quizzes', QuizSchema);

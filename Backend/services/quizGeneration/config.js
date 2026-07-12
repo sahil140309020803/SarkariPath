@@ -1,0 +1,10 @@
+import 'dotenv/config';
+
+export const SCHEDULER_CONFIG = {
+  ACTIVE_POOL_SIZE: parseInt(process.env.SCHEDULER_ACTIVE_POOL_SIZE) || 3,
+  QUESTIONS_PER_REQUEST: parseInt(process.env.SCHEDULER_QUESTIONS_PER_REQUEST) || 5,
+  TOTAL_QUESTIONS: parseInt(process.env.SCHEDULER_TOTAL_QUESTIONS) || 15,
+  MAX_REQUESTS_PER_MINUTE: parseInt(process.env.SCHEDULER_MAX_REQUESTS_PER_MINUTE) || 15,
+  MAX_RETRIES: parseInt(process.env.SCHEDULER_MAX_RETRIES) || 3,
+  QUIZ_EXPIRY_DURATION: 10 * 60 * 1000 // 10 minutes
+};

@@ -1,4 +1,4 @@
-import { MockTestModel, QuestionModel, TestSubmissionModel } from "../models/ExamModel.js";
+import { MockTestModel, QuizModel, QuestionModel, TestSubmissionModel } from "../models/ExamModel.js";
 import userModel from "../models/userModel.js";
 import userStatisticsModel from "../models/userStatisticsModel.js";
 
@@ -14,7 +14,10 @@ export const submitTest = async (req, res) => {
         if (!testId) throw new Error("testId is missing from frontend payload.");
         if (!userResponses || !Array.isArray(userResponses)) throw new Error("userResponses is missing or not an array.");
 
-        const mockTest = await MockTestModel.findById(testId);
+        let mockTest = await MockTestModel.findById(testId);
+        if (!mockTest) {
+            mockTest = await QuizModel.findById(testId);
+        }
         if (!mockTest) throw new Error(`Test with ID ${testId} not found in DB.`);
 
         const user = await userModel.findOne({ email: userEmail });
@@ -136,9 +139,10 @@ export const submitTest = async (req, res) => {
         });
 
         let submissionExpireAt = null;
-        if (mockTest.type === 'quiz') {
+        const testType = mockTest.type || 'quiz';
+        if (testType === 'quiz') {
             submissionExpireAt = mockTest.expireAt;
-        } else if (mockTest.type === 'mock_test' && previousAttemptsCount > 0) {
+        } else if (testType === 'mock_test' && previousAttemptsCount > 0) {
             // Re-attempt for mock test expires in 10 minutes
             submissionExpireAt = new Date(Date.now() + MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS);
         }
@@ -164,7 +168,7 @@ export const submitTest = async (req, res) => {
         console.log("Submission saved successfully:", newSubmission._id);
 
         // ─── Leaderboard Update (mock_test only, first attempt only) ───
-        if (mockTest.type === 'mock_test' && previousAttemptsCount === 0) {
+        if (testType === 'mock_test' && previousAttemptsCount === 0) {
             const userName = user ? user.name : 'Aspirant';
             await MockTestModel.findByIdAndUpdate(testId, {
                 $push: {
