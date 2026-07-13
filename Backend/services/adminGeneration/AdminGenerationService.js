@@ -11,7 +11,7 @@ const withTimeout = (promise, ms) => {
 };
 
 export const generateAdminMockTest = async (io, socketId, data) => {
-  const { title, examId, rules, difficulty, negativeMarks, totalMarks, duration } = data;
+  const { title, examId, rules, difficulty, negativeMarks, totalMarks, duration, marksPerQuestion } = data;
   const socket = io.sockets.sockets.get(socketId);
 
   const emitProgress = (payload) => {
@@ -50,7 +50,8 @@ export const generateAdminMockTest = async (io, socketId, data) => {
         NegativeMarks: negativeMarks || 0,
         Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
         Questions: [],
-        TotalMarks: totalMarks || totalRequired,
+        TotalMarks: totalMarks || (totalRequired * (parseFloat(marksPerQuestion) || 1)),
+        MarksPerQuestion: parseFloat(marksPerQuestion) || 1,
         DurationinMinutes: duration || 60,
         type: 'mock_test'
       });

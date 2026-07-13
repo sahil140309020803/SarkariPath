@@ -557,15 +557,15 @@ const UserDashboard = () => {
 
                     {/* Right details */}
                     <div className="flex flex-wrap items-center justify-between md:justify-end gap-5 md:gap-10 border-t border-slate-50 md:border-t-0 pt-3 md:pt-0 dark:border-slate-800/40">
-                      <div>
+                      <div className='flex flex-col items-center'>
                         <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold block">Score</span>
-                        <span className="text-sm font-semibold text-slate-800 dark:text-slate-400">{activity.qs}</span>
+                        <span className="text-sm font-semibold text-slate-800 dark:text-slate-400">{activity.score}</span>
                       </div>
 
                       <div>
                         <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold block mb-0.5">Percentage</span>
                         <span className="inline-flex items-center justify-center font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2.5 py-1 rounded-lg text-xs">
-                          {activity.score}%
+                          {activity.percentage}%
                         </span>
                       </div>
 

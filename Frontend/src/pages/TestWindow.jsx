@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { QuestionPalette } from '../components/Test Window/QuestionPallete';
 import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 import { XCircle } from 'lucide-react';
+import LOGO from '../assets/LOGO.png';
 
 
 const TestWindow = () => {
@@ -155,7 +156,12 @@ const TestWindow = () => {
                 {/* Top Header Bar  */}
                 <header className="flex flex-col sm:flex-row justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
                     <div className="flex items-center justify-between gap-4 sm:justify-start w-full sm:w-auto">
-                        <div className="text-3xl sm:text-4xl text-white font-bold">Sarkari<span className="text-red-500">Path</span></div>
+                        <div className='flex items-center gap-2'>
+                            <img src={LOGO} alt="logo" className='w-9 h-9' />
+                            <div className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
+                                Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span>
+                            </div>
+                        </div>
                         <span className="text-sm sm:text-lg font-medium text-gray-300 dark:text-slate-400 ml-2 hidden md:inline truncate max-w-[200px] lg:max-w-[400px]">
                             {activeTest.type === 'mock_test' ? 'Mock Test' : 'Quiz'}: {activeTest.ExamId?.Name ? removeSlug(activeTest.ExamId.Name) : ''} {activeTest.Title}
                         </span>
@@ -168,22 +174,24 @@ const TestWindow = () => {
                             <span className="text-md sm:text-lg tracking-wider">{formatTime(timeRemaining)}</span>
                         </div>
                         {/* Language Switcher */}
-                        <div className="flex rounded-sm overflow-hidden border border-gray-500 dark:border-slate-700 shadow-sm shrink-0">
-                            <button
-                                onClick={() => handleLanguageChange('en')}
-                                disabled={!currentQuestionData || !currentQuestionData.en}
-                                className={`px-2 py-1.5 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'en' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
-                            >
-                                English
-                            </button>
-                            <button
-                                onClick={() => handleLanguageChange('hi')}
-                                disabled={!currentQuestionData || !currentQuestionData.hi}
-                                className={`px-2 py-1 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
-                            >
-                                हिन्दी
-                            </button>
-                        </div>
+                        {currentQuestionData?.en?.Question !== currentQuestionData?.hi?.Question && (
+                            <div className="flex rounded-sm overflow-hidden border border-gray-500 dark:border-slate-700 shadow-sm shrink-0">
+                                <button
+                                    onClick={() => handleLanguageChange('en')}
+                                    disabled={!currentQuestionData || !currentQuestionData.en}
+                                    className={`px-2 py-1.5 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'en' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
+                                >
+                                    English
+                                </button>
+                                <button
+                                    onClick={() => handleLanguageChange('hi')}
+                                    disabled={!currentQuestionData || !currentQuestionData.hi}
+                                    className={`px-2 py-1 text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${language === 'hi' ? 'bg-blue-600 dark:bg-indigo-600 text-white' : 'bg-gray-700 dark:bg-slate-800 text-gray-300 dark:text-slate-400 hover:bg-gray-600 dark:hover:bg-slate-700'}`}
+                                >
+                                    हिन्दी
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </header>
 
@@ -231,7 +239,7 @@ const TestWindow = () => {
                                         Time Spent: {formatTime(activeQuestionDuration)}
                                     </div>
                                     <div className="text-sm sm:text-md font-semibold text-red-600 dark:text-rose-400">
-                                        <span className='text-green-800 dark:text-emerald-400'>Marks: +1</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
+                                        <span className='text-green-800 dark:text-emerald-400'>Marks: +{activeTest.MarksPerQuestion !== undefined ? activeTest.MarksPerQuestion : 1}</span> | Negative: {activeTest.NegativeMarks > 0 ? '-' : ''}{activeTest.NegativeMarks !== undefined ? activeTest.NegativeMarks : 'N/A'}
                                     </div>
                                 </div>
                             </div>

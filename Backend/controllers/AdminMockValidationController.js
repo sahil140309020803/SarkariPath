@@ -1,13 +1,13 @@
 import { validateMockTest, applyMockCorrection, regenerateSingleQuestion } from '../services/adminGeneration/AdminValidatorService.js';
 
 export const validateMock = async (req, res) => {
-  const { testId } = req.body;
+  const { testId, questionIds } = req.body;
   if (!testId) {
     return res.status(400).json({ success: false, message: "testId is required" });
   }
 
   try {
-    const issues = await validateMockTest(testId);
+    const issues = await validateMockTest(testId, questionIds);
     return res.status(200).json({ success: true, issues });
   } catch (error) {
     console.error("[AdminMockValidationController] Validation failed:", error);

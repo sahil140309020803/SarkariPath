@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Sparkles, Eye, CheckCircle, Trash2 } from 'lucide-react';
+import { Plus, Sparkles, Eye, CheckCircle, Trash2, RefreshCw } from 'lucide-react';
 import io from 'socket.io-client';
 import { useExam } from '../../context/ExamContext';
 import Modal from './Modal';
@@ -18,6 +18,7 @@ const TestGenerator = () => {
     const [previewTest, setPreviewTest] = useState(null);
     const [previewLang, setPreviewLang] = useState('en');
     const [isValidating, setIsValidating] = useState(false);
+    const [validatingBatchIndex, setValidatingBatchIndex] = useState(null);
     const [validationReport, setValidationReport] = useState([]);
     const [applyingCorrectionId, setApplyingCorrectionId] = useState(null);
     const [regeneratingQuestionId, setRegeneratingQuestionId] = useState(null);
@@ -25,6 +26,7 @@ const TestGenerator = () => {
     const [selectedExam, setSelectedExam] = useState('');
     const [availableExams, setAvailableExams] = useState([]);
     const [title, setTitle] = useState('');
+    const [marksPerQuestion, setMarksPerQuestion] = useState('1');
     const [negativeMarks, setNegativeMarks] = useState('');
     const [difficulty, setDifficulty] = useState('Medium');
     const [progress, setProgress] = useState({ count: 0, total: 0 });
@@ -212,9 +214,10 @@ const TestGenerator = () => {
             examId: selectedExam,
             rules: subjects.filter(s => s.name && s.count > 0),
             difficulty,
+            marksPerQuestion: parseFloat(marksPerQuestion) || 1,
             negativeMarks: parseFloat(negativeMarks) || 0,
             duration: 60,
-            totalMarks: totalQuestions
+            totalMarks: totalQuestions * (parseFloat(marksPerQuestion) || 1)
         };
 
         if (USE_AI_SCHEDULER) {
@@ -255,6 +258,37 @@ const TestGenerator = () => {
             toast.error(`Validation error: ${err.message}`);
         } finally {
             setIsValidating(false);
+        }
+    };
+
+    const handleAIValidateBatch = async (batch) => {
+        if (!previewTest || !backend_url) return;
+        setValidatingBatchIndex(batch.index);
+        axios.defaults.withCredentials = true;
+        try {
+            const questionIds = batch.questions.map(q => q._id);
+            const { data } = await axios.post(`${backend_url}/api/admin/mock/validate`, {
+                testId: previewTest._id,
+                questionIds
+            });
+            if (data.success) {
+                setValidationReport(prev => {
+                    const cleaned = prev.filter(issue => !questionIds.includes(issue.questionId));
+                    return [...cleaned, ...(data.issues || [])];
+                });
+                if (data.issues && data.issues.length > 0) {
+                    toast.warning(`AI found ${data.issues.length} error(s) in Batch ${batch.index}!`);
+                } else {
+                    toast.success(`Batch ${batch.index} passed AI Validation successfully!`);
+                }
+            } else {
+                toast.error(data.message || `Failed to validate Batch ${batch.index}.`);
+            }
+        } catch (err) {
+            console.error("AI Batch Validation error:", err);
+            toast.error(`Validation error: ${err.message}`);
+        } finally {
+            setValidatingBatchIndex(null);
         }
     };
 
@@ -336,14 +370,18 @@ const TestGenerator = () => {
                                 </select>
                             </div>
                         </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Difficulty</label>
+                            <div className="flex space-x-2 mt-1">
+                                <button type="button" onClick={() => setDifficulty('Easy')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 ring-2 ring-green-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Easy</button>
+                                <button type="button" onClick={() => setDifficulty('Medium')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Medium' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 ring-2 ring-yellow-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Medium</button>
+                                <button type="button" onClick={() => setDifficulty('Hard')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Hard' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 ring-2 ring-red-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Hard</button>
+                            </div>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Difficulty</label>
-                                <div className="flex space-x-2 mt-1">
-                                    <button type="button" onClick={() => setDifficulty('Easy')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Easy' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 ring-2 ring-green-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Easy</button>
-                                    <button type="button" onClick={() => setDifficulty('Medium')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Medium' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400 ring-2 ring-yellow-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Medium</button>
-                                    <button type="button" onClick={() => setDifficulty('Hard')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Hard' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 ring-2 ring-red-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Hard</button>
-                                </div>
+                                <label htmlFor="marks-per-question" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Marks per Question</label>
+                                <input type="number" id="marks-per-question" value={marksPerQuestion} onChange={(e) => setMarksPerQuestion(e.target.value)} className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 transition-colors" placeholder="e.g., 1" step="0.1" min="0.1" />
                             </div>
                             <div>
                                 <label htmlFor="negative-marks" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Negative Marks</label>
@@ -367,9 +405,10 @@ const TestGenerator = () => {
                             ))}
                         </div>
                         <button onClick={handleAddSubject} className="mt-4 bg-gray-200 dark:bg-slate-800 text-gray-800 dark:text-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-700 flex items-center text-sm transition-colors"><Plus size={16} className="mr-2" /> Add Subject</button>
-                        <div className="mt-4 p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-sm flex justify-between items-center transition-colors">
+                        <div className="mt-4 p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-sm flex flex-wrap gap-3 justify-between items-center transition-colors">
                             <div><span className="font-semibold text-indigo-800 dark:text-indigo-400">Total Subjects:</span><span className="font-bold text-indigo-900 dark:text-white ml-2">{subjects.length}</span></div>
                             <div><span className="font-semibold text-indigo-800 dark:text-indigo-400">Total Questions:</span><span className="font-bold text-indigo-900 dark:text-white ml-2">{totalQuestions}</span></div>
+                            <div><span className="font-semibold text-indigo-800 dark:text-indigo-400">Total Marks:</span><span className="font-bold text-indigo-900 dark:text-white ml-2">{totalQuestions * (parseFloat(marksPerQuestion) || 1)}</span></div>
                         </div>
                     </div>
                 </div>
@@ -428,30 +467,11 @@ const TestGenerator = () => {
                         <button onClick={() => setPreviewLang('en')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'en' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>English</button>
                         <button onClick={() => setPreviewLang('hi')} className={`font-semibold py-2 px-5 rounded-lg text-sm transition-colors ${previewLang === 'hi' ? 'bg-indigo-600 text-white shadow-md' : 'bg-gray-200 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-300 dark:hover:bg-slate-700'}`}>हिन्दी (Hindi)</button>
                     </div>
-                    <div>
-                        <button
-                            onClick={handleAIValidate}
-                            disabled={isValidating}
-                            className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-1.5 text-sm transition disabled:bg-purple-400 mr-6"
-                        >
-                            {isValidating ? (
-                                <>
-                                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-1"></div>
-                                    Auditing...
-                                </>
-                            ) : (
-                                <>
-                                    <Sparkles size={16} />
-                                    Validate with AI
-                                </>
-                            )}
-                        </button>
-                    </div>
                 </div>
 
-                <div className="prose prose-sm max-w-none">
-                    <ol className="list-decimal ml-6.5 space-y-6">
-                        {previewTest?.Questions?.map((q) => {
+                <div className="prose prose-sm max-w-none mt-4">
+                    <div className="space-y-6">
+                        {previewTest?.Questions?.map((q, idx) => {
                             if (!q) return null;
                             const langData = (previewLang === 'hi' && q.hi) ? q.hi : q.en;
                             const fallbackLangData = q.en || q.hi;
@@ -463,84 +483,132 @@ const TestGenerator = () => {
                                 ? (previewLang === 'hi' ? issue.proposedCorrection.hi : issue.proposedCorrection.en)
                                 : null;
 
+                            const showBatchHeader = idx % 10 === 0;
+                            const batchIndex = Math.floor(idx / 10) + 1;
+                            const batchStart = idx + 1;
+                            const batchEnd = Math.min(idx + 10, previewTest.Questions.length);
+                            const batchQuestions = previewTest.Questions.slice(idx, idx + 10);
+                            const isCurrentValidating = validatingBatchIndex === batchIndex;
+
                             return (
-                                <li key={q._id} className="space-y-3 pb-6 border-b dark:border-slate-800 last:border-0 transition-colors">
-                                    <div className="flex justify-between items-start gap-4">
-                                        <div className="flex-1 space-y-2">
-                                            <p className="font-semibold text-gray-900 dark:text-white transition-colors">{displayData.Question}</p>
-                                            <ul className="list-none pl-4 space-y-1">
-                                                {displayData.options.map((opt, oi) => (
-                                                    <li key={oi} className={`text-gray-700 dark:text-slate-300 transition-colors ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
-                                                        <strong className="mr-2 text-gray-900 dark:text-white transition-colors">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <p className="!mt-3 text-sm">
-                                                <strong className="text-green-700 dark:text-green-400 transition-colors">Answer: {displayData.answer}</strong>
-                                            </p>
-                                            <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
-                                        </div>
-                                    </div>
-
-                                    {issue && (
-                                        <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 rounded-xl space-y-3">
-                                            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-sm">
-                                                <Sparkles size={16} />
-                                                <span>AI-Detected Issue:</span>
-                                            </div>
-                                            <p className="text-xs text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/10 p-2.5 rounded-lg border border-amber-200/50 dark:border-amber-900/20">{issue.issue}</p>
-
-                                            {correctedLangData && (
-                                                <div className="p-3 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-lg space-y-2 text-xs">
-                                                    <div className="text-green-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-semibold">AI Proposed Correction:</div>
-                                                    <p className="font-semibold text-gray-900 dark:text-white">{correctedLangData.Question}</p>
-                                                    <ul className="list-none pl-3 space-y-1">
-                                                        {correctedLangData.options.map((opt, oi) => (
-                                                            <li key={oi} className={`text-gray-700 dark:text-slate-300 ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
-                                                                <strong className="mr-1.5">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                    <p className="font-bold text-green-700 dark:text-emerald-400">Answer: {correctedLangData.answer}</p>
-                                                    <div className="prose-xs text-slate-500" dangerouslySetInnerHTML={{ __html: correctedLangData.solution }} />
-                                                </div>
-                                            )}
-
-                                            <div className="flex justify-end gap-2">
-                                                <button 
-                                                    onClick={() => handleRegenerateQuestion(q._id)}
-                                                    disabled={regeneratingQuestionId === q._id}
-                                                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-indigo-400 cursor-pointer"
-                                                >
-                                                    {regeneratingQuestionId === q._id ? (
-                                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
-                                                    ) : (
-                                                        <Sparkles size={14} />
-                                                    )}
-                                                    Regenerate Question
-                                                </button>
-
-                                                {issue.proposedCorrection && (
-                                                    <button 
-                                                        onClick={() => handleApplyCorrection(q._id, issue.proposedCorrection)}
-                                                        disabled={applyingCorrectionId === q._id}
-                                                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-green-400 cursor-pointer"
-                                                    >
-                                                        {applyingCorrectionId === q._id ? (
-                                                            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
-                                                        ) : (
-                                                            <CheckCircle size={14} />
-                                                        )}
-                                                        Apply AI Correction
-                                                    </button>
+                                <React.Fragment key={q._id}>
+                                    {showBatchHeader && (
+                                        <div className="mt-8 mb-6 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-2xl border border-purple-150 dark:border-purple-900/30 flex justify-between items-center transition-colors">
+                                            <span className="text-sm font-bold text-purple-900 dark:text-purple-300">
+                                                Batch {batchIndex}: Questions {batchStart} to {batchEnd}
+                                            </span>
+                                            <button
+                                                disabled={validatingBatchIndex !== null}
+                                                onClick={() => handleAIValidateBatch({ index: batchIndex, questions: batchQuestions })}
+                                                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm ${
+                                                    isCurrentValidating 
+                                                        ? 'bg-purple-600 text-white animate-pulse'
+                                                        : 'bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
+                                                }`}
+                                            >
+                                                {isCurrentValidating ? (
+                                                    <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-white"></div>
+                                                ) : (
+                                                    <Sparkles size={14} />
                                                 )}
-                                            </div>
+                                                <span>Validate Batch Q{batchStart}-{batchEnd}</span>
+                                            </button>
                                         </div>
                                     )}
-                                </li>
+                                    <div className="space-y-3 pb-6 border-b dark:border-slate-800 last:border-0 transition-colors">
+                                        <div className="flex justify-between items-start gap-4">
+                                            <div className="flex-1 space-y-2">
+                                                <p className="font-semibold text-gray-900 dark:text-white transition-colors">
+                                                    <span className="text-indigo-650 dark:text-indigo-400 font-bold mr-2">Q{idx + 1}.</span>
+                                                    {displayData.Question}
+                                                </p>
+                                                <ul className="list-none pl-4 space-y-1">
+                                                    {displayData.options.map((opt, oi) => (
+                                                        <li key={oi} className={`text-gray-700 dark:text-slate-300 transition-colors ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
+                                                            <strong className="mr-2 text-gray-900 dark:text-white transition-colors">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                <p className="!mt-3 text-sm">
+                                                    <strong className="text-green-700 dark:text-green-400 transition-colors">Answer: {displayData.answer}</strong>
+                                                </p>
+                                                <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
+                                            </div>
+                                            <button 
+                                                onClick={() => handleRegenerateQuestion(q._id)}
+                                                disabled={regeneratingQuestionId === q._id}
+                                                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start shrink-0"
+                                                title="Regenerate this question with AI"
+                                            >
+                                                {regeneratingQuestionId === q._id ? (
+                                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-indigo-700 dark:border-indigo-400"></div>
+                                                ) : (
+                                                    <RefreshCw size={12} />
+                                                )}
+                                                <span>Regenerate</span>
+                                            </button>
+                                        </div>
+
+                                        {issue && (
+                                            <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 rounded-xl space-y-3">
+                                                <div className="flex items-center gap-2 text-amber-800 dark:text-amber-400 font-bold text-sm">
+                                                    <Sparkles size={16} />
+                                                    <span>AI-Detected Issue:</span>
+                                                </div>
+                                                <p className="text-xs text-amber-700 dark:text-amber-300 bg-amber-100/50 dark:bg-amber-900/10 p-2.5 rounded-lg border border-amber-200/50 dark:border-amber-900/20">{issue.issue}</p>
+
+                                                {correctedLangData && (
+                                                    <div className="p-3 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-lg space-y-2 text-xs">
+                                                        <div className="text-green-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-semibold">AI Proposed Correction:</div>
+                                                        <p className="font-semibold text-gray-900 dark:text-white">{correctedLangData.Question}</p>
+                                                        <ul className="list-none pl-3 space-y-1">
+                                                            {correctedLangData.options.map((opt, oi) => (
+                                                                <li key={oi} className={`text-gray-700 dark:text-slate-300 ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
+                                                                    <strong className="mr-1.5">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                        <p className="font-bold text-green-700 dark:text-emerald-400">Answer: {correctedLangData.answer}</p>
+                                                        <div className="prose-xs text-slate-500" dangerouslySetInnerHTML={{ __html: correctedLangData.solution }} />
+                                                    </div>
+                                                )}
+
+                                                <div className="flex justify-end gap-2">
+                                                    <button 
+                                                        onClick={() => handleRegenerateQuestion(q._id)}
+                                                        disabled={regeneratingQuestionId === q._id}
+                                                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-indigo-400 cursor-pointer"
+                                                    >
+                                                        {regeneratingQuestionId === q._id ? (
+                                                            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                                        ) : (
+                                                            <Sparkles size={14} />
+                                                        )}
+                                                        Regenerate Question
+                                                    </button>
+
+                                                    {issue.proposedCorrection && (
+                                                        <button 
+                                                            onClick={() => handleApplyCorrection(q._id, issue.proposedCorrection)}
+                                                            disabled={applyingCorrectionId === q._id}
+                                                            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-green-400 cursor-pointer"
+                                                        >
+                                                            {applyingCorrectionId === q._id ? (
+                                                                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
+                                                            ) : (
+                                                                <CheckCircle size={14} />
+                                                            )}
+                                                            Apply AI Correction
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                </React.Fragment>
                             );
                         })}
-                    </ol>
+                    </div>
                 </div>
             </Modal>
         </div>

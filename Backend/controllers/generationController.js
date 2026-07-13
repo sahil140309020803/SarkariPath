@@ -22,7 +22,7 @@ export const setupSocketHandlers = (socket, io) => {
   });
 
   socket.on('start_generation', async (data) => {
-    const { title, examId, rules, difficulty, negativeMarks, duration, totalMarks, type, subjectName, topicName, examName } = data;
+    const { title, examId, rules, difficulty, negativeMarks, duration, totalMarks, type, subjectName, topicName, examName, marksPerQuestion } = data;
 
     let activeTest;
     const totalRequired = rules.reduce((acc, rule) => acc + (parseInt(rule.count) || 0), 0);
@@ -52,7 +52,8 @@ export const setupSocketHandlers = (socket, io) => {
           NegativeMarks: negativeMarks || 0,
           Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
           Questions: [],
-          TotalMarks: totalMarks || totalRequired,
+          TotalMarks: totalMarks || (totalRequired * (parseFloat(marksPerQuestion) || 1)),
+          MarksPerQuestion: parseFloat(marksPerQuestion) || 1,
           DurationinMinutes: duration || 20,
           type: 'quiz',
           expireAt: new Date(Date.now() + QUIZ_EXPIRY_DURATION)
@@ -77,7 +78,8 @@ export const setupSocketHandlers = (socket, io) => {
             NegativeMarks: negativeMarks || 0,
             Structure: rules.map(r => ({ Subject: r.name, QuestionCount: r.count })),
             Questions: [],
-            TotalMarks: totalMarks || totalRequired,
+            TotalMarks: totalMarks || (totalRequired * (parseFloat(marksPerQuestion) || 1)),
+            MarksPerQuestion: parseFloat(marksPerQuestion) || 1,
             DurationinMinutes: duration,
             type: 'mock_test'
           });
@@ -270,9 +272,26 @@ Previous Response Snippet: ${lastResponse ? `"${lastResponse}..."` : "None"}
     taskText = `Create 1 NEW, UNIQUE MCQ for the subject "${subjectName}" (${difficulty} level) that is not present in historyList.`;
   }
 
+  // Determine language generation rules
+  let languageInstructions = "";
+  if (isHindi) {
+    languageInstructions = `\n### 🌐 LANGUAGE INSTRUCTIONS:
+- This is a Hindi-related subject/topic ("${subjectName}").
+- BOTH the "en" and "hi" objects MUST contain the question, options, answer, and solution written in Hindi language. Do NOT translate this question into English. Copy the Hindi content as-is into BOTH fields.`;
+  } else if (isEnglish) {
+    languageInstructions = `\n### 🌐 LANGUAGE INSTRUCTIONS:
+- This is an English-related subject/topic ("${subjectName}").
+- BOTH the "en" and "hi" objects MUST contain the question, options, answer, and solution written in English language. Do NOT translate this question into Hindi. Copy the English content as-is into BOTH fields.`;
+  } else {
+    languageInstructions = `\n### 🌐 LANGUAGE INSTRUCTIONS:
+- The "en" object must contain the question, options, answer, and solution in English.
+- The "hi" object must contain the question, options, answer, and solution in Hindi.`;
+  }
+
   return `You are a high-level question developer for the "${examName}" exam.
   Randomness Seed: ${Math.floor(Math.random() * 100000) + 1}
   Task: ${taskText}
+${languageInstructions}
 
 ${errorFeedback}
 ${historyList}
@@ -285,8 +304,8 @@ ${historyList}
 
 **JSON Schema:**
 {
-  "en": ${isHindi ? 'null' : `{
-    "Question": "Question text in English",
+  "en": {
+    "Question": "Question text (must match the language rules specified under LANGUAGE INSTRUCTIONS)",
     "options": [
       { "text": "Choice A", "isCorrect": false },
       { "text": "Choice B", "isCorrect": false },
@@ -295,9 +314,9 @@ ${historyList}
     ],
     "answer": "Exact text of the correct choice",
     "solution": "Detailed step-by-step explanation"
-  }`},
-  "hi": ${isEnglish ? 'null' : `{
-    "Question": "हिन्दी में प्रश्न",
+  },
+  "hi": {
+    "Question": "Question text (must match the language rules specified under LANGUAGE INSTRUCTIONS)",
     "options": [
       { "text": "विकल्प A", "isCorrect": false },
       { "text": "विकल्प B", "isCorrect": false },
@@ -306,7 +325,7 @@ ${historyList}
     ],
     "answer": "सही विकल्प का सटीक टेक्स्ट",
     "solution": "विस्तृत हिन्दी व्याख्या"
-  }`},
+  },
   "Topic": "${topicName ? topicName : 'Specific sub-topic name'}"
 }
 FINAL CHECK: Is this question identical to anything in the exclusion list? If yes, change it completely. Return valid JSON.`;

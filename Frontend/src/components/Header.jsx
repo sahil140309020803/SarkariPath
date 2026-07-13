@@ -3,6 +3,7 @@ import FeatureCard from './FeatureCard';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import { Sparkles, BrainCircuit, Target, ArrowRight, Bot } from 'lucide-react';
+import AnimatedSection from './AnimatedSection';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const Header = () => {
 
             <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 w-full">
                 {/* Text Content */}
-                <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-8 lg:ml-6">
+                <AnimatedSection type="fade-up" className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left gap-8 lg:ml-6">
                     {isLoggedIn && (
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium backdrop-blur-md shadow-sm dark:shadow-black/20 -mb-2 transition-colors">
                             👋 Welcome back, <span className="text-slate-900 dark:text-white font-semibold">{name}</span>
@@ -55,21 +56,28 @@ const Header = () => {
                         <Sparkles size={16} className="text-yellow-400" />
                         Powered by Advanced Generative AI
                     </div>
-                </div>
+                </AnimatedSection>
 
                 {/* Feature Cards Grid */}
                 <div className="flex-1 w-full max-w-lg lg:max-w-xl">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <AnimatedSection type="stagger-container" className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                         <div className="space-y-5 pt-0 sm:pt-12">
-                            <FeatureCard icon={<Target className="text-cyan-400" size={28} />} title="Full Mock Tests" content="Experience the real exam format with timed full-length assessments." delay="0" />
-                            <FeatureCard icon={<BrainCircuit className="text-purple-400" size={28} />} title="Topic-wise Learning" content="Instantly formulate a custom test focused on any niche topic." delay="200" />
+                            <AnimatedSection type="stagger-item">
+                                <FeatureCard icon={<Target className="text-cyan-400" size={28} />} title="Full Mock Tests" content="Experience the real exam format with timed full-length assessments." delay="0" />
+                            </AnimatedSection>
+                            <AnimatedSection type="stagger-item">
+                                <FeatureCard icon={<BrainCircuit className="text-purple-400" size={28} />} title="Topic-wise Learning" content="Instantly formulate a custom test focused on any niche topic." delay="200" />
+                            </AnimatedSection>
                         </div>
                         <div className="space-y-5">
-                            <FeatureCard icon={<Bot className="text-indigo-400" size={28} />} title="AI Quiz Generator" content="Generate unlimited AI-powered quizzes
-for any subject." delay="100" />
-                            <FeatureCard icon={<Sparkles className="text-indigo-400" size={28} />} title="AI Topic Summarizer" content="Instantly simplify difficult concepts into easy-to-understand notes, key points, and quick revisions." delay="100" />
+                            <AnimatedSection type="stagger-item">
+                                <FeatureCard icon={<Bot className="text-indigo-400" size={28} />} title="AI Quiz Generator" content="Generate unlimited AI-powered quizzes for any subject." delay="100" />
+                            </AnimatedSection>
+                            <AnimatedSection type="stagger-item">
+                                <FeatureCard icon={<Sparkles className="text-indigo-400" size={28} />} title="AI Topic Summarizer" content="Instantly simplify difficult concepts into easy-to-understand notes, key points, and quick revisions." delay="100" />
+                            </AnimatedSection>
                         </div>
-                    </div>
+                    </AnimatedSection>
                 </div>
             </div>
         </div>

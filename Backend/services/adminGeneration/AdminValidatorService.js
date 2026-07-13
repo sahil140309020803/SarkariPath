@@ -22,13 +22,27 @@ You must return a raw JSON array containing EXACTLY ${questionsBatch.length} obj
 
 CRITICAL AUDITING STEPS FOR EACH QUESTION:
 1. "structuralCheck": Verify if the question statement ("en.Question" and "hi.Question") is present and is NOT an empty string, null, or whitespace. Verify if all options have non-empty text. If the question statement is missing or blank, the question is INVALID.
-2. "mathematicalVerification": Solve the question yourself step-by-step. Show the actual mathematical calculation. Do not just copy the solution. Check if the computed answer is correct.
+2. "mathematicalVerification": 
+   - SOLVE FIRST INDEPENDENTLY: You must solve the question using ONLY the question statement and the options list. Temporarily ignore the pre-existing "answer" and "solution" fields in the input data.
+   - Show your step-by-step calculation, reasoning, or derivation to arrive at the correct answer.
+   - COMPARE: Compare your calculated correct answer with the pre-existing "answer" and the option that is marked "isCorrect: true" in the input data.
+   - Check if there is any mismatch or mathematical/factual discrepancy.
 3. "optionCheck":
-   - List the option text where "isCorrect: true" is set.
-   - Verify if exactly ONE option has "isCorrect: true".
-   - Verify if the correct option's text matches the "answer" field.
-   - Verify if the step-by-step solution calculates this exact option.
-4. "isValid": After your verification steps, if there is ANY missing question statement, factual error, mathematical error, incorrect option key, missing correct option, multiple correct options, or wrong explanation, set this to false. Otherwise, set it to true.
+   - Verify if exactly ONE option has "isCorrect: true" in the input data.
+   - Verify if the pre-existing "answer" text matches the option text marked "isCorrect: true".
+   - If your independent calculation from "mathematicalVerification" produced a different correct option or value than the one marked "isCorrect: true" or written in "answer", document that discrepancy here.
+4. "isValid": After your verification steps, if there is ANY missing question statement, structural issue, mismatch between your independent solution and the pre-existing answer/option, incorrect correct-option flag, or factual/mathematical error, set this to false. Otherwise, set it to true.
+
+LANGUAGE RULES FOR PROPOSED CORRECTIONS (CRITICAL):
+- For Hindi-related subjects/topics (e.g., General Hindi, Hindi Language, etc.): BOTH the "en" and "hi" objects in the proposedCorrection MUST be written in Hindi language. Copy the Hindi question text, options, answers, and solutions as-is into BOTH fields. Do NOT translate Hindi questions into English.
+- For English-related subjects/topics (e.g., General English, English Language, etc.): BOTH the "en" and "hi" objects in the proposedCorrection MUST be written in English language. Copy the English question text, options, answers, and solutions as-is into BOTH fields. Do NOT translate English questions into Hindi.
+- For all other subjects: The "en" object must contain English language and the "hi" object must contain Hindi language.
+
+EXPLANATION STYLE RULES (for proposedCorrection "solution"):
+- The explanation ("solution" field) in proposed corrections must be written like a standard, professional textbook/exam answer key solution.
+- Do NOT use conversational AI filler, greetings, or meta-references (e.g., do NOT start with "The correct option is...", "Here is the explanation...", "Sure, let's understand...", etc.).
+- Start directly with the factual concept, formulas, historical facts, grammatical rules, or step-by-step mathematical calculations that justify the correct choice.
+- Keep the language authoritative, direct, and academic.
 
 Return ONLY a raw JSON array of exactly ${questionsBatch.length} objects. Do not include markdown blocks or conversational text.
 JSON Output Format:
@@ -37,8 +51,8 @@ JSON Output Format:
     "questionId": "string matching the MongoDB _id of the question",
     "questionNumber": number,
     "structuralCheck": "Verify that en.Question and hi.Question are not empty or blank",
-    "mathematicalVerification": "Step-by-step math calculation or factual verification",
-    "optionCheck": "List correct options (e.g. Option B isCorrect: true, matches answer '30')",
+    "mathematicalVerification": "Step-by-step math calculation or factual verification done independently, followed by comparing with the existing answer and identifying any discrepancies.",
+    "optionCheck": "List correct options (e.g. Option B isCorrect: true, matches answer '30'. If discrepancy exists, describe it here.)",
     "isValid": true,
     "issue": null,
     "proposedCorrection": null
@@ -50,10 +64,10 @@ JSON Output Format:
     "mathematicalVerification": "N/A - Cannot calculate as question statement is missing.",
     "optionCheck": "Options are present, but question statement is empty.",
     "isValid": false,
-    "issue": "Missing question statement. The Question field is empty or blank.",
+    "issue": "Language discrepancy, structural check fail, or factual error.",
     "proposedCorrection": {
       "en": {
-        "Question": "Corrected English question text (regenerated based on Topic/Subject)",
+        "Question": "Corrected question text (in Hindi for Hindi subjects, in English for English/other subjects)",
         "options": [
           { "text": "Choice A text", "isCorrect": false },
           { "text": "Choice B text", "isCorrect": false },
@@ -64,7 +78,7 @@ JSON Output Format:
         "solution": "Correct step-by-step explanation"
       },
       "hi": {
-        "Question": "हिन्दी में सही प्रश्न (regenerated)",
+        "Question": "Corrected question text (in English for English subjects, in Hindi for Hindi/other subjects)",
         "options": [
           { "text": "विकल्प A", "isCorrect": false },
           { "text": "विकल्प B", "isCorrect": false },
@@ -80,19 +94,24 @@ JSON Output Format:
 ]`;
 };
 
-export const validateMockTest = async (testId) => {
+export const validateMockTest = async (testId, questionIds = null) => {
   const test = await MockTestModel.findById(testId).populate('Questions').lean();
   if (!test) {
     throw new Error("Mock test not found");
   }
 
-  const questions = test.Questions || [];
+  let questions = test.Questions || [];
+  if (questionIds && Array.isArray(questionIds)) {
+    const qIds = questionIds.map(id => id.toString());
+    questions = questions.filter(q => q && q._id && qIds.includes(q._id.toString()));
+  }
+
   if (questions.length === 0) {
     return [];
   }
 
   const allIssues = [];
-  const BATCH_SIZE = 15;
+  const BATCH_SIZE = 5;
   const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   // Process in batches to avoid context size / token limits issues

@@ -92,7 +92,7 @@ export const TestWindowProvider = ({ children }) => {
                 setActiveTest(test);
                 setQuestions(test.Questions || []);
                 setDuration(test.DurationinMinutes);
-                setMarkingScheme({ correct: 1, incorrect: test.NegativeMarks });
+                setMarkingScheme({ correct: test.MarksPerQuestion !== undefined ? test.MarksPerQuestion : 1, incorrect: test.NegativeMarks });
                 setTimeRemaining(totalSeconds);
 
                 const initialAnswers = test.Questions.reduce((acc, q) => ({ ...acc, [q._id]: null }), {});

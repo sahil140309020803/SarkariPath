@@ -12,11 +12,12 @@ export const TestAnalysisProvider = ({ children }) => {
     const processTestResult = (test, submission) => {
         
         const rawSectionAnalysis = submission.sectionAnalysis || []; 
+        const marksPerQuestion = test.MarksPerQuestion !== undefined ? test.MarksPerQuestion : 1;
 
         const subjects = rawSectionAnalysis.map(sub => ({
             name: sub.subject,
             score: sub.score,
-            total: sub.totalQuestions, 
+            total: sub.totalQuestions * marksPerQuestion, 
             c: sub.correct,
             i: sub.incorrect,
             s: sub.skipped,

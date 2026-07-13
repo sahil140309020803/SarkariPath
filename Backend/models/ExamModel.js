@@ -61,6 +61,7 @@ const MockTestSchema = new mongoose.Schema({
         required: true
     }],
     TotalMarks: { type: Number, required: true },
+    MarksPerQuestion: { type: Number, default: 1 },
     DurationinMinutes: { type: Number, required: true },
     type: { type: String, required: true, enum: ['mock_test', 'quiz'], default: 'mock_test' },
     leaderboard: [
@@ -68,7 +69,7 @@ const MockTestSchema = new mongoose.Schema({
             userId: { type: String, required: true },
             name: { type: String, default: 'Aspirant' },
             score: { type: Number, required: true },
-            percentage: { type: Number, required: true },
+            percentage: { type: Number },
             timeTaken: { type: Number, required: true },
             submittedAt: { type: Date, default: Date.now }
         }
@@ -98,6 +99,7 @@ const QuizSchema = new mongoose.Schema({
     }],
     DurationinMinutes: { type: Number, required: true, default: 20 },
     TotalMarks: { type: Number, required: true, default: 15 },
+    MarksPerQuestion: { type: Number, default: 1 },
     status: { type: String, enum: ['Waiting', 'Active', 'Generating', 'Completed', 'Failed'], default: 'Waiting' },
     expireAt: { type: Date, index: { expires: 0 } },
 }, {

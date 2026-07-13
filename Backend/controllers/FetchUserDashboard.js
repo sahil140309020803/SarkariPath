@@ -40,7 +40,7 @@ export const getUserDashboardData = async (req, res) => {
             await stats.save();
         }
 
-        // Fetch recent 5 test submissions
+        // Fetch recent 10 test submissions
         const possibleUserIds = [
             user._id.toString(),
             user.email
@@ -81,9 +81,9 @@ export const getUserDashboardData = async (req, res) => {
             return {
                 id: test._id,
                 title: `${examName} - ${testTitle}`,
-                qs: `${test.correctCount}/${test.maxPossibleScore} Marks`,
+                score: `${test.totalScore}/${test.maxPossibleScore} Marks`,
                 time: test.createdAt,
-                score: ((test.totalScore / test.maxPossibleScore) * 100).toFixed(2),
+                percentage: ((test.totalScore / test.maxPossibleScore) * 100).toFixed(2),
                 status: 'Completed'
             };
         });

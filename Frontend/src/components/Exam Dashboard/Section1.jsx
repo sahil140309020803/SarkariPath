@@ -23,7 +23,7 @@ const Section1 = () => {
     setActiveTest(test);
     setQuestions(test.Questions);
     setDuration(test.DurationinMinutes);
-    setMarkingScheme({ correct: 1, incorrect: test.NegativeMarks });
+    setMarkingScheme({ correct: test.MarksPerQuestion !== undefined ? test.MarksPerQuestion : 1, incorrect: test.NegativeMarks });
     const testId = test._id;
     navigate(`/tests/${testId}`);
   }

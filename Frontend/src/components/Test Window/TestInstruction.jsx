@@ -133,7 +133,9 @@ const TestInstruction = () => {
                                 <div className=" bg-white dark:bg-slate-800 rounded-xl p-5 border-2 border-green-500 shadow-lg">
                                     <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">Correct Answer</h3>
                                     <div className="text-3xl font-black text-green-500 dark:text-emerald-400 leading-none">+{markingScheme.correct}</div>
-                                    <p className="text-gray-600 dark:text-slate-400 mt-2 text-sm">You will be awarded **Three Marks** for every question answered correctly.</p>
+                                    <p className="text-gray-600 dark:text-slate-400 mt-2 text-sm">
+                                        You will be awarded <strong className="font-semibold text-green-600 dark:text-emerald-400">{markingScheme.correct} {markingScheme.correct === 1 ? 'Mark' : 'Marks'}</strong> for every question answered correctly.
+                                    </p>
                                 </div>
 
                                 {/* Negative Marking Card */}

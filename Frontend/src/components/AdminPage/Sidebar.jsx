@@ -3,6 +3,7 @@ import { LayoutDashboard, Folder, FileText, Settings2, Users, BarChart3, LogOut 
 import { FiAlignJustify } from "react-icons/fi";
 import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import LOGO from '../../assets/LOGO.png';
 
 const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
     const { logout } = useUser();
@@ -33,8 +34,10 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
             <div className="h-20 flex items-center justify-between px-6 border-b border-gray-200 dark:border-slate-800 transition-colors w-full overflow-hidden">
                 <div className={`flex items-center gap-4 transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>
                     <div className='flex items-center gap-2'>
-                        <div className="bg-indigo-600 dark:bg-indigo-500 text-white font-bold text-lg w-9 h-9 flex items-center justify-center rounded-lg transition-colors">SP</div>
-                        <div className="text-2xl font-bold text-gray-800 dark:text-white transition-colors">SarkariPath</div>
+                        <img src={LOGO} alt="logo" className='w-9 h-9 text-white' />
+                        <div className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
+                            Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span>
+                        </div>
                     </div>
                 </div>
                 <button onClick={() => setIsOpen(!isOpen)} className={`text-gray-600 dark:text-gray-400 hover:text-indigo-600 transition-colors ${!isOpen ? 'mx-auto' : ''}`}>
@@ -59,7 +62,7 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
             </nav>
             <div className="p-4 border-t border-gray-200 dark:border-slate-800 transition-colors overflow-hidden">
                 <div onClick={handleLogout} role="button" tabIndex="0" className={`nav-link flex items-center px-4 py-2.5 text-red-500 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer transition-colors ${!isOpen ? 'justify-center px-0' : ''}`} title={!isOpen ? 'Logout' : ''}>
-                    <LogOut size={20} className={`${isOpen ? 'mr-3' : 'mx-auto'}`} /> 
+                    <LogOut size={20} className={`${isOpen ? 'mr-3' : 'mx-auto'}`} />
                     {isOpen && <span className="whitespace-nowrap">Logout</span>}
                 </div>
             </div>

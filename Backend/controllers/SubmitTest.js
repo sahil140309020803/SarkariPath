@@ -75,7 +75,7 @@ export const submitTest = async (req, res) => {
 
                 let status = 'skipped';
                 const correctOptionIndex = questionData.options.findIndex(opt => opt.isCorrect === true);
-                const marksPerQuestion = 1;
+                const marksPerQuestion = mockTest.MarksPerQuestion !== undefined ? mockTest.MarksPerQuestion : 1;
                 const negMarks = mockTest.NegativeMarks || 0;
 
                 if (response.selectedOptionIndex !== null && response.selectedOptionIndex !== undefined) {
@@ -88,9 +88,9 @@ export const submitTest = async (req, res) => {
                     } else {
                         status = 'incorrect';
                         incorrectCount++;
-                        totalScore += negMarks;             // Assume negMarks is negative or zero
+                        totalScore -= Math.abs(negMarks);
                         subjectMap[subject].incorrect++;
-                        subjectMap[subject].score += negMarks;  // Assume negMarks is negative or zero
+                        subjectMap[subject].score -= Math.abs(negMarks);
                     }
                 } else {
                     skippedCount++;
@@ -122,7 +122,7 @@ export const submitTest = async (req, res) => {
         }));
 
         const finalScore = Math.max(0, totalScore);
-        const maxScore = questions.length * 1;
+        const maxScore = questions.length * (mockTest.MarksPerQuestion !== undefined ? mockTest.MarksPerQuestion : 1);
         const accuracy = correctCount + incorrectCount > 0
             ? parseFloat(((correctCount / (correctCount + incorrectCount)) * 100).toFixed(2))
             : 0;

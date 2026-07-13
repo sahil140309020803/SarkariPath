@@ -14,21 +14,70 @@ import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 
 const CircularProgress = ({ value, max }) => {
-  const radius = 70;
+  const radius = 72;
   const circumference = 2 * Math.PI * radius;
   const percentage = max > 0 ? (value / max) * 100 : 0;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
+  const [offset, setOffset] = useState(circumference);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setOffset(strokeDashoffset);
+    }, 150);
+    return () => clearTimeout(timer);
+  }, [strokeDashoffset]);
+
   return (
-    <div className="relative flex flex-col items-center justify-center">
-      <svg width="160" height="160" className="transform -rotate-90">
-        <circle cx="80" cy="80" r={radius} stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-200 dark:text-slate-800" />
-        <circle cx="80" cy="80" r={radius} stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray={circumference} strokeDashoffset={strokeDashoffset} strokeLinecap="round" className='text-blue-600 dark:text-indigo-500 animate-circular-bar' />
+    <div className="relative flex flex-col items-center justify-center p-2 group">
+
+      <svg width="180" height="180" className="transform -rotate-90 relative z-10">
+        <defs>
+          <linearGradient id="scoreProgressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="50%" stopColor="#6366f1" />
+            <stop offset="100%" stopColor="#a855f7" />
+          </linearGradient>
+        </defs>
+        {/* Background Track Circle */}
+        <circle
+          cx="90"
+          cy="90"
+          r={radius}
+          stroke="currentColor"
+          strokeWidth="6"
+          fill="transparent"
+          className="text-slate-200/50 dark:text-slate-800/80 transition-colors"
+        />
+        {/* Active Progress Circle */}
+        <circle
+          cx="90"
+          cy="90"
+          r={radius}
+          stroke="url(#scoreProgressGradient)"
+          strokeWidth="8"
+          fill="transparent"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+          className="transition-all duration-1000 ease-out"
+          style={{
+            filter: 'drop-shadow(0px 0px 8px rgba(99, 102, 241, 0.45))'
+          }}
+        />
       </svg>
-      <div className="absolute flex flex-col items-center text-center">
-        <span className="text-3xl font-bold text-slate-900 dark:text-white transition-colors">{value}</span>
-        <span className="text-sm font-semibold text-gray-500 dark:text-slate-400">/ {max}</span>
-        <span className="text-lg font-bold text-blue-600 dark:text-indigo-400 mt-1">{percentage.toFixed(1)}%</span>
+
+      {/* Inner Central Text details */}
+      <div className="absolute flex flex-col items-center text-center z-20">
+        <span className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+          {value}
+        </span>
+        <span className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">
+          Out of {max}
+        </span>
+        <div className="mt-2 px-2.5 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-extrabold text-sm border border-indigo-100 dark:border-indigo-800/40">
+          {percentage.toFixed(1)}%
+        </div>
       </div>
     </div>
   );
@@ -181,15 +230,33 @@ const ScoreOverview = ({ data }) => {
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-800 flex flex-col md:flex-row gap-8 transition-colors">
         {/* Score Circle */}
         <div className="flex-1 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-100 dark:border-slate-800 pb-6 md:pb-0 md:pr-8">
-          <h3 className="text-gray-500 dark:text-slate-400 font-medium mb-4 uppercase text-xs tracking-wider">Your Total Score</h3>
+          <h3 className="text-gray-500 dark:text-slate-400 font-medium uppercase text-xs tracking-wider">Your Total Score</h3>
           <CircularProgress value={data.score} max={data.totalScore} />
-          <div className="mt-6 text-center w-full">
-            <div className="flex justify-between items-center text-sm px-8">
-              <span className="text-gray-500 dark:text-slate-400">Total Accuracy</span>
-              <span className="font-bold text-slate-800 dark:text-slate-200">{data.accuracy}%</span>
+          <div className="mt-1 text-center w-full max-w-[320px] mx-auto bg-slate-100/80 dark:bg-slate-800/50 p-3 rounded-xl border border-slate-300/70 dark:border-slate-800/40 transition-all duration-300">
+            <div className="flex justify-between items-center text-xs sm:text-sm font-semibold mb-2">
+              <span className="text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                <BrainCircuit size={14} className="text-indigo-500 dark:text-indigo-400" />
+                Accuracy
+              </span>
+              <span className={`font-black text-sm ${data.accuracy > 70
+                ? 'text-emerald-600 dark:text-emerald-400'
+                : data.accuracy > 40
+                  ? 'text-amber-600 dark:text-amber-400'
+                  : 'text-rose-600 dark:text-rose-400'
+                }`}>
+                {data.accuracy}%
+              </span>
             </div>
-            <div className="w-full bg-gray-100 dark:bg-slate-800/50 rounded-full h-2 mt-2 mx-auto max-w-[200px]">
-              <div className={`h-2 rounded-full ${data.accuracy > 70 ? 'bg-green-500' : data.accuracy > 40 ? 'bg-orange-500' : 'bg-red-500'}`} style={{ width: `${data.accuracy}%` }}></div>
+            <div className="w-full bg-slate-200/60 dark:bg-slate-800/80 rounded-full h-2.5 overflow-hidden shadow-inner relative">
+              <div
+                className={`h-full rounded-full transition-all duration-1000 ease-out ${data.accuracy > 70
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]'
+                  : data.accuracy > 40
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-400 shadow-[0_0_8px_rgba(245,158,11,0.5)]'
+                    : 'bg-gradient-to-r from-rose-500 to-red-400 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
+                  }`}
+                style={{ width: `${data.accuracy}%` }}
+              ></div>
             </div>
           </div>
         </div>
