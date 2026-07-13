@@ -154,7 +154,7 @@ const TestWindow = () => {
             <div className="flex-1 overflow-y-auto p-0 transition-all duration-300 custom-scrollbar ">
 
                 {/* Top Header Bar  */}
-                <header className="flex flex-col sm:flex-row justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
+                <header className="flex flex-row max-[23rem]:flex-col justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
                     <div className="flex items-center justify-between gap-4 sm:justify-start w-full sm:w-auto">
                         <div className='flex items-center gap-2'>
                             <img src={LOGO} alt="logo" className='w-9 h-9' />
@@ -167,7 +167,7 @@ const TestWindow = () => {
                         </span>
                     </div>
 
-                    <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
+                    <div className="flex flex-col sm:flex-row items-end justify-between sm:justify-end w-full sm:w-auto sm:gap-4 gap-1.5">
                         {/* Timer */}
                         <div className="bg-red-600 dark:bg-rose-600 text-gray-100 font-bold px-3 py-1 rounded-md shadow-lg text-sm sm:text-md">
                             <span className="mr-1">Time Left:</span>
@@ -175,7 +175,7 @@ const TestWindow = () => {
                         </div>
                         {/* Language Switcher */}
                         {currentQuestionData?.en?.Question !== currentQuestionData?.hi?.Question && (
-                            <div className="flex rounded-sm overflow-hidden border border-gray-500 dark:border-slate-700 shadow-sm shrink-0">
+                            <div className="flex rounded-sm overflow-hidden dark:border-slate-700 shadow-sm shrink-0">
                                 <button
                                     onClick={() => handleLanguageChange('en')}
                                     disabled={!currentQuestionData || !currentQuestionData.en}

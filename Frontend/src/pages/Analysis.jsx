@@ -108,8 +108,8 @@ const Badge = ({ text }) => {
 const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, onPageChange }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-1.5 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 w-full sm:max-w-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden animate-in zoom-in-95 duration-200">
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="bg-amber-100 dark:bg-amber-900/30 p-2 rounded-xl">
@@ -124,7 +124,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
             <XCircle className="text-slate-400" size={24} />
           </button>
         </div>
-        <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+        <div className="py-4  max-h-[60vh] overflow-y-auto custom-scrollbar">
           {isLoading ? (
             <div className="py-12 text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -134,11 +134,11 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
             <table className="w-full text-left">
               <thead>
                 <tr className="text-xs uppercase text-slate-400 font-bold border-b border-slate-100 dark:border-slate-800">
-                  <th className="py-3 px-2 text-center w-16">Rank</th>
-                  <th className="py-3 px-2">Aspirant</th>
+                  <th className="py-3 px-2 text-center w-10 md:w-16">Rank</th>
+                  <th className="py-3 px-1 sm:px-2">Aspirant</th>
                   <th className="py-3 px-2">Score</th>
-                  <th className="py-3 px-2">Percentage</th>
-                  <th className="py-3 px-2">Time</th>
+                  <th className="py-3 px-1 sm:px-2">Percentage</th>
+                  <th className="py-3 px-1 sm:px-2">Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -151,14 +151,14 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
                             {user.rank}
                           </span>
                         ) : (
-                          <span className="w-8 h-8 flex items-center justify-center font-bold text-slate-400">#{user.rank}</span>
+                          <span className="w-8 h-8 flex items-center justify-center font-bold text-slate-400">{user.rank}</span>
                         )}
                       </div>
                     </td>
-                    <td className="py-4 px-2 font-semibold text-slate-700 dark:text-slate-200">{user.name}</td>
+                    <td className="py-4 px-1 sm:2 font-semibold text-slate-700 dark:text-slate-200">{user.name}</td>
                     <td className="py-4 px-2 font-bold text-blue-600 dark:text-indigo-400">{user.score}</td>
-                    <td className="py-4 px-2 text-slate-600 dark:text-slate-400 font-medium">{user.percentage}%</td>
-                    <td className="py-4 px-2 text-slate-500 dark:text-slate-500 text-xs italic">
+                    <td className="py-4 px-1 sm:px-2 text-slate-600 dark:text-slate-400 font-medium">{user.percentage}%</td>
+                    <td className="py-4 px-1 sm:px-2 text-slate-500 dark:text-slate-500 text-xs italic">
                       {user.time ? `${Math.floor(user.time / 60)}m ${user.time % 60}s` : 'N/A'}
                     </td>
                   </tr>
@@ -171,7 +171,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
             </div>
           )}
         </div>
-        <div className="p-4 bg-slate-50 dark:bg-slate-800/30 flex items-center justify-between">
+        <div className="p-4 bg-slate-50 dark:bg-slate-800/30 flex items-center justify-between gap-4">
           <button
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1 || isLoading}

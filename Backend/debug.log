@@ -10119,3 +10119,792 @@
 [2026-07-13T15:20:37.163Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
 [2026-07-13T15:20:37.164Z] [isAuth] Token present: true
 [2026-07-13T15:20:37.165Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:17.981Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:17.982Z] [isAuth] Token present: true
+[2026-07-13T15:23:17.991Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:17.999Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:18.000Z] [isAuth] Token present: true
+[2026-07-13T15:23:18.004Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:18.117Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:18.118Z] [isAuth] Token present: true
+[2026-07-13T15:23:18.122Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:18.128Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:18.129Z] [isAuth] Token present: true
+[2026-07-13T15:23:18.132Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.461Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.462Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.464Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.475Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.475Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.476Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.479Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.479Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.482Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.555Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.556Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.557Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.570Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.570Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.573Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:20.580Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:20.580Z] [isAuth] Token present: true
+[2026-07-13T15:23:20.583Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:33.580Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk1NTAzNCwiZXhwIjoxNzg0MDQxNDM0fQ.hX3zq-MQK3nPNYIJvhmHbibpoQjbf6wNrm3NGUX6uhc"}
+[2026-07-13T15:23:33.580Z] [isAuth] Token present: true
+[2026-07-13T15:23:33.583Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T15:23:33.600Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783955029243,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783955029243}"}
+[2026-07-13T15:23:33.601Z] [isAuth] Token present: false
+[2026-07-13T15:23:33.601Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:23:47.948Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:23:47.949Z] [isAuth] Token present: true
+[2026-07-13T15:23:47.950Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:23:47.964Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:23:47.965Z] [isAuth] Token present: true
+[2026-07-13T15:23:47.966Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:23:48.267Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:23:48.268Z] [isAuth] Token present: true
+[2026-07-13T15:23:48.270Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:23:54.456Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:23:54.456Z] [isAuth] Token present: true
+[2026-07-13T15:23:54.458Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:24:21.032Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:24:21.033Z] [isAuth] Token present: true
+[2026-07-13T15:24:21.035Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:25:20.721Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:25:20.721Z] [isAuth] Token present: true
+[2026-07-13T15:25:20.723Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:26:21.030Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:26:21.031Z] [isAuth] Token present: true
+[2026-07-13T15:26:21.034Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:20.718Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:20.718Z] [isAuth] Token present: true
+[2026-07-13T15:27:20.720Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:39.383Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:39.384Z] [isAuth] Token present: true
+[2026-07-13T15:27:39.387Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:39.397Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:39.397Z] [isAuth] Token present: true
+[2026-07-13T15:27:39.399Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:39.503Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:39.503Z] [isAuth] Token present: true
+[2026-07-13T15:27:39.505Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:39.509Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:39.511Z] [isAuth] Token present: true
+[2026-07-13T15:27:39.515Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:39.642Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:39.643Z] [isAuth] Token present: true
+[2026-07-13T15:27:39.646Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:27:40.080Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:27:40.080Z] [isAuth] Token present: true
+[2026-07-13T15:27:40.083Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:30:01.642Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:30:01.643Z] [isAuth] Token present: true
+[2026-07-13T15:30:01.645Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:30:34.832Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjIyNywiZXhwIjoxNzg0MDQyNjI3fQ.28b9ZrMauaSkVSwgKGb2ha8rDlUjg1xDHKJ6PPst3bE"}
+[2026-07-13T15:30:34.832Z] [isAuth] Token present: true
+[2026-07-13T15:30:34.834Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:30:34.851Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956216993,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956216993,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}"}
+[2026-07-13T15:30:34.852Z] [isAuth] Token present: false
+[2026-07-13T15:30:34.852Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:30:55.646Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956648613,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956648613,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjY1NSwiZXhwIjoxNzg0MDQzMDU1fQ.FwqTVTYDoTEBlPnoi-B2cr2Ov5wHEhNAiblsekWuovw"}
+[2026-07-13T15:30:55.647Z] [isAuth] Token present: true
+[2026-07-13T15:30:55.648Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:30:55.656Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956648613,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956648613,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjY1NSwiZXhwIjoxNzg0MDQzMDU1fQ.FwqTVTYDoTEBlPnoi-B2cr2Ov5wHEhNAiblsekWuovw"}
+[2026-07-13T15:30:55.657Z] [isAuth] Token present: true
+[2026-07-13T15:30:55.658Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:30:55.729Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956648613,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956648613,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjY1NSwiZXhwIjoxNzg0MDQzMDU1fQ.FwqTVTYDoTEBlPnoi-B2cr2Ov5wHEhNAiblsekWuovw"}
+[2026-07-13T15:30:55.730Z] [isAuth] Token present: true
+[2026-07-13T15:30:55.731Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:38:52.197Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956648613,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956648613,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NjY1NSwiZXhwIjoxNzg0MDQzMDU1fQ.FwqTVTYDoTEBlPnoi-B2cr2Ov5wHEhNAiblsekWuovw"}
+[2026-07-13T15:38:52.198Z] [isAuth] Token present: true
+[2026-07-13T15:38:52.200Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:38:52.214Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783956648613,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783956648613,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}"}
+[2026-07-13T15:38:52.215Z] [isAuth] Token present: false
+[2026-07-13T15:38:52.215Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:39:13.062Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957144441,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957144441,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NzE1MywiZXhwIjoxNzg0MDQzNTUzfQ.hyniW9eAewN_iGpFP-U7R2ZlP8Xd976dyy1gQfV6wC8"}
+[2026-07-13T15:39:13.063Z] [isAuth] Token present: true
+[2026-07-13T15:39:13.066Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:39:13.080Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957144441,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957144441,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NzE1MywiZXhwIjoxNzg0MDQzNTUzfQ.hyniW9eAewN_iGpFP-U7R2ZlP8Xd976dyy1gQfV6wC8"}
+[2026-07-13T15:39:13.081Z] [isAuth] Token present: true
+[2026-07-13T15:39:13.083Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:39:13.158Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957144441,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957144441,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NzE1MywiZXhwIjoxNzg0MDQzNTUzfQ.hyniW9eAewN_iGpFP-U7R2ZlP8Xd976dyy1gQfV6wC8"}
+[2026-07-13T15:39:13.159Z] [isAuth] Token present: true
+[2026-07-13T15:39:13.161Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:39:35.363Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957144441,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957144441,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1NzE1MywiZXhwIjoxNzg0MDQzNTUzfQ.hyniW9eAewN_iGpFP-U7R2ZlP8Xd976dyy1gQfV6wC8"}
+[2026-07-13T15:39:35.363Z] [isAuth] Token present: true
+[2026-07-13T15:39:35.366Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:39:35.390Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957144441,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957144441,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}"}
+[2026-07-13T15:39:35.390Z] [isAuth] Token present: false
+[2026-07-13T15:39:35.391Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:49:23.813Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:49:23.814Z] [isAuth] Token present: true
+[2026-07-13T15:49:23.815Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:49:23.827Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:49:23.827Z] [isAuth] Token present: true
+[2026-07-13T15:49:23.829Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:49:23.897Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:49:23.897Z] [isAuth] Token present: true
+[2026-07-13T15:49:23.899Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:41.701Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:41.702Z] [isAuth] Token present: true
+[2026-07-13T15:50:41.703Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:46.733Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:46.733Z] [isAuth] Token present: true
+[2026-07-13T15:50:46.735Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:46.742Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:46.743Z] [isAuth] Token present: true
+[2026-07-13T15:50:46.745Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:46.825Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:46.826Z] [isAuth] Token present: true
+[2026-07-13T15:50:46.829Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:46.832Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:46.833Z] [isAuth] Token present: true
+[2026-07-13T15:50:46.835Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:46.981Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:46.981Z] [isAuth] Token present: true
+[2026-07-13T15:50:46.984Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:47.373Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:47.374Z] [isAuth] Token present: true
+[2026-07-13T15:50:47.377Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:52.032Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:52.032Z] [isAuth] Token present: true
+[2026-07-13T15:50:52.033Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:56.603Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:56.603Z] [isAuth] Token present: true
+[2026-07-13T15:50:56.605Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:56.613Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:56.614Z] [isAuth] Token present: true
+[2026-07-13T15:50:56.616Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:56.618Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:56.619Z] [isAuth] Token present: true
+[2026-07-13T15:50:56.621Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:56.681Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:56.682Z] [isAuth] Token present: true
+[2026-07-13T15:50:56.683Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:56.685Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:56.686Z] [isAuth] Token present: true
+[2026-07-13T15:50:56.688Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:50:57.443Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:50:57.443Z] [isAuth] Token present: true
+[2026-07-13T15:50:57.444Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:51:45.475Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783957752389,\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783957752389,\"i_b\":\"v8wOIdMiR50Zc6P6WOBQdIh8XdCt37OXolZME37KHr0\"}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1Nzc2MywiZXhwIjoxNzg0MDQ0MTYzfQ.KrjMVah7HzOZBiZI8iXKIlCuewiN6B4vH2nAVL13xWc"}
+[2026-07-13T15:51:45.476Z] [isAuth] Token present: true
+[2026-07-13T15:51:45.479Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:54:33.964Z] [isAuth] Cookies: {}
+[2026-07-13T15:54:33.965Z] [isAuth] Token present: false
+[2026-07-13T15:54:33.965Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:54:47.184Z] [isAuth] Cookies: {}
+[2026-07-13T15:54:47.185Z] [isAuth] Token present: false
+[2026-07-13T15:54:47.185Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:55:04.031Z] [isAuth] Cookies: {}
+[2026-07-13T15:55:04.032Z] [isAuth] Token present: false
+[2026-07-13T15:55:04.032Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T15:57:52.070Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T15:57:52.070Z] [isAuth] Token present: true
+[2026-07-13T15:57:52.075Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:57:52.113Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T15:57:52.114Z] [isAuth] Token present: true
+[2026-07-13T15:57:52.117Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:57:52.220Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T15:57:52.221Z] [isAuth] Token present: true
+[2026-07-13T15:57:52.225Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T15:58:03.305Z] [isAuth] Cookies: {}
+[2026-07-13T15:58:03.306Z] [isAuth] Token present: false
+[2026-07-13T15:58:03.307Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T16:00:13.085Z] [isAuth] Cookies: {}
+[2026-07-13T16:00:13.086Z] [isAuth] Token present: false
+[2026-07-13T16:00:13.087Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T16:00:22.423Z] [isAuth] Cookies: {}
+[2026-07-13T16:00:22.425Z] [isAuth] Token present: false
+[2026-07-13T16:00:22.426Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T16:00:28.269Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783619088919,\"i_b\":\"3qAkeP78LfVTP0uXh07afpDkMXFzy1gpIwx2vV+u4mM\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783619088919}"}
+[2026-07-13T16:00:28.271Z] [isAuth] Token present: false
+[2026-07-13T16:00:28.272Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T16:00:49.796Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:00:49.797Z] [isAuth] Token present: true
+[2026-07-13T16:00:49.802Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:00:49.825Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:00:49.826Z] [isAuth] Token present: true
+[2026-07-13T16:00:49.832Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:00:50.008Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:00:50.009Z] [isAuth] Token present: true
+[2026-07-13T16:00:50.014Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:50.698Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:50.699Z] [isAuth] Token present: true
+[2026-07-13T16:35:50.705Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:50.717Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:50.719Z] [isAuth] Token present: true
+[2026-07-13T16:35:50.725Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:50.729Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:50.730Z] [isAuth] Token present: true
+[2026-07-13T16:35:50.735Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:50.800Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:50.801Z] [isAuth] Token present: true
+[2026-07-13T16:35:50.806Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:50.812Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:50.813Z] [isAuth] Token present: true
+[2026-07-13T16:35:50.817Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:35:51.313Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:35:51.315Z] [isAuth] Token present: true
+[2026-07-13T16:35:51.319Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.194Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.195Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.200Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.208Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.209Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.214Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.223Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.224Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.229Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.294Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.296Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.301Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.307Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.308Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.314Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:36:11.794Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:36:11.795Z] [isAuth] Token present: true
+[2026-07-13T16:36:11.801Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:41:36.139Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:41:36.142Z] [isAuth] Token present: true
+[2026-07-13T16:41:36.151Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:42:50.880Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T16:42:50.882Z] [isAuth] Token present: true
+[2026-07-13T16:42:50.889Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:47.743Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:47.745Z] [isAuth] Token present: true
+[2026-07-13T16:46:47.749Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:47.819Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:47.821Z] [isAuth] Token present: true
+[2026-07-13T16:46:47.825Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:47.835Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:47.836Z] [isAuth] Token present: true
+[2026-07-13T16:46:47.840Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:47.942Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:47.943Z] [isAuth] Token present: true
+[2026-07-13T16:46:47.947Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:47.953Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:47.954Z] [isAuth] Token present: true
+[2026-07-13T16:46:47.958Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:48.538Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:48.540Z] [isAuth] Token present: true
+[2026-07-13T16:46:48.544Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:57.453Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:57.454Z] [isAuth] Token present: true
+[2026-07-13T16:46:57.459Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:57.501Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:57.502Z] [isAuth] Token present: true
+[2026-07-13T16:46:57.506Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:57.513Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:57.514Z] [isAuth] Token present: true
+[2026-07-13T16:46:57.520Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:57.576Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:57.577Z] [isAuth] Token present: true
+[2026-07-13T16:46:57.581Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:57.586Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:57.587Z] [isAuth] Token present: true
+[2026-07-13T16:46:57.591Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T16:46:58.009Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T16:46:58.010Z] [isAuth] Token present: true
+[2026-07-13T16:46:58.012Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:13.821Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:13.822Z] [isAuth] Token present: true
+[2026-07-13T17:08:13.827Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:13.899Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:13.900Z] [isAuth] Token present: true
+[2026-07-13T17:08:13.904Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:13.931Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:13.932Z] [isAuth] Token present: true
+[2026-07-13T17:08:13.935Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:13.972Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:13.973Z] [isAuth] Token present: true
+[2026-07-13T17:08:13.978Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:14.115Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:14.117Z] [isAuth] Token present: true
+[2026-07-13T17:08:14.121Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:14.601Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:14.602Z] [isAuth] Token present: true
+[2026-07-13T17:08:14.606Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:22.892Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:22.893Z] [isAuth] Token present: true
+[2026-07-13T17:08:22.896Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:23.074Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:23.075Z] [isAuth] Token present: true
+[2026-07-13T17:08:23.080Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:23.084Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:23.085Z] [isAuth] Token present: true
+[2026-07-13T17:08:23.089Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:23.175Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:23.176Z] [isAuth] Token present: true
+[2026-07-13T17:08:23.179Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:23.344Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:23.345Z] [isAuth] Token present: true
+[2026-07-13T17:08:23.348Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:08:23.780Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:08:23.781Z] [isAuth] Token present: true
+[2026-07-13T17:08:23.785Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.062Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.063Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.068Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.096Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.097Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.102Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.111Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.112Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.116Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.187Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.188Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.192Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.197Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.198Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.202Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:15:09.796Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:15:09.797Z] [isAuth] Token present: true
+[2026-07-13T17:15:09.801Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:23:44.261Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODI3MSwiZXhwIjoxNzg0MDQ0NjcxfQ.h580h1Wj50to_i1XyZ0W8g37QL2Nw2agaoARiXJLasQ"}
+[2026-07-13T17:23:44.261Z] [isAuth] Token present: true
+[2026-07-13T17:23:44.262Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:23:44.319Z] [isAuth] Cookies: {}
+[2026-07-13T17:23:44.319Z] [isAuth] Token present: false
+[2026-07-13T17:23:44.319Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T17:24:00.549Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:24:00.550Z] [isAuth] Token present: true
+[2026-07-13T17:24:00.552Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:24:00.598Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:24:00.598Z] [isAuth] Token present: true
+[2026-07-13T17:24:00.601Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:24:00.723Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:24:00.723Z] [isAuth] Token present: true
+[2026-07-13T17:24:00.725Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:24:13.358Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:24:13.358Z] [isAuth] Token present: true
+[2026-07-13T17:24:13.359Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:35:28.844Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:35:28.845Z] [isAuth] Token present: true
+[2026-07-13T17:35:28.847Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:35:29.548Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:35:29.549Z] [isAuth] Token present: true
+[2026-07-13T17:35:29.552Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:35:37.789Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:35:37.789Z] [isAuth] Token present: true
+[2026-07-13T17:35:37.791Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:20.798Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:20.798Z] [isAuth] Token present: true
+[2026-07-13T17:37:20.799Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:26.364Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:26.365Z] [isAuth] Token present: true
+[2026-07-13T17:37:26.368Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:40.351Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:40.352Z] [isAuth] Token present: true
+[2026-07-13T17:37:40.353Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:46.211Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:46.212Z] [isAuth] Token present: true
+[2026-07-13T17:37:46.213Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:56.221Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:56.221Z] [isAuth] Token present: true
+[2026-07-13T17:37:56.222Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:37:59.695Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:37:59.695Z] [isAuth] Token present: true
+[2026-07-13T17:37:59.696Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:38:04.390Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:38:04.391Z] [isAuth] Token present: true
+[2026-07-13T17:38:04.392Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:38:08.639Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:38:08.639Z] [isAuth] Token present: true
+[2026-07-13T17:38:08.640Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:38:36.503Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:38:36.503Z] [isAuth] Token present: true
+[2026-07-13T17:38:36.504Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:39:15.279Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:39:15.280Z] [isAuth] Token present: true
+[2026-07-13T17:39:15.281Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:39:20.071Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:39:20.071Z] [isAuth] Token present: true
+[2026-07-13T17:39:20.074Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:39:27.615Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:39:27.615Z] [isAuth] Token present: true
+[2026-07-13T17:39:27.616Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:39:33.836Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:39:33.836Z] [isAuth] Token present: true
+[2026-07-13T17:39:33.837Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:00.146Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:00.146Z] [isAuth] Token present: true
+[2026-07-13T17:40:00.147Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:04.770Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:04.771Z] [isAuth] Token present: true
+[2026-07-13T17:40:04.772Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:34.206Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:34.207Z] [isAuth] Token present: true
+[2026-07-13T17:40:34.207Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:40.067Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:40.069Z] [isAuth] Token present: true
+[2026-07-13T17:40:40.071Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:45.701Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:45.702Z] [isAuth] Token present: true
+[2026-07-13T17:40:45.703Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:40:54.089Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:40:54.089Z] [isAuth] Token present: true
+[2026-07-13T17:40:54.091Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:02.354Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:02.354Z] [isAuth] Token present: true
+[2026-07-13T17:41:02.356Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:09.063Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:09.063Z] [isAuth] Token present: true
+[2026-07-13T17:41:09.065Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:16.649Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:16.650Z] [isAuth] Token present: true
+[2026-07-13T17:41:16.651Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:24.955Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:24.956Z] [isAuth] Token present: true
+[2026-07-13T17:41:24.958Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:32.059Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:41:32.061Z] [isAuth] Token present: true
+[2026-07-13T17:41:32.063Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:41:34.498Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:41:34.499Z] [isAuth] Token present: true
+[2026-07-13T17:41:34.500Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:41:35.625Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:41:35.626Z] [isAuth] Token present: true
+[2026-07-13T17:41:35.627Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:41:44.727Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:41:44.728Z] [isAuth] Token present: true
+[2026-07-13T17:41:44.729Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:41:44.767Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:44.767Z] [isAuth] Token present: true
+[2026-07-13T17:41:44.768Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:58.683Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:41:58.683Z] [isAuth] Token present: true
+[2026-07-13T17:41:58.685Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:41:58.742Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:41:58.743Z] [isAuth] Token present: true
+[2026-07-13T17:41:58.744Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:42:03.546Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:42:03.547Z] [isAuth] Token present: true
+[2026-07-13T17:42:03.547Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:42:03.738Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:42:03.738Z] [isAuth] Token present: true
+[2026-07-13T17:42:03.739Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:42:09.078Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:42:09.078Z] [isAuth] Token present: true
+[2026-07-13T17:42:09.079Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:42:09.724Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:42:09.724Z] [isAuth] Token present: true
+[2026-07-13T17:42:09.725Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:42:41.027Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:42:41.027Z] [isAuth] Token present: true
+[2026-07-13T17:42:41.028Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:42:41.762Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:42:41.762Z] [isAuth] Token present: true
+[2026-07-13T17:42:41.764Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:42:50.905Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:42:50.905Z] [isAuth] Token present: true
+[2026-07-13T17:42:50.906Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:42:51.716Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:42:51.717Z] [isAuth] Token present: true
+[2026-07-13T17:42:51.718Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:43:04.679Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:43:04.679Z] [isAuth] Token present: true
+[2026-07-13T17:43:04.680Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:43:04.739Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:43:04.739Z] [isAuth] Token present: true
+[2026-07-13T17:43:04.740Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:43:14.466Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:43:14.467Z] [isAuth] Token present: true
+[2026-07-13T17:43:14.468Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:43:14.739Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:43:14.739Z] [isAuth] Token present: true
+[2026-07-13T17:43:14.740Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:43:20.272Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:43:20.272Z] [isAuth] Token present: true
+[2026-07-13T17:43:20.273Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:43:20.739Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:43:20.739Z] [isAuth] Token present: true
+[2026-07-13T17:43:20.740Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:43:52.996Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:43:52.996Z] [isAuth] Token present: true
+[2026-07-13T17:43:52.998Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:43:53.754Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:43:53.755Z] [isAuth] Token present: true
+[2026-07-13T17:43:53.756Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:44:09.286Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:09.287Z] [isAuth] Token present: true
+[2026-07-13T17:44:09.290Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:09.764Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:44:09.765Z] [isAuth] Token present: true
+[2026-07-13T17:44:09.767Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:44:18.854Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:18.855Z] [isAuth] Token present: true
+[2026-07-13T17:44:18.857Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:19.776Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:44:19.777Z] [isAuth] Token present: true
+[2026-07-13T17:44:19.778Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:44:22.703Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:22.704Z] [isAuth] Token present: true
+[2026-07-13T17:44:22.705Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:22.757Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:22.758Z] [isAuth] Token present: true
+[2026-07-13T17:44:22.760Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:22.764Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:22.765Z] [isAuth] Token present: true
+[2026-07-13T17:44:22.765Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:22.851Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:22.851Z] [isAuth] Token present: true
+[2026-07-13T17:44:22.853Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:22.871Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:22.872Z] [isAuth] Token present: true
+[2026-07-13T17:44:22.873Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:23.174Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:23.175Z] [isAuth] Token present: true
+[2026-07-13T17:44:23.177Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:23.206Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:23.206Z] [isAuth] Token present: true
+[2026-07-13T17:44:23.207Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:24.478Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:24.479Z] [isAuth] Token present: true
+[2026-07-13T17:44:24.481Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:38.852Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:38.853Z] [isAuth] Token present: true
+[2026-07-13T17:44:38.855Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:39.766Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:44:39.767Z] [isAuth] Token present: true
+[2026-07-13T17:44:39.768Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:44:55.164Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:44:55.164Z] [isAuth] Token present: true
+[2026-07-13T17:44:55.165Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:44:55.763Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:44:55.763Z] [isAuth] Token present: true
+[2026-07-13T17:44:55.764Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:45:02.737Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:45:02.738Z] [isAuth] Token present: true
+[2026-07-13T17:45:02.739Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:45:02.804Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:45:02.804Z] [isAuth] Token present: true
+[2026-07-13T17:45:02.806Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:45:13.301Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:45:13.301Z] [isAuth] Token present: true
+[2026-07-13T17:45:13.302Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:45:13.757Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:45:13.757Z] [isAuth] Token present: true
+[2026-07-13T17:45:13.758Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:45:17.431Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:45:17.431Z] [isAuth] Token present: true
+[2026-07-13T17:45:17.433Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:45:17.762Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:45:17.763Z] [isAuth] Token present: true
+[2026-07-13T17:45:17.763Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:08.926Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:08.926Z] [isAuth] Token present: true
+[2026-07-13T17:46:08.927Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:09.756Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:09.756Z] [isAuth] Token present: true
+[2026-07-13T17:46:09.757Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:17.000Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:17.001Z] [isAuth] Token present: true
+[2026-07-13T17:46:17.003Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:17.776Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:17.777Z] [isAuth] Token present: true
+[2026-07-13T17:46:17.779Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:21.761Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:21.761Z] [isAuth] Token present: true
+[2026-07-13T17:46:21.763Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:21.774Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:21.775Z] [isAuth] Token present: true
+[2026-07-13T17:46:21.776Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:27.645Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:27.645Z] [isAuth] Token present: true
+[2026-07-13T17:46:27.646Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:27.769Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:27.769Z] [isAuth] Token present: true
+[2026-07-13T17:46:27.770Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:33.755Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:33.755Z] [isAuth] Token present: true
+[2026-07-13T17:46:33.757Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:46:33.833Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:33.834Z] [isAuth] Token present: true
+[2026-07-13T17:46:33.835Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:43.280Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:46:43.280Z] [isAuth] Token present: true
+[2026-07-13T17:46:43.282Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:46:43.773Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:46:43.774Z] [isAuth] Token present: true
+[2026-07-13T17:46:43.776Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:47:04.593Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:47:04.593Z] [isAuth] Token present: true
+[2026-07-13T17:47:04.594Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:47:04.739Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:47:04.740Z] [isAuth] Token present: true
+[2026-07-13T17:47:04.741Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:47:14.980Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:47:14.980Z] [isAuth] Token present: true
+[2026-07-13T17:47:14.982Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:47:15.768Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:47:15.769Z] [isAuth] Token present: true
+[2026-07-13T17:47:15.769Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:47:51.221Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:47:51.222Z] [isAuth] Token present: true
+[2026-07-13T17:47:51.223Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:47:51.728Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:47:51.728Z] [isAuth] Token present: true
+[2026-07-13T17:47:51.729Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:47:54.887Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:47:54.887Z] [isAuth] Token present: true
+[2026-07-13T17:47:54.888Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:47:55.750Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:47:55.750Z] [isAuth] Token present: true
+[2026-07-13T17:47:55.751Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:48:16.874Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:48:16.874Z] [isAuth] Token present: true
+[2026-07-13T17:48:16.875Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:48:17.754Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:48:17.755Z] [isAuth] Token present: true
+[2026-07-13T17:48:17.756Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:48:24.753Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:48:24.754Z] [isAuth] Token present: true
+[2026-07-13T17:48:24.755Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:48:24.858Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:48:24.859Z] [isAuth] Token present: true
+[2026-07-13T17:48:24.860Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:48:44.631Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:48:44.632Z] [isAuth] Token present: true
+[2026-07-13T17:48:44.632Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:48:44.749Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:48:44.750Z] [isAuth] Token present: true
+[2026-07-13T17:48:44.751Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:48:51.151Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:48:51.152Z] [isAuth] Token present: true
+[2026-07-13T17:48:51.152Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:48:51.759Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:48:51.759Z] [isAuth] Token present: true
+[2026-07-13T17:48:51.760Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:49:08.757Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:49:08.757Z] [isAuth] Token present: true
+[2026-07-13T17:49:08.758Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:49:08.761Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:49:08.761Z] [isAuth] Token present: true
+[2026-07-13T17:49:08.762Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:49:22.410Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:49:22.411Z] [isAuth] Token present: true
+[2026-07-13T17:49:22.412Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:49:22.754Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:49:22.755Z] [isAuth] Token present: true
+[2026-07-13T17:49:22.756Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:49:34.194Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:49:34.194Z] [isAuth] Token present: true
+[2026-07-13T17:49:34.195Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:49:34.764Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:49:34.764Z] [isAuth] Token present: true
+[2026-07-13T17:49:34.765Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:50:00.236Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:50:00.237Z] [isAuth] Token present: true
+[2026-07-13T17:50:00.237Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:50:00.757Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:50:00.757Z] [isAuth] Token present: true
+[2026-07-13T17:50:00.758Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:50:05.455Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:50:05.456Z] [isAuth] Token present: true
+[2026-07-13T17:50:05.457Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:50:05.753Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:50:05.753Z] [isAuth] Token present: true
+[2026-07-13T17:50:05.754Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:50:15.130Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:50:15.130Z] [isAuth] Token present: true
+[2026-07-13T17:50:15.132Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:50:15.752Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:50:15.752Z] [isAuth] Token present: true
+[2026-07-13T17:50:15.753Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:50:23.923Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:50:23.923Z] [isAuth] Token present: true
+[2026-07-13T17:50:23.925Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:50:24.757Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:50:24.758Z] [isAuth] Token present: true
+[2026-07-13T17:50:24.760Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:50:55.025Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:50:55.025Z] [isAuth] Token present: true
+[2026-07-13T17:50:55.027Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:50:55.745Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:50:55.746Z] [isAuth] Token present: true
+[2026-07-13T17:50:55.747Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:51:53.536Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:51:53.536Z] [isAuth] Token present: true
+[2026-07-13T17:51:53.537Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:51:53.756Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:51:53.757Z] [isAuth] Token present: true
+[2026-07-13T17:51:53.758Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:51:58.826Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:51:58.826Z] [isAuth] Token present: true
+[2026-07-13T17:51:58.827Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:51:59.776Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:51:59.776Z] [isAuth] Token present: true
+[2026-07-13T17:51:59.778Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:52:19.499Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:52:19.500Z] [isAuth] Token present: true
+[2026-07-13T17:52:19.502Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:52:34.186Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:52:34.187Z] [isAuth] Token present: true
+[2026-07-13T17:52:34.189Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:52:44.527Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:52:44.528Z] [isAuth] Token present: true
+[2026-07-13T17:52:44.530Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:52:55.097Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:52:55.098Z] [isAuth] Token present: true
+[2026-07-13T17:52:55.100Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:53:26.929Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:53:26.931Z] [isAuth] Token present: true
+[2026-07-13T17:53:26.933Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:53:37.992Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:53:37.993Z] [isAuth] Token present: true
+[2026-07-13T17:53:37.996Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:53:45.277Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWxwYXNvbGF0aEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2MzQ0MCwiZXhwIjoxNzg0MDQ5ODQwfQ.VjBu_Cx3MG354wtNj6S_H3xhYKhXVeZn6HmQSnWEryg"}
+[2026-07-13T17:53:45.278Z] [isAuth] Token present: true
+[2026-07-13T17:53:45.279Z] [isAuth] Token verified for email: shilpasolath@gmail.com, role: user
+[2026-07-13T17:53:45.324Z] [isAuth] Cookies: {}
+[2026-07-13T17:53:45.324Z] [isAuth] Token present: false
+[2026-07-13T17:53:45.325Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T17:53:59.530Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:53:59.530Z] [isAuth] Token present: true
+[2026-07-13T17:53:59.532Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:53:59.574Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:53:59.574Z] [isAuth] Token present: true
+[2026-07-13T17:53:59.576Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:53:59.705Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:53:59.706Z] [isAuth] Token present: true
+[2026-07-13T17:53:59.707Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:56:22.782Z] [isAuth] Cookies: {"g_state":"{\"i_l\":0,\"i_ll\":1783958430726,\"i_b\":\"PMqxHX0BARnM3+NHZoBrHEJGvyX8A0pgNr+D5RsORBs\",\"i_e\":{\"enable_itp_optimization\":24},\"i_et\":1783958430726}","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk1ODQ0OSwiZXhwIjoxNzg0MDQ0ODQ5fQ.H2uOBa8YRmCg4g338gvx1xBg3bs6EAyvTuARpM9KAhI"}
+[2026-07-13T17:56:22.784Z] [isAuth] Token present: true
+[2026-07-13T17:56:22.790Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:56:44.826Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:56:44.826Z] [isAuth] Token present: true
+[2026-07-13T17:56:44.829Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:57:00.552Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:57:00.553Z] [isAuth] Token present: true
+[2026-07-13T17:57:00.555Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:58:10.849Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:58:10.850Z] [isAuth] Token present: true
+[2026-07-13T17:58:10.853Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:58:11.606Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:58:11.607Z] [isAuth] Token present: true
+[2026-07-13T17:58:11.610Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:58:27.337Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhaGlsc29sYXRoMTIzNEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc4Mzk2NTIzOSwiZXhwIjoxNzg0MDUxNjM5fQ.HTKIWn5VcAa7w3z0L2Ta2pu1_rLcmh1Y2UqWfEJc9tg"}
+[2026-07-13T17:58:27.338Z] [isAuth] Token present: true
+[2026-07-13T17:58:27.341Z] [isAuth] Token verified for email: sahilsolath1234@gmail.com, role: user
+[2026-07-13T17:58:27.401Z] [isAuth] Cookies: {}
+[2026-07-13T17:58:27.402Z] [isAuth] Token present: false
+[2026-07-13T17:58:27.403Z] [isAuth] No token in cookies. Denied.
+[2026-07-13T17:58:38.435Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:38.436Z] [isAuth] Token present: true
+[2026-07-13T17:58:38.439Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T17:58:38.467Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:38.468Z] [isAuth] Token present: true
+[2026-07-13T17:58:38.471Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T17:58:42.666Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:42.667Z] [isAuth] Token present: true
+[2026-07-13T17:58:42.671Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T17:58:42.682Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:42.684Z] [isAuth] Token present: true
+[2026-07-13T17:58:42.687Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T17:58:55.124Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:55.125Z] [isAuth] Token present: true
+[2026-07-13T17:58:55.128Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin
+[2026-07-13T17:58:56.573Z] [isAuth] Cookies: {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im9mZmljaWFsLnNhcmthcmlwYXRoQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4Mzk2NTUxOCwiZXhwIjoxNzg0MDUxOTE4fQ._d5BGrfBITDs6ZFYoxoVNaucaSRjxriO8DR1aqvRc_g"}
+[2026-07-13T17:58:56.574Z] [isAuth] Token present: true
+[2026-07-13T17:58:56.578Z] [isAuth] Token verified for email: official.sarkaripath@gmail.com, role: admin

@@ -74,7 +74,7 @@ export const QuestionPalette = ({ questions, questionStatus, currentQuestionInde
             {/* Toggle Button for mobile/tablet (Hidden on desktop) */}
             <button
                 onClick={() => setIsPaletteOpen(!isPaletteOpen)}
-                className={`fixed bottom-24 right-6 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 md:hidden flex items-center justify-center ${isPaletteOpen ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}`}
+                className={`fixed bottom-8 right-6 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 md:hidden flex items-center justify-center ${isPaletteOpen ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}`}
                 title={isPaletteOpen ? "Hide Palette" : "Show Palette"}
             >
                 {isPaletteOpen ? (
