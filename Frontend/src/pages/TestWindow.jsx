@@ -154,7 +154,7 @@ const TestWindow = () => {
             <div className="flex-1 overflow-y-auto p-0 transition-all duration-300 custom-scrollbar ">
 
                 {/* Top Header Bar  */}
-                <header className="flex flex-row max-[23rem]:flex-col justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
+                <header className="flex sm:flex-row flex-col justify-between items-center bg-blue-800 dark:bg-indigo-950 text-white py-3 px-4 shadow-lg sticky top-0 z-30 transition-colors gap-3 sm:gap-0">
                     <div className="flex items-center justify-between gap-4 sm:justify-start w-full sm:w-auto">
                         <div className='flex items-center gap-2'>
                             <img src={LOGO} alt="logo" className='w-9 h-9' />
@@ -167,7 +167,7 @@ const TestWindow = () => {
                         </span>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row items-end justify-between sm:justify-end w-full sm:w-auto sm:gap-4 gap-1.5">
+                    <div className="flex flex-row items-end justify-between sm:justify-end w-full sm:w-auto sm:gap-4 gap-1.5">
                         {/* Timer */}
                         <div className="bg-red-600 dark:bg-rose-600 text-gray-100 font-bold px-3 py-1 rounded-md shadow-lg text-sm sm:text-md">
                             <span className="mr-1">Time Left:</span>
@@ -226,12 +226,12 @@ const TestWindow = () => {
 
 
                 {/* Question Body */}
-                <div className="p-2 sm:p-6">
+                <div className="p-2 max-[23rem]:p-0.5 sm:p-6">
                     {questionContent ? (
-                        <div className="bg-slate-100 dark:bg-slate-900 p-4 sm:p-6 rounded-xl shadow-xl border border-gray-300 dark:border-slate-800/80 transition-colors">
+                        <div className="bg-slate-100 dark:bg-slate-900 p-2 sm:p-6 rounded-xl shadow-xl border border-gray-300 dark:border-slate-800/80 transition-colors">
 
-                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 pb-4 border-b border-gray-200 dark:border-slate-800 gap-3">
-                                <div className="text-xl sm:text-[22px] font-semibold text-gray-800 dark:text-slate-100">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-1 sm:mb-6 pb-4 border-b border-gray-200 dark:border-slate-800 gap-3">
+                                <div className="text-xl max-[23rem]:text-lg sm:text-[22px] font-semibold text-gray-800 dark:text-slate-100">
                                     Question <span className="text-blue-700 dark:text-indigo-400">{currentQuestionNumber}</span>
                                 </div>
                                 <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -244,9 +244,9 @@ const TestWindow = () => {
                                 </div>
                             </div>
 
-                            <p className="text-[14px] sm:text-[17px] font-semibold mb-4 sm:mb-6 text-gray-900 dark:text-white leading-snug p-3 sm:p-4 bg-gray-100 dark:bg-slate-800 shadow-md rounded-md border border-gray-200 dark:border-slate-700 transition-colors">{questionContent.Question}</p>
+                            <p className="text-[14px] sm:text-[17px] font-semibold mb-2 sm:mb-6 text-gray-900 dark:text-white leading-snug p-3 sm:p-4 bg-gray-100 dark:bg-slate-800 shadow-md rounded-md border border-gray-200 dark:border-slate-700 transition-colors">{questionContent.Question}</p>
 
-                            <div className="space-y-3">
+                            <div className="space-y-2 max-[23rem]:space-y-1 sm:space-y-3">
                                 {questionContent.options.map((option, index) => {
                                     const isSelected = currentAnswer === option.text;
                                     const optionLabel = String.fromCharCode(65 + index);
@@ -277,7 +277,7 @@ const TestWindow = () => {
                             </div>
 
                             {/* Action Buttons  */}
-                            <div className="mt-6 sm:mt-10 flex flex-col md:flex-row gap-3 md:gap-4 border-t-2 border-gray-300 dark:border-slate-800 pt-4 sm:pt-6 justify-between items-stretch md:items-center">
+                            <div className="max-[23rem]:mt-4 mt-6 sm:mt-10 flex flex-col md:flex-row gap-3 md:gap-4 border-t-2 border-gray-300 dark:border-slate-800 pt-4 sm:pt-6 justify-between items-stretch md:items-center">
 
                                 {/* Top/Desktop Prev & Next Buttons on Mobile */}
                                 <div className="flex justify-between items-center gap-3 sm:gap-4 w-full md:w-auto">

@@ -80,7 +80,7 @@ const Dashboard = () => {
                     },
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth < 640 ? 'bottom' : 'right',
                             labels: {
                                 color: '#94a3b8',
                                 padding: 15,

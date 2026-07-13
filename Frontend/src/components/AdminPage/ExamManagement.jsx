@@ -317,13 +317,13 @@ const ExamManagement = () => {
             <div className="flex justify-between items-center mb-8">
                 <h2 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 tracking-tight transition-colors">Exam Management</h2>
             </div>
-            <div className="flex flex-wrap gap-8 items-start relative">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative w-full">
                 {/* Decorative background blurs */}
                 <div className="absolute top-0 left-0 w-72 h-72 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
                 <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
 
                 {/* Category Section */}
-                <div className='relative flex flex-col p-6 rounded-3xl space-y-4 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-slate-200/60 dark:border-slate-700/50 min-w-[28rem] max-w-[31rem] min-h-[15rem] h-[32rem] transition-colors overflow-hidden'>
+                <div className='relative flex flex-col p-6 rounded-3xl space-y-4 bg-white/60 dark:bg-slate-900/40 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-slate-200/60 dark:border-slate-700/50 w-full lg:col-span-5 min-h-[15rem] h-[32rem] transition-colors overflow-hidden'>
                     <div className='flex justify-between items-center pb-4 border-b border-slate-200/50 dark:border-slate-700/50 transition-colors z-10'>
                         <div className='flex items-center gap-3 font-extrabold text-xl text-slate-800 dark:text-slate-100 transition-colors'><Folder className="text-indigo-500 drop-shadow-sm" /> Categories</div>
                         <button onClick={() => setIsCatModalOpen(true)} className="flex items-center px-5 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-xl shadow-md shadow-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/30 hover:-translate-y-0.5 hover:from-indigo-600 hover:to-purple-700 transition-all duration-300">
@@ -353,7 +353,7 @@ const ExamManagement = () => {
                 </div>
 
                 {/* Exams Section */}
-                <div className='flex flex-col p-6 rounded-2xl shadow-xl dark:shadow-none space-y-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 min-w-[30rem] w-[40rem] min-h-[15rem] h-[30rem] transition-colors'>
+                <div className='flex flex-col p-6 rounded-2xl shadow-xl dark:shadow-none space-y-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 w-full lg:col-span-7 min-h-[15rem] h-[32rem] transition-colors'>
                     <div className="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center transition-colors">
                         <div>
                             <div className='flex items-center gap-3 font-bold text-lg text-slate-700 dark:text-slate-200 transition-colors'>🎓 Exams: {activeCatSection?.Name || 'Select Category'}</div>
@@ -564,10 +564,10 @@ const ExamManagement = () => {
                             if (!displayData) return null;
 
                             return (
-                                <div key={q._id} className="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
+                                <div key={q._id} className="bg-slate-50 dark:bg-slate-800/40 p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
                                     <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/50 group-hover:bg-indigo-500 transition-colors"></div>
                                     <p className="font-bold text-slate-900 dark:text-slate-100 text-lg mb-4 leading-relaxed"><span className="text-indigo-500 mr-2">Q{idx + 1}.</span>{displayData.Question}</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-1 sm:pl-4">
                                         {displayData.options.map((opt, oi) => (
                                             <div key={oi} className={`flex items-center p-3 rounded-xl border transition-all ${opt.isCorrect ? 'bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800/50 text-emerald-700 dark:text-emerald-400' : 'bg-white dark:bg-slate-700/50 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300'}`}>
                                                 <span className="font-extrabold mr-3 text-sm opacity-60">{String.fromCharCode(65 + oi)}.</span>
@@ -576,9 +576,9 @@ const ExamManagement = () => {
                                         ))}
                                     </div>
                                     <div className="mt-6 pt-5 border-t border-slate-200 dark:border-slate-700 space-y-3">
-                                        <p className="inline-flex items-center px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm font-bold">
-                                            <CheckCircle size={16} className="mr-2" /> Correct Answer: {displayData.answer}
-                                        </p>
+                                        <div className="flex flex-wrap items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-lg text-sm font-bold w-full max-w-max">
+                                            <CheckCircle size={16} className="shrink-0" /> <span>Correct Answer: {displayData.answer}</span>
+                                        </div>
                                         <div className="p-4 bg-indigo-50 dark:bg-indigo-900/10 rounded-2xl border border-indigo-100 dark:border-indigo-900/30">
                                             <p className="text-[11px] font-extrabold text-indigo-500 uppercase tracking-wider mb-2">Solution Explanation</p>
                                             <div className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: displayData.solution }} />

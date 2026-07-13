@@ -83,7 +83,7 @@ const ExamDash = () => {
   const TopicsMap = isExamDataFetched?.Topics || {};
   let totalTopicsCount = 0;
   for (const subject in TopicsMap) {
-      totalTopicsCount += TopicsMap[subject].length;
+    totalTopicsCount += TopicsMap[subject].length;
   }
   const completedTopicsCount = isExamDataFetched?.syllabusProgress?.length || 0;
   const readinessPercentage = totalTopicsCount > 0 ? Math.round((completedTopicsCount / totalTopicsCount) * 100) : 0;
@@ -112,9 +112,9 @@ const ExamDash = () => {
         <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-fuchsia-600/15 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
 
         <div className='relative z-10 animate-fadeInUp'>
-          <h1 className='font-extrabold text-3xl sm:text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-lg capitalize'>
+          <div className='font-extrabold text-4xl sm:text-5xl md:text-6xl text-white mb-4 tracking-tight drop-shadow-lg capitalize'>
             {removeSlug(exam_name)} Exam
-          </h1>
+          </div>
           <p className='text-base sm:text-lg md:text-xl text-indigo-200/90 font-medium max-w-2xl mx-auto drop-shadow'>
             Your path to success starts here. Target your weaknesses and build momentum.
           </p>
@@ -123,15 +123,15 @@ const ExamDash = () => {
 
       {/* Floating Feature Cards */}
       <div className='-mt-20 relative z-20 max-w-5xl mx-auto w-full px-6 grid grid-cols-1 lg:grid-cols-2 gap-6 place-items-stretch'>
-          <AITopicSummarizerCard onClick={() => setAItopicSummarizer(true)} />
-           <ExamReadinessCard 
-              completedTopicsCount={completedTopicsCount}
-              totalTopicsCount={totalTopicsCount}
-              onViewDetailedProgress={() => {
-                setActiveSection(2);
-                document.getElementById('navigation-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
-           />
+        <AITopicSummarizerCard onClick={() => setAItopicSummarizer(true)} />
+        <ExamReadinessCard
+          completedTopicsCount={completedTopicsCount}
+          totalTopicsCount={totalTopicsCount}
+          onViewDetailedProgress={() => {
+            setActiveSection(2);
+            document.getElementById('navigation-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        />
       </div>
 
       {/* Overlays */}
@@ -141,13 +141,13 @@ const ExamDash = () => {
       {showTestGenerate && <TestGenerating />}
 
       {/* Main Content Layout */}
-      <div className='max-w-6xl mx-auto w-full px-6 mt-16 flex flex-col gap-10'>
+      <div className='max-w-6xl mx-auto w-full px-3 sm:px-6 mt-16 flex flex-col gap-10'>
 
         {/* Modern Segmented Navigation Tabs */}
-        <div id="navigation-tabs" className="relative bg-white dark:bg-slate-800/80 backdrop-blur border border-gray-200 dark:border-slate-700 p-1.5 rounded-2xl flex flex-row shadow-sm transition-colors mx-auto w-full max-w-3xl">
-          
+        <div id="navigation-tabs" className="relative bg-white dark:bg-slate-800/80 backdrop-blur border border-gray-200 dark:border-slate-700 p-1.5 rounded-2xl flex flex-row shadow-sm transition-colors w-full max-w-3xl min-w-[20em] mx-auto">
+
           {/* Sliding Indicator */}
-          <div 
+          <div
             className="absolute top-1.5 bottom-1.5 left-1.5 rounded-xl bg-indigo-600 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-md z-0"
             style={{
               width: 'calc((100% - 12px) / 3)',

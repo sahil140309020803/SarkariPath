@@ -49,14 +49,14 @@ const Navbar = () => {
   // Check if today a test has been attempted
   const hasAttemptedToday = React.useMemo(() => {
     if (!dashboardData || !Array.isArray(dashboardData.dailyStatistics)) return false;
-    
+
     // Get current local date string in YYYY-MM-DD format
     const today = new Date();
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     const todayStr = `${year}-${month}-${day}`;
-    
+
     const todayEntry = dashboardData.dailyStatistics.find(entry => entry.date === todayStr);
     return todayEntry ? (todayEntry.testsAttempted > 0) : false;
   }, [dashboardData]);
@@ -134,9 +134,9 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4 lg:gap-16">
             {/* Logo Section */}
-            <div onClick={handleLogoClick} className="flex items-center cursor-pointer group gap-3">
-              <img src={LOGO} alt="logo" className="w-10 h-10 transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300" />
-              <div className="font-bold text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
+            <div onClick={handleLogoClick} className="flex items-center cursor-pointer group gap-2 sm:gap-4">
+              <img src={LOGO} alt="logo" className="max-[23rem]:w-8 max-[23rem]:h-8 w-10 h-10  transform group-hover:scale-105 group-hover:rotate-6 transition-all duration-300" />
+              <div className="font-bold max-[23rem]:text-xl text-2xl tracking-tight text-slate-800 dark:text-white flex items-center transition-colors">
                 Sarkari<span className="text-blue-600 dark:text-cyan-400">Path</span>
               </div>
             </div>

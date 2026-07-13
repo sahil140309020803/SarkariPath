@@ -493,14 +493,14 @@ const TestGenerator = () => {
                             return (
                                 <React.Fragment key={q._id}>
                                     {showBatchHeader && (
-                                        <div className="mt-8 mb-6 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-2xl border border-purple-150 dark:border-purple-900/30 flex justify-between items-center transition-colors">
+                                        <div className="mt-8 mb-6 p-4 bg-purple-50 dark:bg-purple-950/20 rounded-2xl border border-purple-150 dark:border-purple-900/30 flex flex-col sm:flex-row gap-3 sm:items-center justify-between transition-colors">
                                             <span className="text-sm font-bold text-purple-900 dark:text-purple-300">
                                                 Batch {batchIndex}: Questions {batchStart} to {batchEnd}
                                             </span>
                                             <button
                                                 disabled={validatingBatchIndex !== null}
                                                 onClick={() => handleAIValidateBatch({ index: batchIndex, questions: batchQuestions })}
-                                                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm ${
+                                                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm w-full sm:w-auto ${
                                                     isCurrentValidating 
                                                         ? 'bg-purple-600 text-white animate-pulse'
                                                         : 'bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
@@ -516,13 +516,13 @@ const TestGenerator = () => {
                                         </div>
                                     )}
                                     <div className="space-y-3 pb-6 border-b dark:border-slate-800 last:border-0 transition-colors">
-                                        <div className="flex justify-between items-start gap-4">
+                                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                                             <div className="flex-1 space-y-2">
                                                 <p className="font-semibold text-gray-900 dark:text-white transition-colors">
                                                     <span className="text-indigo-650 dark:text-indigo-400 font-bold mr-2">Q{idx + 1}.</span>
                                                     {displayData.Question}
                                                 </p>
-                                                <ul className="list-none pl-4 space-y-1">
+                                                <ul className="list-none pl-1 sm:pl-4 space-y-1">
                                                     {displayData.options.map((opt, oi) => (
                                                         <li key={oi} className={`text-gray-700 dark:text-slate-300 transition-colors ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
                                                             <strong className="mr-2 text-gray-900 dark:text-white transition-colors">{String.fromCharCode(65 + oi)}.</strong>{opt.text}
@@ -537,7 +537,7 @@ const TestGenerator = () => {
                                             <button 
                                                 onClick={() => handleRegenerateQuestion(q._id)}
                                                 disabled={regeneratingQuestionId === q._id}
-                                                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start shrink-0"
+                                                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start sm:self-auto shrink-0 w-full sm:w-auto"
                                                 title="Regenerate this question with AI"
                                             >
                                                 {regeneratingQuestionId === q._id ? (
@@ -573,11 +573,11 @@ const TestGenerator = () => {
                                                     </div>
                                                 )}
 
-                                                <div className="flex justify-end gap-2">
+                                                <div className="flex flex-col sm:flex-row justify-end gap-2">
                                                     <button 
                                                         onClick={() => handleRegenerateQuestion(q._id)}
                                                         disabled={regeneratingQuestionId === q._id}
-                                                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-indigo-400 cursor-pointer"
+                                                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5 disabled:bg-indigo-400 cursor-pointer w-full sm:w-auto"
                                                     >
                                                         {regeneratingQuestionId === q._id ? (
                                                             <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>
@@ -591,7 +591,7 @@ const TestGenerator = () => {
                                                         <button 
                                                             onClick={() => handleApplyCorrection(q._id, issue.proposedCorrection)}
                                                             disabled={applyingCorrectionId === q._id}
-                                                            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 disabled:bg-green-400 cursor-pointer"
+                                                            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5 disabled:bg-green-400 cursor-pointer w-full sm:w-auto"
                                                         >
                                                             {applyingCorrectionId === q._id ? (
                                                                 <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-white"></div>

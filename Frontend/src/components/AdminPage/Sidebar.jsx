@@ -30,7 +30,7 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
     };
 
     return (
-        <aside className={`${isOpen ? 'w-68' : 'w-20'} flex-shrink-0 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 flex flex-col transition-all duration-300 z-20`}>
+        <aside className={`fixed inset-y-0 left-0 lg:static z-50 flex flex-col flex-shrink-0 bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-800 transition-all duration-300 ${isOpen ? 'w-68 translate-x-0 shadow-2xl lg:shadow-none' : 'w-20 -translate-x-full lg:translate-x-0 lg:w-20'}`}>
             <div className="h-20 flex items-center justify-between px-6 border-b border-gray-200 dark:border-slate-800 transition-colors w-full overflow-hidden">
                 <div className={`flex items-center gap-4 transition-all duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 hidden'}`}>
                     <div className='flex items-center gap-2'>

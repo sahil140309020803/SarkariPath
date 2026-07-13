@@ -16,7 +16,7 @@ import ExamManagement from '../components/AdminPage/ExamManagement';
 
 export default function AdminPage() {
     const [activePage, setActivePage] = useState('dashboard');
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
     const { userDetails } = useUser();
     const navigate = useNavigate();
 
@@ -28,6 +28,19 @@ export default function AdminPage() {
         };
         checkUserRole();
     }, [userDetails, navigate]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 1024) {
+                setIsSidebarOpen(false);
+            } else {
+                setIsSidebarOpen(true);
+            }
+        };
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     if (!userDetails || userDetails.role !== 'admin') {
         return <BeautifulLoadingScreen message="Verifying admin credentials..." />;
@@ -45,10 +58,17 @@ export default function AdminPage() {
     };
 
     return (
-        <div className="flex h-screen bg-slate-50 dark:bg-slate-900 transition-colors">
+        <div className="flex h-screen bg-slate-50 dark:bg-slate-900 transition-colors relative overflow-hidden">
+            {/* Mobile/Tablet Backdrop Overlay */}
+            {isSidebarOpen && (
+                <div 
+                    className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
+                    onClick={() => setIsSidebarOpen(false)}
+                />
+            )}
             <Sidebar activePage={activePage} setActivePage={setActivePage} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-            <main className="flex-1 p-8 overflow-y-auto">
-                <Header />
+            <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+                <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
                 {renderPage()}
             </main>
         </div>

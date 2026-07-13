@@ -26,12 +26,12 @@ const Header = () => {
                         </div>
                     )}
 
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-slate-800 dark:text-white leading-[1.15] transition-colors">
-                        Your Gateway to <br />
+                    <div className="text-5xl max-[23rem]:text-4xl md:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight text-slate-800 dark:text-white leading-[1.15] transition-colors">
+                        <span>Your Gateway to</span> <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 inline-block animate-pulse">
                             Government Exams
                         </span>
-                    </h1>
+                    </div>
 
                     <p className="text-base sm:text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed transition-colors">
                         Master government exam preparation with <strong className="text-slate-900 dark:text-slate-200">AI-powered mock tests</strong>, subject-wise practice, and topic-focused learning designed specifically for your success.

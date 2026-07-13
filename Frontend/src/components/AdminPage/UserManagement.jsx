@@ -51,7 +51,7 @@ const UserManagement = () => {
                     className="bg-gray-50 dark:bg-slate-800 border-2 border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:border-blue-800 dark:focus:border-indigo-500 focus:outline-0 w-full md:w-1/3 p-2.5 mb-4 transition-colors"
                     placeholder="Search by Name or Email..."
                 />
-                <div className="relative overflow-y-auto custom-scrollbar max-h-[60vh]">
+                <div className="relative overflow-x-auto overflow-y-auto custom-scrollbar max-h-[60vh]">
                     <table className="w-full text-sm text-left text-gray-500 dark:text-slate-400 transition-colors">
                         <thead className="text-gray-700 dark:text-slate-300 uppercase bg-gray-50 dark:bg-slate-800 sticky top-0 transition-colors">
                             <tr>

@@ -116,7 +116,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
               <Trophy className="text-amber-600 dark:text-amber-400" size={24} />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Global Leaderboard</h2>
+              <div className="sm:text-2xl text-lg font-bold text-slate-900 dark:text-white">Global Leaderboard</div>
               {totalPages > 0 && <p className="text-xs text-slate-400 font-medium">Page {page} of {totalPages}</p>}
             </div>
           </div>
@@ -124,7 +124,7 @@ const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, 
             <XCircle className="text-slate-400" size={24} />
           </button>
         </div>
-        <div className="py-4  max-h-[60vh] overflow-y-auto custom-scrollbar">
+        <div className="py-4 overflow-x-auto  max-h-[60vh] overflow-y-auto custom-scrollbar">
           {isLoading ? (
             <div className="py-12 text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
