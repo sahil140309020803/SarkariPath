@@ -13,6 +13,7 @@ import TestGenerator from '../components/AdminPage/TestGenerator';
 import UserManagement from '../components/AdminPage/UserManagement';
 import PlatformSettings from '../components/AdminPage/PlatformSettings';
 import ExamManagement from '../components/AdminPage/ExamManagement';
+import CurrentAffairsDashboard from '../components/AdminPage/CurrentAffairsDashboard';
 
 export default function AdminPage() {
     const [activePage, setActivePage] = useState('dashboard');
@@ -51,6 +52,7 @@ export default function AdminPage() {
             case 'dashboard': return <Dashboard />;
             case 'exam-management': return <ExamManagement />;
             case 'manage-mock-tests': return <TestGenerator />;
+            case 'current-affairs': return <CurrentAffairsDashboard />;
             case 'user-management': return <UserManagement />;
             case 'settings': return <PlatformSettings />;
             default: return <Dashboard />;

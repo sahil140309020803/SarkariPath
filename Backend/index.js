@@ -29,6 +29,7 @@ import { getDashboardStats, getAnalyticsStats } from './controllers/AdminDashboa
 import { generateAdminMock } from './controllers/AdminMockGenerationController.js';
 import { validateMock, applyCorrection, regenerateQuestion } from './controllers/AdminMockValidationController.js';
 import { generateUserQuiz } from './controllers/QuizGenerationController.js';
+import { currentAffairsRouter } from './routers/currentAffairsRoutes.js';
 
 const app = express();
 const server = http.createServer(app);
@@ -39,7 +40,8 @@ connectMongoDB(process.env.USER_MONGODB_URI);
 connectMongoDB(process.env.EXAM_MONGODB_URI);
 
 // Middlewares
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 const allowedOrigins = ['http://localhost:5173', 'http://10.11.224.196:5173'];
 app.use(cors({ origin: allowedOrigins, credentials: true }));
@@ -98,6 +100,9 @@ app.use('/api/exams', examRouter);
 
 // Test Window Routes
 app.use('/api/test-window', testWindowRouter);
+
+// Current Affairs Routes
+app.use('/api/admin/current-affairs', currentAffairsRouter);
 
 // New Quiz/Mock Generation Routes
 app.post('/api/admin/mock/generate', isAuth, generateAdminMock);

@@ -6,6 +6,7 @@ import { rateLimiter } from './RateLimiter.js';
 import { quizAI } from './GeminiQuizService.js';
 import { getQuizMultipleQuestionsPrompt } from './PromptBuilder.js';
 import { parseQuizQuestions } from './QuestionParser.js';
+import { fetchAndCloneCurrentAffairsQuestions } from '../currentAffairs/CurrentAffairsService.js';
 
 const withTimeout = (promise, ms) => {
   const timeout = new Promise((_, reject) =>
@@ -200,6 +201,38 @@ export class GenerationScheduler {
     // Fallback: retry only missing questions in the batch
     let batchQuestions = [];
     let remainingTopicsForBatch = [...selectedTopics];
+
+    // Intercept Current Affairs topics to load directly from MongoDB
+    const caIndices = [];
+    remainingTopicsForBatch.forEach((t, idx) => {
+      if ((t && t.toLowerCase().includes('current affairs')) || (activeRule.name && activeRule.name.toLowerCase().includes('current affairs'))) {
+        caIndices.push(idx);
+      }
+    });
+
+    if (caIndices.length > 0) {
+      console.log(`[GenerationScheduler] Current Affairs requested. Fetching ${caIndices.length} questions from DB...`);
+      const excludeIds = job.activeTest.Questions || [];
+      const dbQuestions = await fetchAndCloneCurrentAffairsQuestions(
+        job.data.examId,
+        job.data.difficulty || 'Medium',
+        caIndices.length,
+        excludeIds
+      );
+
+      console.log(`[GenerationScheduler] Fetched ${dbQuestions.length} Current Affairs questions from DB.`);
+      
+      if (dbQuestions.length > 0) {
+        batchQuestions.push(...dbQuestions);
+        for (let i = remainingTopicsForBatch.length - 1; i >= 0; i--) {
+          const t = remainingTopicsForBatch[i];
+          if ((t && t.toLowerCase().includes('current affairs')) || (activeRule.name && activeRule.name.toLowerCase().includes('current affairs'))) {
+            remainingTopicsForBatch.splice(i, 1);
+          }
+        }
+      }
+    }
+
     let retryCount = 0;
     const MAX_RETRIES = 3;
 

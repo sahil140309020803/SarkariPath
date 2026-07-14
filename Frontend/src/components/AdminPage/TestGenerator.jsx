@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Sparkles, Eye, CheckCircle, Trash2, RefreshCw } from 'lucide-react';
+import { Plus, Sparkles, Eye, CheckCircle, Trash2, RefreshCw, Edit2 } from 'lucide-react';
 import io from 'socket.io-client';
 import { useExam } from '../../context/ExamContext';
 import Modal from './Modal';
@@ -21,6 +21,9 @@ const TestGenerator = () => {
     const [validationReport, setValidationReport] = useState([]);
     const [applyingCorrectionId, setApplyingCorrectionId] = useState(null);
     const [regeneratingQuestionId, setRegeneratingQuestionId] = useState(null);
+    const [editingQuestionIndex, setEditingQuestionIndex] = useState(null);
+    const [editingQuestionData, setEditingQuestionData] = useState(null);
+    const [isSavingQuestion, setIsSavingQuestion] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedExam, setSelectedExam] = useState('');
     const [availableExams, setAvailableExams] = useState([]);
@@ -337,6 +340,85 @@ const TestGenerator = () => {
         }
     };
 
+    const startEditingQuestion = (index, question) => {
+        setEditingQuestionIndex(index);
+        setEditingQuestionData(JSON.parse(JSON.stringify(question)));
+    };
+
+    const handleEditFieldChange = (lang, field, val) => {
+        setEditingQuestionData(prev => ({
+            ...prev,
+            [lang]: {
+                ...prev[lang],
+                [field]: val
+            }
+        }));
+    };
+
+    const handleEditOptionChange = (lang, optIndex, val) => {
+        setEditingQuestionData(prev => {
+            const opts = [...prev[lang].options];
+            opts[optIndex] = { ...opts[optIndex], text: val };
+            return {
+                ...prev,
+                [lang]: {
+                    ...prev[lang],
+                    options: opts
+                }
+            };
+        });
+    };
+
+    const handleEditCorrectChange = (lang, optIndex) => {
+        setEditingQuestionData(prev => {
+            const enOpts = prev.en.options.map((o, idx) => ({ ...o, isCorrect: idx === optIndex }));
+            const hiOpts = prev.hi.options.map((o, idx) => ({ ...o, isCorrect: idx === optIndex }));
+            
+            const enAnswer = enOpts[optIndex].text;
+            const hiAnswer = hiOpts[optIndex].text;
+
+            return {
+                ...prev,
+                en: { ...prev.en, options: enOpts, answer: enAnswer },
+                hi: { ...prev.hi, options: hiOpts, answer: hiAnswer }
+            };
+        });
+    };
+
+    const saveEditedQuestion = async () => {
+        if (!previewTest || !backend_url || editingQuestionIndex === null || !editingQuestionData) return;
+        setIsSavingQuestion(true);
+        axios.defaults.withCredentials = true;
+        try {
+            const qId = previewTest.Questions[editingQuestionIndex]._id;
+            const { data } = await axios.post(`${backend_url}/api/admin/mock/apply-correction`, {
+                testId: previewTest._id,
+                questionId: qId,
+                correctedPayload: {
+                    en: editingQuestionData.en,
+                    hi: editingQuestionData.hi,
+                    Topic: editingQuestionData.Topic,
+                    Difficulty: editingQuestionData.Difficulty
+                }
+            });
+
+            if (data.success && data.test) {
+                toast.success("Question manually updated successfully!");
+                setPreviewTest(data.test);
+                setRecentGenerations(prev => prev.map(gen => gen._id === data.test._id ? data.test : gen));
+                setEditingQuestionIndex(null);
+                setEditingQuestionData(null);
+            } else {
+                toast.error(data.message || "Failed to save updates.");
+            }
+        } catch (err) {
+            console.error("Save manual correction error:", err);
+            toast.error(`Save error: ${err.message}`);
+        } finally {
+            setIsSavingQuestion(false);
+        }
+    };
+
     return (
         <div className=' overflow-hidden'>
 
@@ -532,19 +614,29 @@ const TestGenerator = () => {
                                                 </p>
                                                 <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
                                             </div>
-                                            <button
-                                                onClick={() => handleRegenerateQuestion(q._id)}
-                                                disabled={regeneratingQuestionId === q._id}
-                                                className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start sm:self-auto shrink-0 w-full sm:w-auto"
-                                                title="Regenerate this question with AI"
-                                            >
-                                                {regeneratingQuestionId === q._id ? (
-                                                    <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-indigo-700 dark:border-indigo-400"></div>
-                                                ) : (
-                                                    <RefreshCw size={12} />
-                                                )}
-                                                <span>Regenerate</span>
-                                            </button>
+                                            <div className="flex flex-col gap-2 self-start sm:self-auto shrink-0 w-full sm:w-auto">
+                                                <button
+                                                    onClick={() => handleRegenerateQuestion(q._id)}
+                                                    disabled={regeneratingQuestionId === q._id}
+                                                    className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer w-full"
+                                                    title="Regenerate this question with AI"
+                                                >
+                                                    {regeneratingQuestionId === q._id ? (
+                                                        <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-indigo-700 dark:border-indigo-400"></div>
+                                                    ) : (
+                                                        <RefreshCw size={12} />
+                                                    )}
+                                                    <span>Regenerate</span>
+                                                </button>
+                                                <button
+                                                    onClick={() => startEditingQuestion(idx, q)}
+                                                    className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 cursor-pointer w-full"
+                                                    title="Edit this question manually"
+                                                >
+                                                    <Edit2 size={12} />
+                                                    <span>Edit</span>
+                                                </button>
+                                            </div>
                                         </div>
 
                                         {issue && (
@@ -608,6 +700,154 @@ const TestGenerator = () => {
                         })}
                     </div>
                 </div>
+            </Modal>
+            {/* INLINE QUESTION EDITOR MODAL */}
+            <Modal
+                isOpen={editingQuestionIndex !== null && editingQuestionData !== null}
+                onClose={() => { setEditingQuestionIndex(null); setEditingQuestionData(null); }}
+                title="Edit Mock Question"
+                maxWidth="max-w-4xl"
+            >
+                {editingQuestionData && (
+                    <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Difficulty</label>
+                                <select
+                                    value={editingQuestionData.Difficulty || 'Medium'}
+                                    onChange={(e) => setEditingQuestionData(prev => ({ ...prev, Difficulty: e.target.value }))}
+                                    className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 block w-full p-2.5"
+                                >
+                                    <option value="Easy">Easy</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Hard">Hard</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Topic</label>
+                                <input
+                                    type="text"
+                                    value={editingQuestionData.Topic || ''}
+                                    onChange={(e) => setEditingQuestionData(prev => ({ ...prev, Topic: e.target.value }))}
+                                    className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 block w-full p-2.5"
+                                />
+                            </div>
+                        </div>
+
+                        <hr className="dark:border-slate-800" />
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* EDIT ENGLISH VERSION */}
+                            <div className="space-y-4">
+                                <h4 className="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider border-b dark:border-slate-800 pb-1">
+                                    English Fields
+                                </h4>
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-400">Question Text</label>
+                                    <textarea
+                                        rows={4}
+                                        value={editingQuestionData.en?.Question || ''}
+                                        onChange={(e) => handleEditFieldChange('en', 'Question', e.target.value)}
+                                        className="mt-1 w-full bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2.5"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-semibold text-gray-400">Options (Select the correct option)</label>
+                                    {(editingQuestionData.en?.options || []).map((opt, optIdx) => (
+                                        <div key={optIdx} className="flex items-center gap-2">
+                                            <input
+                                                type="radio"
+                                                name="correct-option-en"
+                                                checked={opt.isCorrect}
+                                                onChange={() => handleEditCorrectChange('en', optIdx)}
+                                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
+                                            />
+                                            <span className="text-xs font-bold text-gray-500">{String.fromCharCode(65 + optIdx)}</span>
+                                            <input
+                                                type="text"
+                                                value={opt.text}
+                                                onChange={(e) => handleEditOptionChange('en', optIdx, e.target.value)}
+                                                className="bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2 w-full"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-400">Solution Explanation (Supports HTML)</label>
+                                    <textarea
+                                        rows={4}
+                                        value={editingQuestionData.en?.solution || ''}
+                                        onChange={(e) => handleEditFieldChange('en', 'solution', e.target.value)}
+                                        className="mt-1 w-full bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2.5 font-mono"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* EDIT HINDI VERSION */}
+                            <div className="space-y-4 border-t lg:border-t-0 lg:border-l dark:border-slate-800 lg:pl-6">
+                                <h4 className="text-sm font-bold text-gray-800 dark:text-white uppercase tracking-wider border-b dark:border-slate-800 pb-1">
+                                    हिन्दी अनुवाद (Hindi Fields)
+                                </h4>
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-400">प्रश्न का टेक्स्ट (Question Text)</label>
+                                    <textarea
+                                        rows={4}
+                                        value={editingQuestionData.hi?.Question || ''}
+                                        onChange={(e) => handleEditFieldChange('hi', 'Question', e.target.value)}
+                                        className="mt-1 w-full bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2.5"
+                                    />
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-semibold text-gray-400">विकल्प (Options - Auto-synced correctness)</label>
+                                    {(editingQuestionData.hi?.options || []).map((opt, optIdx) => (
+                                        <div key={optIdx} className="flex items-center gap-2">
+                                            <div className={`h-4 w-4 rounded-full border-4 flex items-center justify-center ${opt.isCorrect ? 'border-indigo-600 bg-indigo-650' : 'border-gray-350'}`}></div>
+                                            <span className="text-xs font-bold text-gray-500">{String.fromCharCode(65 + optIdx)}</span>
+                                            <input
+                                                type="text"
+                                                value={opt.text}
+                                                onChange={(e) => handleEditOptionChange('hi', optIdx, e.target.value)}
+                                                className="bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2 w-full"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-semibold text-gray-400">हिन्दी व्याख्या (Solution - Supports HTML)</label>
+                                    <textarea
+                                        rows={4}
+                                        value={editingQuestionData.hi?.solution || ''}
+                                        onChange={(e) => handleEditFieldChange('hi', 'solution', e.target.value)}
+                                        className="mt-1 w-full bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-xs rounded-lg p-2.5 font-mono"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-3 border-t dark:border-slate-850 pt-3">
+                            <button
+                                type="button"
+                                disabled={isSavingQuestion}
+                                onClick={() => { setEditingQuestionIndex(null); setEditingQuestionData(null); }}
+                                className="px-4 py-2 border border-gray-300 dark:border-slate-750 text-gray-700 dark:text-slate-350 text-xs font-bold rounded-lg disabled:opacity-50"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                disabled={isSavingQuestion}
+                                onClick={saveEditedQuestion}
+                                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-750 disabled:bg-indigo-400 text-white text-xs font-bold rounded-lg transition"
+                            >
+                                {isSavingQuestion ? "Saving..." : "Save Updates"}
+                            </button>
+                        </div>
+                    </div>
+                )}
             </Modal>
         </div>
     );

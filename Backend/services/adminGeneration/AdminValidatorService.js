@@ -2,6 +2,7 @@ import { adminAI } from './AdminGeminiService.js';
 import { MockTestModel, QuestionModel, examModel } from '../../models/ExamModel.js';
 import { getAdminMultipleQuestionsPrompt } from './AdminPromptBuilder.js';
 import { parseAdminQuestions } from './AdminQuestionParser.js';
+import mongoose from 'mongoose';
 
 const withTimeout = (promise, ms) => {
   const timeout = new Promise((_, reject) =>
@@ -210,54 +211,115 @@ export const regenerateSingleQuestion = async (testId, questionId) => {
   const topicName = question.Topic || "General";
   const difficulty = test.Difficulty || 'Medium';
 
-  const previousQuestions = await QuestionModel.find({
-    ExamId: test.ExamId,
-    $or: [{ Subject: subjectName }, { Topic: topicName }]
-  })
-    .sort({ createdAt: -1 })
-    .limit(60)
-    .select('Topic en.Question hi.Question');
+  console.log(`[AdminValidator] Regenerate Question Clicked. ID: ${questionId}, Subject: "${subjectName}", Topic: "${topicName}"`);
 
-  const history = previousQuestions.map(q => ({
-    topic: q.Topic,
-    summary: (q.en?.Question || q.hi?.Question || "").substring(0, 100)
-  }));
+  let newQuestion;
 
-  let examName = "Competitive Exam";
-  const examDoc = await examModel.findById(test.ExamId);
-  if (examDoc) {
-    examName = examDoc.Name;
+  if (topicName && topicName.toLowerCase().includes('current affairs')) {
+    // Attempt to fetch a random current affairs question from the database pool
+    const currentQuestionIds = (test.Questions || []).map(q => q._id);
+    const caQuestions = await QuestionModel.aggregate([
+      { 
+        $match: { 
+          Topic: 'Current Affairs', 
+          Difficulty: difficulty,
+          _id: { $nin: currentQuestionIds.map(id => new mongoose.Types.ObjectId(id)) } 
+        } 
+      },
+      { $sample: { size: 1 } }
+    ]);
+
+    let caQuestion = caQuestions[0];
+    if (!caQuestion) {
+      // Fallback: search any difficulty if matching difficulty not found
+      const caFallback = await QuestionModel.aggregate([
+        { 
+          $match: { 
+            Topic: 'Current Affairs',
+            _id: { $nin: currentQuestionIds.map(id => new mongoose.Types.ObjectId(id)) } 
+          } 
+        },
+        { $sample: { size: 1 } }
+      ]);
+      caQuestion = caFallback[0];
+    }
+
+    if (caQuestion) {
+      console.log(`[AdminValidator] Regenerating current affairs question from database pool: ${caQuestion._id}`);
+      newQuestion = new QuestionModel({
+        ExamId: test.ExamId,
+        en: {
+          Question: caQuestion.en?.Question || '',
+          options: (caQuestion.en?.options || []).map(o => ({ text: o.text, isCorrect: o.isCorrect })),
+          answer: caQuestion.en?.answer || '',
+          solution: caQuestion.en?.solution || ''
+        },
+        hi: {
+          Question: caQuestion.hi?.Question || '',
+          options: (caQuestion.hi?.options || []).map(o => ({ text: o.text, isCorrect: o.isCorrect })),
+          answer: caQuestion.hi?.answer || '',
+          solution: caQuestion.hi?.solution || ''
+        },
+        Subject: caQuestion.Subject || 'General Awareness',
+        Topic: 'Current Affairs',
+        Difficulty: caQuestion.Difficulty || difficulty
+      });
+      await newQuestion.validate();
+      await newQuestion.save();
+    }
   }
 
-  const prompt = getAdminMultipleQuestionsPrompt(
-    examName,
-    subjectName,
-    [topicName],
-    difficulty,
-    history,
-    1
-  );
+  // If not Current Affairs, or if the database pool had no questions available, generate via Gemini
+  if (!newQuestion) {
+    const previousQuestions = await QuestionModel.find({
+      ExamId: test.ExamId,
+      $or: [{ Subject: subjectName }, { Topic: topicName }]
+    })
+      .sort({ createdAt: -1 })
+      .limit(60)
+      .select('Topic en.Question hi.Question');
 
-  const result = await withTimeout(adminAI.generateContent(prompt), 35000);
-  const aiResponseString = result.response.candidates[0].content.parts[0].text;
-  const parsedQuestions = parseAdminQuestions(aiResponseString);
+    const history = previousQuestions.map(q => ({
+      topic: q.Topic,
+      summary: (q.en?.Question || q.hi?.Question || "").substring(0, 100)
+    }));
 
-  if (!parsedQuestions || parsedQuestions.length === 0) {
-    throw new Error("AI failed to generate a replacement question.");
+    let examName = "Competitive Exam";
+    const examDoc = await examModel.findById(test.ExamId);
+    if (examDoc) {
+      examName = examDoc.Name;
+    }
+
+    const prompt = getAdminMultipleQuestionsPrompt(
+      examName,
+      subjectName,
+      [topicName],
+      difficulty,
+      history,
+      1
+    );
+
+    const result = await withTimeout(adminAI.generateContent(prompt), 35000);
+    const aiResponseString = result.response.candidates[0].content.parts[0].text;
+    const parsedQuestions = parseAdminQuestions(aiResponseString);
+
+    if (!parsedQuestions || parsedQuestions.length === 0) {
+      throw new Error("AI failed to generate a replacement question.");
+    }
+
+    const questionData = parsedQuestions[0];
+
+    newQuestion = new QuestionModel({
+      ...questionData,
+      ExamId: test.ExamId,
+      Subject: subjectName,
+      Topic: topicName,
+      Difficulty: difficulty
+    });
+
+    await newQuestion.validate();
+    await newQuestion.save();
   }
-
-  const questionData = parsedQuestions[0];
-
-  const newQuestion = new QuestionModel({
-    ...questionData,
-    ExamId: test.ExamId,
-    Subject: subjectName,
-    Topic: topicName,
-    Difficulty: difficulty
-  });
-
-  await newQuestion.validate();
-  await newQuestion.save();
 
   const updatedTestDoc = await MockTestModel.findById(testId);
   const index = updatedTestDoc.Questions.findIndex(id => id.toString() === questionId);

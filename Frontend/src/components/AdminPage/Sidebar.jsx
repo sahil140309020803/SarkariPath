@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Folder, FileText, Settings2, Users, BarChart3, LogOut } from 'lucide-react';
+import { LayoutDashboard, Folder, FileText, Settings2, Users, BarChart3, LogOut, BookOpen } from 'lucide-react';
 import { FiAlignJustify } from "react-icons/fi";
 import { useUser } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -19,6 +19,7 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
         { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
         { id: 'exam-management', icon: <Folder size={20} />, label: 'Exam Management' },
         { id: 'manage-mock-tests', icon: <FileText size={20} />, label: 'AI Test Generator' },
+        { id: 'current-affairs', icon: <BookOpen size={20} />, label: 'Current Affairs' },
         { id: 'user-management', icon: <Users size={20} />, label: 'User Management' },
         { id: 'settings', icon: <Settings2 size={20} />, label: 'Settings' },
     ];

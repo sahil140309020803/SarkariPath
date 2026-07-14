@@ -68,11 +68,11 @@ For logical reasoning and quantitative aptitude topics (such as Blood Relations,
    Conclusions / Assumptions:
    I. [Conclusion 1]
    II. [Conclusion 2]
-
-### 📅 CURRENT AFFAIRS TEMPORAL RULES:
-For any Current Affairs or General Awareness questions involving recent events, schemes, news, rankings, awards, or appointments:
-1. **Strict Date Range:** You MUST ONLY generate questions based on events, news, policy launches, and developments that occurred between **November 2025 and July 2026** (inclusive).
-2. **NO Past/Outdated Events:** Do NOT ask about events, schemes, or appointments from 2024 or earlier, as they are outdated. Focus exclusively on the specified November 2025 - July 2026 period.
+5. **Seating Arrangements Puzzles (Circular, Linear, Square, Parallel Rows):**
+   - You MUST write down the complete resulting physical seating order/layout in the "reasoning_draft" field (e.g. "Linear order Left-to-Right: A, B, C, D..." or "Circular clockwise: A, B, C...").
+   - Carefully verify all relative terms like "immediate right", "second to the left", "facing center", and "facing away".
+   - Make sure the clues provided are mathematically sufficient to lock down the exact arrangement required to answer the question without ambiguity.
+   - Verify that all options are unique and that the designated correct answer is mathematically and logically correct.
 
 **ZERO TOLERANCE REPETITION POLICY:**
 1. **NO REPEATS:** You must NOT generate any question that matches the logic, numbers, scenario, or phrasing of the questions in the EXCLUSION LIST above.  

@@ -2,6 +2,7 @@ import { adminAI } from './AdminGeminiService.js';
 import { getAdminMultipleQuestionsPrompt } from './AdminPromptBuilder.js';
 import { parseAdminQuestions } from './AdminQuestionParser.js';
 import { MockTestModel, QuestionModel, examModel } from '../../models/ExamModel.js';
+import { fetchAndCloneCurrentAffairsQuestions } from '../currentAffairs/CurrentAffairsService.js';
 
 const withTimeout = (promise, ms) => {
   const timeout = new Promise((_, reject) =>
@@ -119,6 +120,38 @@ export const generateAdminMockTest = async (io, socketId, data) => {
 
         let batchQuestions = [];
         let remainingTopicsForBatch = [...selectedTopics];
+
+        // Intercept Current Affairs topics to load directly from MongoDB
+        const caIndices = [];
+        remainingTopicsForBatch.forEach((t, idx) => {
+          if ((t && t.toLowerCase().includes('current affairs')) || (rule.name && rule.name.toLowerCase().includes('current affairs'))) {
+            caIndices.push(idx);
+          }
+        });
+
+        if (caIndices.length > 0) {
+          console.log(`[AdminGeneration] Current Affairs requested. Fetching ${caIndices.length} questions from DB...`);
+          const excludeIds = activeTest.Questions ? activeTest.Questions.map(q => q._id || q) : [];
+          const dbQuestions = await fetchAndCloneCurrentAffairsQuestions(
+            examId,
+            difficulty || 'Medium',
+            caIndices.length,
+            excludeIds
+          );
+
+          console.log(`[AdminGeneration] Fetched ${dbQuestions.length} Current Affairs questions from DB.`);
+          
+          if (dbQuestions.length > 0) {
+            batchQuestions.push(...dbQuestions);
+            for (let i = remainingTopicsForBatch.length - 1; i >= 0; i--) {
+              const t = remainingTopicsForBatch[i];
+              if ((t && t.toLowerCase().includes('current affairs')) || (rule.name && rule.name.toLowerCase().includes('current affairs'))) {
+                remainingTopicsForBatch.splice(i, 1);
+              }
+            }
+          }
+        }
+
         let retryCount = 0;
         const MAX_RETRIES = 3;
 
