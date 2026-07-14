@@ -607,7 +607,7 @@ const QuestionReview = ({ questions }) => {
               <div className="p-6 border-t border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 transition-colors">
                 <div className="mb-6">
                   <p className="text-gray-500 dark:text-slate-500 text-xs uppercase font-bold tracking-wider mb-2">Question</p>
-                  <p className="text-lg text-slate-800 dark:text-slate-100 font-medium leading-relaxed font-sans">{q.question}</p>
+                  <p className="text-lg text-slate-800 dark:text-slate-100 font-medium leading-relaxed font-sans whitespace-pre-wrap">{q.question}</p>
                 </div>
                 <div className="mb-8 space-y-3">
                   <p className="text-gray-500 dark:text-slate-500 text-xs uppercase font-bold tracking-wider mb-2">Options</p>

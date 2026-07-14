@@ -63,7 +63,6 @@ const MockTestSchema = new mongoose.Schema({
     TotalMarks: { type: Number, required: true },
     MarksPerQuestion: { type: Number, default: 1 },
     DurationinMinutes: { type: Number, required: true },
-    type: { type: String, required: true, enum: ['mock_test', 'quiz'], default: 'mock_test' },
     leaderboard: [
         {
             userId: { type: String, required: true },

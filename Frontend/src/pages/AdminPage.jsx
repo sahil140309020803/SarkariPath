@@ -61,13 +61,13 @@ export default function AdminPage() {
         <div className="flex h-screen bg-slate-50 dark:bg-slate-900 transition-colors relative overflow-hidden">
             {/* Mobile/Tablet Backdrop Overlay */}
             {isSidebarOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden"
                     onClick={() => setIsSidebarOpen(false)}
                 />
             )}
             <Sidebar activePage={activePage} setActivePage={setActivePage} isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-            <main className="flex-1 p-4 md:p-8 overflow-y-auto">
+            <main className="flex-1 p-4 md:p-6.4 overflow-y-auto">
                 <Header toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
                 {renderPage()}
             </main>

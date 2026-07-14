@@ -6,7 +6,6 @@ import Modal from './Modal';
 import { toast } from "react-toastify";
 import axios from 'axios';
 
-const USE_AI_SCHEDULER = true;
 
 const TestGenerator = () => {
     const { examCatList, backend_url } = useExam();
@@ -28,6 +27,7 @@ const TestGenerator = () => {
     const [title, setTitle] = useState('');
     const [marksPerQuestion, setMarksPerQuestion] = useState('1');
     const [negativeMarks, setNegativeMarks] = useState('');
+    const [duration, setDuration] = useState('60');
     const [difficulty, setDifficulty] = useState('Medium');
     const [progress, setProgress] = useState({ count: 0, total: 0 });
     const [isAiLoadingCounts, setIsAiLoadingCounts] = useState(false);
@@ -216,22 +216,16 @@ const TestGenerator = () => {
             difficulty,
             marksPerQuestion: parseFloat(marksPerQuestion) || 1,
             negativeMarks: parseFloat(negativeMarks) || 0,
-            duration: 60,
-            totalMarks: totalQuestions * (parseFloat(marksPerQuestion) || 1)
+            duration: parseInt(duration) || 60,
+            totalMarks: totalQuestions * (parseFloat(marksPerQuestion) || 1),
+            socketId: socket.id
         };
 
-        if (USE_AI_SCHEDULER) {
-            axios.post(`${backend_url}/api/admin/mock/generate`, {
-                ...payload,
-                socketId: socket.id
-            }, { withCredentials: true }).catch(err => {
-                console.error("Admin Generator POST failed:", err);
-                setIsLoading(false);
-                toast.error(`Admin generator error: ${err.message}`);
-            });
-        } else {
-            socket.emit('start_generation', payload);
-        }
+        axios.post(`${backend_url}/api/admin/mock/generate`, payload, { withCredentials: true }).catch(err => {
+            console.error("Admin Generator POST failed:", err);
+            setIsLoading(false);
+            toast.error(`Admin generator error: ${err.message}`);
+        });
     };
 
     const handleAIValidate = async () => {
@@ -345,11 +339,11 @@ const TestGenerator = () => {
 
     return (
         <div className=' overflow-hidden'>
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6 transition-colors">Test Generator</h2>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* --- LEFT SIDE: FORM --- */}
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-xl border border-gray-200 dark:border-slate-800 space-y-6 shadow-lg dark:shadow-none transition-colors">
-                    <div className="space-y-4">
+                <div className="bg-white dark:bg-slate-900 p-5 pb-2 rounded-xl border border-gray-200 dark:border-slate-800 space-y-3 shadow-lg dark:shadow-none transition-colors">
+                    <div className="space-y-3">
                         <div>
                             <label htmlFor="test-title" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Test Title</label>
                             <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" id="test-title" className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 transition-colors" placeholder="e.g., Full Mock Test #5" required />
@@ -378,7 +372,7 @@ const TestGenerator = () => {
                                 <button type="button" onClick={() => setDifficulty('Hard')} className={`px-3 py-2.5 rounded-lg font-medium text-sm w-full transition-colors ${difficulty === 'Hard' ? 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400 ring-2 ring-red-500' : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'}`}>Hard</button>
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label htmlFor="marks-per-question" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Marks per Question</label>
                                 <input type="number" id="marks-per-question" value={marksPerQuestion} onChange={(e) => setMarksPerQuestion(e.target.value)} className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 transition-colors" placeholder="e.g., 1" step="0.1" min="0.1" />
@@ -387,15 +381,20 @@ const TestGenerator = () => {
                                 <label htmlFor="negative-marks" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Negative Marks</label>
                                 <input type="number" id="negative-marks" value={negativeMarks} onChange={(e) => setNegativeMarks(e.target.value)} className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 transition-colors" placeholder="e.g., 0.25" step="0.01" />
                             </div>
+                            <div>
+                                <label htmlFor="test-duration" className="block text-sm font-medium text-gray-900 dark:text-slate-300 transition-colors">Duration (Minutes)</label>
+                                <input type="number" id="test-duration" value={duration} onChange={(e) => setDuration(e.target.value)} className="mt-1 bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 transition-colors" placeholder="e.g., 60" min="1" />
+                            </div>
                         </div>
                     </div>
                     <hr className="dark:border-slate-800" />
                     <div>
-                        <div className="flex justify-between items-center mb-4">
+                        <div className="flex justify-between items-center mb-3">
                             <h4 className="text-sm font-semibold text-gray-800 dark:text-slate-200">Subjects Breakdown</h4>
                             {isAiLoadingCounts && <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2.5 py-1 rounded-full animate-pulse flex items-center gap-1.5"><Sparkles size={12} /> AI analyzing syllabus...</span>}
+                            {!isAiLoadingCounts && <button onClick={handleAddSubject} className=" bg-gray-200 dark:bg-slate-800 text-gray-800 dark:text-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-700 flex items-center text-sm transition-colors"><Plus size={16} className="mr-2" /> Add Subject</button>}
                         </div>
-                        <div id="subject-list" className="space-y-4 max-h-[40vh] overflow-y-auto pr-2">
+                        <div id="subject-list" className="space-y-4 max-h-[28vh] overflow-y-auto custom-scrollbar pr-2">
                             {subjects.map((s, i) => (
                                 <div key={i} className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                                     <div className="md:col-span-3"><label className="block mb-1 text-xs font-medium text-gray-700 dark:text-slate-400 transition-colors">Subject Name</label><input type="text" value={s.name} onChange={e => handleSubjectChange(i, 'name', e.target.value)} className="subject-name bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white text-sm rounded-lg block w-full p-2.5 transition-colors" placeholder="e.g., General Knowledge" /></div>
@@ -404,7 +403,7 @@ const TestGenerator = () => {
                                 </div>
                             ))}
                         </div>
-                        <button onClick={handleAddSubject} className="mt-4 bg-gray-200 dark:bg-slate-800 text-gray-800 dark:text-slate-200 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 dark:hover:bg-slate-700 flex items-center text-sm transition-colors"><Plus size={16} className="mr-2" /> Add Subject</button>
+
                         <div className="mt-4 p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-sm flex flex-wrap gap-3 justify-between items-center transition-colors">
                             <div><span className="font-semibold text-indigo-800 dark:text-indigo-400">Total Subjects:</span><span className="font-bold text-indigo-900 dark:text-white ml-2">{subjects.length}</span></div>
                             <div><span className="font-semibold text-indigo-800 dark:text-indigo-400">Total Questions:</span><span className="font-bold text-indigo-900 dark:text-white ml-2">{totalQuestions}</span></div>
@@ -433,7 +432,7 @@ const TestGenerator = () => {
 
                     <div className="mt-8">
                         <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-200 transition-colors">History</h3>
-                        <div className="space-y-3 mt-4 max-h-[42dvh] overflow-y-auto custom-scrollbar pr-3">
+                        <div className="space-y-3 mt-4 max-h-[54dvh] overflow-y-auto custom-scrollbar pr-3">
                             {recentGenerations.length > 0 ? recentGenerations.map((gen, index) => (
                                 <div key={index} className={`flex items-center justify-between p-3 rounded-lg transition ${gen.Status === 'Published' ? 'border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40' : ''} ${gen.Status === 'Draft' ? 'border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/40' : ''}`}>
                                     <div>
@@ -479,7 +478,7 @@ const TestGenerator = () => {
                             if (!displayData) return null;
 
                             const issue = validationReport.find(i => i.questionId === q._id);
-                            const correctedLangData = (issue && issue.proposedCorrection) 
+                            const correctedLangData = (issue && issue.proposedCorrection)
                                 ? (previewLang === 'hi' ? issue.proposedCorrection.hi : issue.proposedCorrection.en)
                                 : null;
 
@@ -500,11 +499,10 @@ const TestGenerator = () => {
                                             <button
                                                 disabled={validatingBatchIndex !== null}
                                                 onClick={() => handleAIValidateBatch({ index: batchIndex, questions: batchQuestions })}
-                                                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm w-full sm:w-auto ${
-                                                    isCurrentValidating 
-                                                        ? 'bg-purple-600 text-white animate-pulse'
-                                                        : 'bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
-                                                }`}
+                                                className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm w-full sm:w-auto ${isCurrentValidating
+                                                    ? 'bg-purple-600 text-white animate-pulse'
+                                                    : 'bg-purple-600 hover:bg-purple-700 text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer'
+                                                    }`}
                                             >
                                                 {isCurrentValidating ? (
                                                     <div className="animate-spin rounded-full h-3.5 w-3.5 border-b-2 border-white"></div>
@@ -518,7 +516,7 @@ const TestGenerator = () => {
                                     <div className="space-y-3 pb-6 border-b dark:border-slate-800 last:border-0 transition-colors">
                                         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                                             <div className="flex-1 space-y-2">
-                                                <p className="font-semibold text-gray-900 dark:text-white transition-colors">
+                                                <p className="font-semibold text-gray-900 dark:text-white transition-colors whitespace-pre-wrap">
                                                     <span className="text-indigo-650 dark:text-indigo-400 font-bold mr-2">Q{idx + 1}.</span>
                                                     {displayData.Question}
                                                 </p>
@@ -534,10 +532,10 @@ const TestGenerator = () => {
                                                 </p>
                                                 <div className="!mt-1 prose-sm" dangerouslySetInnerHTML={{ __html: displayData.solution }} />
                                             </div>
-                                            <button 
+                                            <button
                                                 onClick={() => handleRegenerateQuestion(q._id)}
                                                 disabled={regeneratingQuestionId === q._id}
-                                                className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start sm:self-auto shrink-0 w-full sm:w-auto"
+                                                className="px-3 py-1.5 bg-slate-800 hover:bg-indigo-100 text-indigo-700 dark:bg-slate-880 dark:hover:bg-slate-700 dark:text-indigo-400 font-semibold text-xs rounded-lg transition flex items-center justify-center gap-1.5 disabled:bg-gray-100 dark:disabled:bg-slate-800 cursor-pointer self-start sm:self-auto shrink-0 w-full sm:w-auto"
                                                 title="Regenerate this question with AI"
                                             >
                                                 {regeneratingQuestionId === q._id ? (
@@ -560,7 +558,7 @@ const TestGenerator = () => {
                                                 {correctedLangData && (
                                                     <div className="p-3 bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 rounded-lg space-y-2 text-xs">
                                                         <div className="text-green-600 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider font-semibold">AI Proposed Correction:</div>
-                                                        <p className="font-semibold text-gray-900 dark:text-white">{correctedLangData.Question}</p>
+                                                        <p className="font-semibold text-gray-900 dark:text-white whitespace-pre-wrap">{correctedLangData.Question}</p>
                                                         <ul className="list-none pl-3 space-y-1">
                                                             {correctedLangData.options.map((opt, oi) => (
                                                                 <li key={oi} className={`text-gray-700 dark:text-slate-300 ${opt.isCorrect ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}>
@@ -574,7 +572,7 @@ const TestGenerator = () => {
                                                 )}
 
                                                 <div className="flex flex-col sm:flex-row justify-end gap-2">
-                                                    <button 
+                                                    <button
                                                         onClick={() => handleRegenerateQuestion(q._id)}
                                                         disabled={regeneratingQuestionId === q._id}
                                                         className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5 disabled:bg-indigo-400 cursor-pointer w-full sm:w-auto"
@@ -588,7 +586,7 @@ const TestGenerator = () => {
                                                     </button>
 
                                                     {issue.proposedCorrection && (
-                                                        <button 
+                                                        <button
                                                             onClick={() => handleApplyCorrection(q._id, issue.proposedCorrection)}
                                                             disabled={applyingCorrectionId === q._id}
                                                             className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5 disabled:bg-green-400 cursor-pointer w-full sm:w-auto"

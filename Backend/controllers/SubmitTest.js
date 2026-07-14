@@ -14,9 +14,11 @@ export const submitTest = async (req, res) => {
         if (!testId) throw new Error("testId is missing from frontend payload.");
         if (!userResponses || !Array.isArray(userResponses)) throw new Error("userResponses is missing or not an array.");
 
+        let isMock = true;
         let mockTest = await MockTestModel.findById(testId);
         if (!mockTest) {
             mockTest = await QuizModel.findById(testId);
+            isMock = false;
         }
         if (!mockTest) throw new Error(`Test with ID ${testId} not found in DB.`);
 
@@ -139,7 +141,7 @@ export const submitTest = async (req, res) => {
         });
 
         let submissionExpireAt = null;
-        const testType = mockTest.type || 'quiz';
+        const testType = isMock ? 'mock_test' : 'quiz';
         if (testType === 'quiz') {
             submissionExpireAt = mockTest.expireAt;
         } else if (testType === 'mock_test' && previousAttemptsCount > 0) {

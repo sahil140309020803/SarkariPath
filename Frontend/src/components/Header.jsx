@@ -10,6 +10,14 @@ const Header = () => {
     const { isLoggedIn, userDetails } = useUser();
     const name = userDetails?.name || '';
 
+    const handleDashboardClick = () => {
+        if (userDetails?.role === 'admin') {
+            navigate(`/admin-page`);
+        } else {
+            navigate(`/dashboard`);
+        }
+    }
+
     return (
         <div className="relative overflow-hidden bg-blue-50/80 dark:bg-slate-900 w-full flex flex-col justify-center items-center py-24 px-4 md:px-8 transition-colors duration-300 border-none">
             {/* Background Effects */}
@@ -43,7 +51,7 @@ const Header = () => {
                                 Start Free Prep <ArrowRight size={20} />
                             </button>
                         ) : (
-                            <button onClick={() => navigate(`/dashboard`)} className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 text-white font-semibold flex items-center justify-center gap-2 transform hover:-translate-y-1 transition-all duration-300 shadow-md">
+                            <button onClick={() => handleDashboardClick()} className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500 hover:opacity-90 text-white font-semibold flex items-center justify-center gap-2 transform hover:-translate-y-1 transition-all duration-300 shadow-md">
                                 View Dashboard <ArrowRight size={20} />
                             </button>
                         )}

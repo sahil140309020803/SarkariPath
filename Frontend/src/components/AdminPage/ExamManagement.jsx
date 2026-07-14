@@ -566,7 +566,7 @@ const ExamManagement = () => {
                             return (
                                 <div key={q._id} className="bg-slate-50 dark:bg-slate-800/40 p-4 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm relative overflow-hidden group">
                                     <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500/50 group-hover:bg-indigo-500 transition-colors"></div>
-                                    <p className="font-bold text-slate-900 dark:text-slate-100 text-lg mb-4 leading-relaxed"><span className="text-indigo-500 mr-2">Q{idx + 1}.</span>{displayData.Question}</p>
+                                    <p className="font-bold text-slate-900 dark:text-slate-100 text-lg mb-4 leading-relaxed whitespace-pre-wrap"><span className="text-indigo-500 mr-2">Q{idx + 1}.</span>{displayData.Question}</p>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-1 sm:pl-4">
                                         {displayData.options.map((opt, oi) => (
                                             <div key={oi} className={`flex items-center p-3 rounded-xl border transition-all ${opt.isCorrect ? 'bg-emerald-50 dark:bg-emerald-900/10 border-emerald-200 dark:border-emerald-800/50 text-emerald-700 dark:text-emerald-400' : 'bg-white dark:bg-slate-700/50 border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300'}`}>

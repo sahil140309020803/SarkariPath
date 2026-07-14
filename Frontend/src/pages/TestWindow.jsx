@@ -244,7 +244,7 @@ const TestWindow = () => {
                                 </div>
                             </div>
 
-                            <p className="text-[14px] sm:text-[17px] font-semibold mb-2 sm:mb-6 text-gray-900 dark:text-white leading-snug p-3 sm:p-4 bg-gray-100 dark:bg-slate-800 shadow-md rounded-md border border-gray-200 dark:border-slate-700 transition-colors">{questionContent.Question}</p>
+                            <p className="text-[14px] sm:text-[17px] font-semibold mb-2 sm:mb-6 text-gray-900 dark:text-white leading-snug p-3 sm:p-4 bg-gray-100 dark:bg-slate-800 shadow-md rounded-md border border-gray-200 dark:border-slate-700 transition-colors whitespace-pre-wrap">{questionContent.Question}</p>
 
                             <div className="space-y-2 max-[23rem]:space-y-1 sm:space-y-3">
                                 {questionContent.options.map((option, index) => {

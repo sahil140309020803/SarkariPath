@@ -148,11 +148,7 @@ const UserDashboard = () => {
         .sort((a, b) => b.percentage - a.percentage)
         .slice(0, 3);
     }
-    return [
-      { examName: "SSC CGL 2024", percentage: 68 },
-      { examName: "UP Police Constable", percentage: 45 },
-      { examName: "Railway NTPC", percentage: 30 }
-    ];
+    return [];
   }, [dashboardData?.syllabusProgress]);
 
   // Initialize and update charts

@@ -10,6 +10,8 @@ const withTimeout = (promise, ms) => {
   return Promise.race([promise, timeout]);
 };
 
+const SLEEP_TIME = 4000;
+
 export const getMockValidationPrompt = (questionsBatch) => {
   return `You are an expert exam auditor and subject matter specialist.
 Your task is to audit the following list of MCQs (Multiple Choice Questions) generated for a competitive exam and identify if they contain any structural, factual, mathematical, answer key, or translation errors.
@@ -117,8 +119,9 @@ export const validateMockTest = async (testId, questionIds = null) => {
   // Process in batches to avoid context size / token limits issues
   for (let i = 0; i < questions.length; i += BATCH_SIZE) {
     if (i > 0) {
-      console.log(`[AdminValidator] Respecting rate limiter. Sleeping 5 seconds before batch ${Math.floor(i / BATCH_SIZE) + 1}...`);
-      await sleep(5000);
+      console.log(`[AdminValidator] Respecting rate limiter. Sleeping ${SLEEP_TIME / 1000} seconds before batch ${Math.floor(i / BATCH_SIZE) + 1}...`);
+
+      await sleep(SLEEP_TIME);
     }
 
     const batch = questions.slice(i, i + BATCH_SIZE).map((q, index) => ({
@@ -150,8 +153,6 @@ export const validateMockTest = async (testId, questionIds = null) => {
           45000
         );
         const aiResponseString = result.response.candidates[0].content.parts[0].text;
-        console.log(`[AdminValidator] AI Audit Response:\n${aiResponseString}`);
-
         // Clean markdown blocks if any
         const cleanedJson = aiResponseString.replace(/```json\n?|```/g, "").trim();
         const parsedIssues = JSON.parse(cleanedJson);
@@ -246,7 +247,7 @@ export const regenerateSingleQuestion = async (testId, questionId) => {
   }
 
   const questionData = parsedQuestions[0];
-  
+
   const newQuestion = new QuestionModel({
     ...questionData,
     ExamId: test.ExamId,

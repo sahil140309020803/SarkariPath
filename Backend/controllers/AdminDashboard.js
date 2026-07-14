@@ -6,8 +6,8 @@ export const getDashboardStats = async (req, res) => {
         const [totalUsers, activeExams, publishedTests, aiQuizzes, popularExamsAggregation, testsUnderReview] = await Promise.all([
             userModel.countDocuments(),
             examModel.countDocuments(),
-            MockTestModel.countDocuments({ Status: 'Published', type: 'mock_test' }),
-            MockTestModel.countDocuments({ Status: 'Published', type: 'quiz' }),
+            MockTestModel.countDocuments({ Status: 'Published' }),
+            QuizModel.countDocuments({ status: 'Completed' }),
             MockTestModel.aggregate([
                 { $group: { _id: "$ExamId", count: { $sum: 1 } } },
                 { $sort: { count: -1 } },
@@ -32,7 +32,7 @@ export const getDashboardStats = async (req, res) => {
             MockTestModel.find({ Status: 'Draft' })
                 .populate('ExamId', 'Name')
                 .limit(5)
-                .select('Title type Status')
+                .select('Title Status')
         ]);
 
         const testsPerExam = {
@@ -44,7 +44,7 @@ export const getDashboardStats = async (req, res) => {
             id: t._id,
             title: t.Title,
             examName: t.ExamId ? t.ExamId.Name : 'Unknown Exam',
-            type: t.type
+            type: 'Mock Test'
         }));
 
         res.status(200).json({

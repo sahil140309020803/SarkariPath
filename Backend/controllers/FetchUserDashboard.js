@@ -7,16 +7,7 @@ export const getUserDashboardData = async (req, res) => {
     const { userEmail } = req.body;
 
     try {
-        let user;
-        if (mongoose.Types.ObjectId.isValid(userEmail)) {
-            user = await userModel.findById(userEmail).select('name email');
-        }
-        if (!user) {
-            user = await userModel.findOne({ email: userEmail }).select('name email');
-        }
-        if (!user) {
-            user = await userModel.findOne({ email: { $regex: userEmail, $options: 'i' } }).select('name email');
-        }
+        const user = await userModel.findOne({ email: userEmail }).select('name email');
 
         if (!user) {
             console.log("❌ User not found in DB");
@@ -38,6 +29,26 @@ export const getUserDashboardData = async (req, res) => {
                 syllabusProgress: []
             });
             await stats.save();
+        } else if (stats.currentStreak > 0) {
+            // Check if streak is broken (no activity today or yesterday)
+            const getLocalDateString = (date) => {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
+
+            const todayStr = getLocalDateString(new Date());
+            const yesterdayStr = getLocalDateString(new Date(Date.now() - 24 * 60 * 60 * 1000));
+
+            const hasActivityTodayOrYesterday = stats.dailyStatistics.some(
+                entry => entry.date === todayStr || entry.date === yesterdayStr
+            );
+
+            if (!hasActivityTodayOrYesterday) {
+                stats.currentStreak = 0;
+                await stats.save();
+            }
         }
 
         // Fetch recent 10 test submissions

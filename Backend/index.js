@@ -19,7 +19,6 @@ import userDetails from './controllers/UserDetails.js';
 import categoryRouter from './routers/ExamCategory.js';
 import examRouter from './routers/HandleExams.js';
 import fetchAllUsers from './controllers/FetchAllUsers.js';
-import { setupSocketHandlers } from './controllers/generationController.js';
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
@@ -58,7 +57,6 @@ app.set('socketio', io);
 // Listen for WebSocket connections
 io.on('connection', (socket) => {
     console.log('A user connected via WebSocket:', socket.id);
-    setupSocketHandlers(socket, io);
 
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);

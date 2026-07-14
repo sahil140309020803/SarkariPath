@@ -7,7 +7,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-const USE_AI_SCHEDULER = true;
 
 const TestGenerating = () => {
     const {
@@ -92,21 +91,15 @@ const TestGenerating = () => {
                 totalMarks: 15,
                 subjectName: activeSubject?.name || activeSubject || null,
                 topicName: activeTopic || null,
-                examName: isExamDataFetched?.ExamName || null
+                examName: isExamDataFetched?.ExamName || null,
+                socketId: newSocket.id
             };
 
-            if (USE_AI_SCHEDULER) {
-                axios.post(`${backend_url}/api/quiz/generate`, {
-                    ...payload,
-                    socketId: newSocket.id
-                }, { withCredentials: true }).catch(err => {
-                    console.error("Scheduler POST failed:", err);
-                    setAiText('Failed to queue quiz generation');
-                    toast.error(`Queue error: ${err.message}`);
-                });
-            } else {
-                newSocket.emit('start_generation', payload);
-            }
+            axios.post(`${backend_url}/api/quiz/generate`, payload, { withCredentials: true }).catch(err => {
+                console.error("Scheduler POST failed:", err);
+                setAiText('Failed to queue quiz generation');
+                toast.error(`Queue error: ${err.message}`);
+            });
         });
 
         newSocket.on('generation_progress', (data) => {

@@ -50,6 +50,7 @@ ${languageInstructions}
 ${historyList}
 
 ### 📝 EXPLANATION STYLE RULES (for "solution"):
+- Use HTML tags (such as <br/>, <strong>, <b>, <ul>, <li>, etc.) to format the explanation into paragraphs, bullet points, or bold key steps for high readability. Do NOT return a single long wall of text.
 - The explanation ("solution" field) must be written like a standard, professional textbook/exam answer key solution.
 - Do NOT use conversational AI filler, greetings, or meta-references (e.g., do NOT start with "The correct option is...", "Here is the explanation...", "Sure, let's understand...", etc.).
 - Start directly with the factual concept, formulas, historical facts, grammatical rules, or step-by-step mathematical calculations that justify the correct choice.
@@ -60,6 +61,18 @@ For logical reasoning and quantitative aptitude topics (such as Blood Relations,
 1. **Absolute Logical Correctness:** Before writing the final question and options, verify that the puzzle statement has exactly one unique mathematically correct solution.
 2. **Step-by-step Planning:** You must use the "reasoning_draft" field to trace the steps (e.g. diagram coordinates, family tree mapping, seating order, or code pattern calculation). Never generate options without first solving the question step-by-step.
 3. **No Contradictory Clues:** Double check that clues do not contradict each other and that all of them are necessary to solve the puzzle.
+4. **Statement/Conclusion & Syllogism Question Layout:** For Statement-Conclusion, Statement-Assumption, or Syllogism questions, BOTH the "en" and "hi" question text fields must be beautifully formatted with line breaks (\n). Do NOT put everything in one line. Format exactly like this:
+   Statement:
+   [Statement Text]
+
+   Conclusions / Assumptions:
+   I. [Conclusion 1]
+   II. [Conclusion 2]
+
+### 📅 CURRENT AFFAIRS TEMPORAL RULES:
+For any Current Affairs or General Awareness questions involving recent events, schemes, news, rankings, awards, or appointments:
+1. **Strict Date Range:** You MUST ONLY generate questions based on events, news, policy launches, and developments that occurred between **November 2025 and July 2026** (inclusive).
+2. **NO Past/Outdated Events:** Do NOT ask about events, schemes, or appointments from 2024 or earlier, as they are outdated. Focus exclusively on the specified November 2025 - July 2026 period.
 
 **ZERO TOLERANCE REPETITION POLICY:**
 1. **NO REPEATS:** You must NOT generate any question that matches the logic, numbers, scenario, or phrasing of the questions in the EXCLUSION LIST above.  

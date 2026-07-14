@@ -10,6 +10,8 @@ const withTimeout = (promise, ms) => {
   return Promise.race([promise, timeout]);
 };
 
+const SLEEP_TIME = 4000;
+
 export const generateAdminMockTest = async (io, socketId, data) => {
   const { title, examId, rules, difficulty, negativeMarks, totalMarks, duration, marksPerQuestion } = data;
   const socket = io.sockets.sockets.get(socketId);
@@ -37,8 +39,7 @@ export const generateAdminMockTest = async (io, socketId, data) => {
     let activeTest = await MockTestModel.findOne({
       Title: title,
       ExamId: examId,
-      Status: 'Draft',
-      type: 'mock_test'
+      Status: 'Draft'
     }).populate('Questions');
 
     if (!activeTest) {
@@ -52,8 +53,7 @@ export const generateAdminMockTest = async (io, socketId, data) => {
         Questions: [],
         TotalMarks: totalMarks || (totalRequired * (parseFloat(marksPerQuestion) || 1)),
         MarksPerQuestion: parseFloat(marksPerQuestion) || 1,
-        DurationinMinutes: duration || 60,
-        type: 'mock_test'
+        DurationinMinutes: duration || 60
       });
       await activeTest.save();
     }
@@ -71,9 +71,9 @@ export const generateAdminMockTest = async (io, socketId, data) => {
     for (const rule of rules) {
       const currentTestState = await MockTestModel.findById(activeTest._id).populate('Questions');
       const existingSubjectQuestions = currentTestState.Questions.filter(q => q.Subject === rule.name || q.Topic === rule.name);
-      
+
       let questionsGeneratedForRule = existingSubjectQuestions.length;
-      
+
       const previousQuestions = await QuestionModel.find({
         ExamId: examId,
         $or: [
@@ -92,8 +92,8 @@ export const generateAdminMockTest = async (io, socketId, data) => {
 
       const fullHistory = [...globalHistory, ...sessionHistory];
 
-      const subjectTopics = (examDoc && examDoc.Topics && examDoc.Topics[rule.name]) 
-        ? examDoc.Topics[rule.name] 
+      const subjectTopics = (examDoc && examDoc.Topics && examDoc.Topics[rule.name])
+        ? examDoc.Topics[rule.name]
         : [];
 
       while (questionsGeneratedForRule < rule.count) {
@@ -138,7 +138,7 @@ export const generateAdminMockTest = async (io, socketId, data) => {
             const aiResponseString = result.response.candidates[0].content.parts[0].text;
 
             const parsedQuestions = parseAdminQuestions(aiResponseString);
-            
+
             const validQuestions = [];
             for (const q of parsedQuestions) {
               if (q.en || q.hi) {
@@ -193,9 +193,9 @@ export const generateAdminMockTest = async (io, socketId, data) => {
         );
 
         questionsGeneratedForRule += savedQuestionIds.length;
-        
-        console.log("[AdminGeneration] Sleeping 5 seconds before next request...");
-        await sleep(5000);
+
+        console.log(`[AdminGeneration] Sleeping ${SLEEP_TIME / 1000} seconds before next request...`);
+        await sleep(SLEEP_TIME);
       }
     }
 
