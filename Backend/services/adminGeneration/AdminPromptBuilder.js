@@ -2,7 +2,7 @@ export function getAdminMultipleQuestionsPrompt(examName, subjectName, topics, d
   const isEnglish = (subjectName || "").toLowerCase().includes('english') || (topics && topics.some(t => t.toLowerCase().includes('english')));
   const isHindi = (subjectName || "").toLowerCase().includes('hindi') || (topics && topics.some(t => t.toLowerCase().includes('hindi')));
 
-  const recentHistory = history.slice(-40); 
+  const recentHistory = history.slice(-40);
   const historyList = recentHistory.length > 0
     ? `\n### 🛑 EXCLUSION LIST (DO NOT GENERATE ANYTHING SIMILAR TO THESE):\n${recentHistory.map((h, i) => `${i + 1}. [${h.topic}]: ${h.summary}...`).join('\n')}`
     : "";

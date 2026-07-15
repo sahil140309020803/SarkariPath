@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { useUser } from '../context/UserContext';
 import InputField from '../components/Auth Page/InputField';
+import { trackEvent } from '../utils/analytics';
+import { trackEvent as clarityTrackEvent } from '../utils/clarity';
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -77,6 +79,8 @@ const ForgotPassword = () => {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(`${backend_url}/api/auth/user/forgot-password`, { email });
       if (data.success) {
+        trackEvent('forgot_password', { email });
+        clarityTrackEvent('forgot_password');
         toast.success(data.message || "OTP sent successfully!");
         setTimer(30);
         setStep(2);
@@ -209,6 +213,8 @@ const ForgotPassword = () => {
       });
 
       if (data.success) {
+        trackEvent('reset_password');
+        clarityTrackEvent('reset_password');
         toast.success(data.message || "Password updated successfully!");
         navigate('/login');
       } else {

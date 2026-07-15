@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useCallback, useContext, createContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
+import { trackEvent } from '../utils/analytics';
+import { trackEvent as clarityTrackEvent } from '../utils/clarity';
 
 
 
@@ -265,6 +267,10 @@ export const TestWindowProvider = ({ children }) => {
             const { data } = await axios.post(`${backend_url}/api/submit-test`, payload);
 
             if (data.success) {
+                const isQuiz = activeTest?.type === 'quiz';
+                const eventName = isQuiz ? 'submit_quiz' : 'submit_mock_test';
+                trackEvent(eventName, { test_id: activeTestID, title: activeTest?.Title });
+                clarityTrackEvent(eventName);
                 setIsTestEnded(true);
                 navigate(`/analysis/${data.result._id}`, { replace: true });
             } else {

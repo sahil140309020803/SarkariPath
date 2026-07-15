@@ -373,7 +373,7 @@ const TestGenerator = () => {
         setEditingQuestionData(prev => {
             const enOpts = prev.en.options.map((o, idx) => ({ ...o, isCorrect: idx === optIndex }));
             const hiOpts = prev.hi.options.map((o, idx) => ({ ...o, isCorrect: idx === optIndex }));
-            
+
             const enAnswer = enOpts[optIndex].text;
             const hiAnswer = hiOpts[optIndex].text;
 

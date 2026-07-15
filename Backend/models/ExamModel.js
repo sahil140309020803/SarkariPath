@@ -22,11 +22,11 @@ const examSchema = new mongoose.Schema({
         ref: 'exam_categories',
         required: true
     },
-    MockTests: [{ 
+    MockTests: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'mock_tests',
     }],
-    Quizzes: [{ 
+    Quizzes: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'quizzes',
     }],
@@ -46,7 +46,7 @@ const MockTestSchema = new mongoose.Schema({
         ref: 'exams',
         required: true
     },
-    Status: {type: String, required: true, enum: ['Draft', 'Published'], default: 'Draft'},
+    Status: { type: String, required: true, enum: ['Draft', 'Published'], default: 'Draft' },
     Difficulty: { type: String, required: true, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
     NegativeMarks: { type: Number, default: 0 },
     Structure: [
@@ -55,7 +55,7 @@ const MockTestSchema = new mongoose.Schema({
             QuestionCount: { type: Number, required: true },
         }
     ],
-    Questions: [{ 
+    Questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'questions',
         required: true
@@ -91,7 +91,7 @@ const QuizSchema = new mongoose.Schema({
     },
     NegativeMarks: { type: Number, required: true, default: 0 },
     Difficulty: { type: String, required: true, enum: ['Easy', 'Medium', 'Hard'], default: 'Medium' },
-    Questions: [{ 
+    Questions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'questions',
         required: true
@@ -121,7 +121,7 @@ const TestSubmissionSchema = new mongoose.Schema({
     },
     examId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'exams', 
+        ref: 'exams',
         required: true
     },
     responses: [
@@ -132,11 +132,11 @@ const TestSubmissionSchema = new mongoose.Schema({
                 required: true
             },
             subject: { type: String, required: true },
-            selectedOptionIndex: { type: Number, default: null }, 
-            status: { 
-                type: String, 
-                enum: ['correct', 'incorrect', 'skipped'], 
-                required: true 
+            selectedOptionIndex: { type: Number, default: null },
+            status: {
+                type: String,
+                enum: ['correct', 'incorrect', 'skipped'],
+                required: true
             },
             timeSpent: { type: Number, default: 0 }
         }
@@ -158,10 +158,10 @@ const TestSubmissionSchema = new mongoose.Schema({
     correctCount: { type: Number, default: 0 },
     incorrectCount: { type: Number, default: 0 },
     skippedCount: { type: Number, default: 0 },
-    accuracy: { type: Number, required: true }, 
+    accuracy: { type: Number, required: true },
 
     timeTaken: { type: Number, required: true },
-    isQualified: { type: Boolean, default: false }, 
+    isQualified: { type: Boolean, default: false },
     expireAt: { type: Date, index: { expires: 0 } },
 
 }, {

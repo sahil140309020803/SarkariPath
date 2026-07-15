@@ -13,56 +13,56 @@ const generateOtp = () => {
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-const adminLogin = async(req, res) => {
+const adminLogin = async (req, res) => {
     const { adminID, password } = req.body;
-    if(!adminID || !password) {
-        return res.json({success: false, message: "All Fields are required"});
+    if (!adminID || !password) {
+        return res.json({ success: false, message: "All Fields are required" });
     }
     try {
-        const admin = await adminModel.findOne({email: adminID});
-        if(!admin) {
-            return res.json({success: false, message: "Admin not found"});
+        const admin = await adminModel.findOne({ email: adminID });
+        if (!admin) {
+            return res.json({ success: false, message: "Admin not found" });
         }
         const isMatch = await bcrypt.compare(password, admin.password);
-        if(!isMatch) {
-            return res.json({success: false, message: "Invalid Password"});
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid Password" });
         }
 
-        const token = jwt.sign({email: adminID, role: 'admin'}, process.env.JWT_SECRET, {expiresIn: '1d'});
+        const token = jwt.sign({ email: adminID, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none": "strict",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
         });
 
-        return res.json({success:true, message: "Admin login successfully", token: token, role: 'admin'});
+        return res.json({ success: true, message: "Admin login successfully", token: token, role: 'admin' });
 
-    } catch(err) {
-        return res.json({success: false, message: err.message});
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 };
 
 const register = async (req, res) => {
-    const {name, email, password} = req.body;
-    if(!name || !email || !password) {
-        return res.json({success: false, message: "All Fields are required"});
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
+        return res.json({ success: false, message: "All Fields are required" });
     }
 
     try {
-        const existingUser = await userModel.findOne({email});
-        if(existingUser) {
-            return res.json({success: false, message: "User already exists"});
+        const existingUser = await userModel.findOne({ email });
+        if (existingUser) {
+            return res.json({ success: false, message: "User already exists" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new userModel({name, email, password:hashedPassword, emailVerified: false});
-        
+        const user = new userModel({ name, email, password: hashedPassword, emailVerified: false });
+
         // Generate unique username
         const baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
         const suffix = user._id.toString().slice(-6);
         let username = `${baseUsername}_${suffix}`;
-        
+
         let isUnique = false;
         let suffixLength = 6;
         while (!isUnique) {
@@ -97,45 +97,45 @@ const register = async (req, res) => {
         await sendOtpEmail(email, otp);
 
         return res.json({
-            success: true, 
-            unverified: true, 
+            success: true,
+            unverified: true,
             message: "OTP sent to your email. Please verify."
         });
-    } catch(err) {
-        return res.json({success: false, message: err.message});
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 }
 
 const userLogin = async (req, res) => {
-    const {email, password} = req.body;
-    if(!email || !password) {
-        return res.json({success: false, message: "All Fields are required"});
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return res.json({ success: false, message: "All Fields are required" });
     }
 
     try {
         // 1. Search Admin collection first
-        const admin = await adminModel.findOne({email});
+        const admin = await adminModel.findOne({ email });
         if (admin) {
             const isMatch = await bcrypt.compare(password, admin.password);
-            if(!isMatch) {
-                return res.json({success: false, message: "Invalid Password"});
+            if (!isMatch) {
+                return res.json({ success: false, message: "Invalid Password" });
             }
 
-            const token = jwt.sign({email: email, role: 'admin'}, process.env.JWT_SECRET, {expiresIn: '1d'});
+            const token = jwt.sign({ email: email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
             res.cookie('token', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "none": "strict",
+                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                 maxAge: 1 * 24 * 60 * 60 * 1000,
             });
 
-            return res.json({success:true, message: "Admin login successfully", token: token, role: 'admin'});
+            return res.json({ success: true, message: "Admin login successfully", token: token, role: 'admin' });
         }
 
         // 2. Search User collection
-        const user = await userModel.findOne({email});
-        if(!user) {
-            return res.json({success: false, message: "User not found"});
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
         }
 
         if (user.provider === 'google' || user.googleId) {
@@ -146,11 +146,11 @@ const userLogin = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) {
-            return res.json({success: false, message: "Invalid Password"});
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid Password" });
         }
 
-        if(!user.emailVerified) {
+        if (!user.emailVerified) {
             // Delete previous OTP if any
             await otpModel.deleteOne({ email });
 
@@ -167,18 +167,18 @@ const userLogin = async (req, res) => {
             return res.json({ success: false, unverified: true, email: email, message: "Email is not verified. A new OTP has been sent." });
         }
 
-        const token = jwt.sign({email: email, role: 'user'}, process.env.JWT_SECRET, {expiresIn: '1d'});
+        const token = jwt.sign({ email: email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none": "strict",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 1 * 24 * 60 * 60 * 1000,
         });
 
-        return res.json({success:true, message: "User login successfully", token: token, role: 'user'});
+        return res.json({ success: true, message: "User login successfully", token: token, role: 'user' });
 
-    } catch(err) {
-        return res.json({success: false, message: err.message});
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 }
 
@@ -267,20 +267,20 @@ const logout = async (req, res) => {
         res.clearCookie('token', {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none": "strict",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         })
 
-        return res.json({success: true, message: "Logged Out Successfully"});
-    } catch(err) {
-        return res.json({success: false, message: err.message});
+        return res.json({ success: true, message: "Logged Out Successfully" });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 }
 
-const isAuthenticated = async(req, res) => {
+const isAuthenticated = async (req, res) => {
     try {
-        return res.json({success:true, message: "User is Logged In", email: req.body.userEmail, role: req.body.role});
-    } catch(err) {
-        return res.json({success: false, message: err.message});
+        return res.json({ success: true, message: "User is Logged In", email: req.body.userEmail, role: req.body.role });
+    } catch (err) {
+        return res.json({ success: false, message: err.message });
     }
 }
 
@@ -309,7 +309,7 @@ const googleLogin = async (req, res) => {
             audience: process.env.GOOGLE_CLIENT_ID,
         });
         const payload = ticket.getPayload();
-        
+
         const googleId = payload['sub'];
         const email = payload['email'];
         const name = payload['name'];
@@ -374,12 +374,12 @@ const googleLogin = async (req, res) => {
                     emailVerified,
                     profilePicture: picture
                 });
-                
+
                 // Generate unique username
                 const baseUsername = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
                 const suffix = user._id.toString().slice(-6);
                 let username = `${baseUsername}_${suffix}`;
-                
+
                 let isUnique = false;
                 let suffixLength = 6;
                 while (!isUnique) {
@@ -575,7 +575,7 @@ const resetPassword = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     const { userEmail, name, username } = req.body;
-    
+
     if (!name || !username) {
         return res.json({ success: false, message: "Name and username are required." });
     }
@@ -602,8 +602,8 @@ const updateProfile = async (req, res) => {
         user.username = cleanUsername;
         await user.save();
 
-        return res.json({ 
-            success: true, 
+        return res.json({
+            success: true,
             message: "Profile updated successfully.",
             user: {
                 name: user.name,

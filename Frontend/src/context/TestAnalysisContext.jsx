@@ -10,14 +10,14 @@ export const TestAnalysisProvider = ({ children }) => {
     const [error, setError] = useState(null);
 
     const processTestResult = (test, submission) => {
-        
-        const rawSectionAnalysis = submission.sectionAnalysis || []; 
+
+        const rawSectionAnalysis = submission.sectionAnalysis || [];
         const marksPerQuestion = test.MarksPerQuestion !== undefined ? test.MarksPerQuestion : 1;
 
         const subjects = rawSectionAnalysis.map(sub => ({
             name: sub.subject,
             score: sub.score,
-            total: sub.totalQuestions * marksPerQuestion, 
+            total: sub.totalQuestions * marksPerQuestion,
             c: sub.correct,
             i: sub.incorrect,
             s: sub.skipped,
@@ -36,14 +36,14 @@ export const TestAnalysisProvider = ({ children }) => {
         const processedQuestions = test.Questions.map((q, index) => {
             // Find user's response for this question ID
             const response = responses.find(r => r.questionId === q._id);
-            
+
             const status = response ? response.status : 'skipped';
             const selectedOption = response ? response.selectedOptionIndex : null;
 
             const timeRaw = response ? response.timeSpent : 0;
             const timeSpent = `${Math.floor(timeRaw / 60)}m ${timeRaw % 60}s`;
 
-            const qData = q.en || q.hi || { Question: "Question text unavailable", options: [] }; 
+            const qData = q.en || q.hi || { Question: "Question text unavailable", options: [] };
             const optionsArray = qData.options || [];
 
             return {
@@ -79,7 +79,7 @@ export const TestAnalysisProvider = ({ children }) => {
             score: submission.totalScore,
             totalScore: submission.maxPossibleScore || (test.Questions.length * 1),
             accuracy: submission.accuracy.toFixed(2),
-            rank: submission.globalRank || 0, 
+            rank: submission.globalRank || 0,
             totalAspirants: submission.totalParticipants || 0,
             percentile: submission.percentile || 0,
             isQualified: submission.isQualified,
@@ -107,7 +107,7 @@ export const TestAnalysisProvider = ({ children }) => {
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/test-results/${submissionId}`);
-            
+
             if (data.success) {
                 const processed = processTestResult(data.test, data.submission);
                 setAnalysisData(processed);

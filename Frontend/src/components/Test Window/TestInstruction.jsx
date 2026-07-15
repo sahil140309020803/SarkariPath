@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTestWindow } from '../../context/TestWindowContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import { trackEvent } from '../../utils/analytics';
+import { trackEvent as clarityTrackEvent } from '../../utils/clarity';
 
 const TestInstruction = () => {
     const [isReady, setIsReady] = useState(false);
@@ -17,6 +19,10 @@ const TestInstruction = () => {
 
     const handleStartExam = () => {
         if (isReady) {
+            const isQuiz = activeTest?.type === 'quiz';
+            const eventName = isQuiz ? 'start_quiz' : 'start_mock_test';
+            trackEvent(eventName, { test_id: testID, title: activeTest?.Title });
+            clarityTrackEvent(eventName);
             alert('Starting test now. Good luck!');
             setIsTestStarted(true);
             setIsReady(false);

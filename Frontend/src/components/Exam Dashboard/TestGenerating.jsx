@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { trackEvent as clarityTrackEvent } from '../../utils/clarity';
 
 
 const TestGenerating = () => {
@@ -95,6 +96,7 @@ const TestGenerating = () => {
                 socketId: newSocket.id
             };
 
+            clarityTrackEvent('generate_ai_quiz');
             axios.post(`${backend_url}/api/quiz/generate`, payload, { withCredentials: true }).catch(err => {
                 console.error("Scheduler POST failed:", err);
                 setAiText('Failed to queue quiz generation');
@@ -123,6 +125,7 @@ const TestGenerating = () => {
         });
 
         newSocket.on('generation_complete', (data) => {
+            clarityTrackEvent('generate_ai_quiz_complete');
             setQuestionCount(15);
             setAiText('Finalizing Test...');
             setTimeout(() => {

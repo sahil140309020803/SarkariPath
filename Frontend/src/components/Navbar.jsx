@@ -7,6 +7,8 @@ import { useUser } from '../context/UserContext';
 import { useExam } from '../context/ExamContext';
 import { LogOut, LayoutDashboard, UserCircle, BookOpen, Menu, X, Flame, Search } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import { trackEvent } from '../utils/analytics';
+import { clearUser, trackEvent as clarityTrackEvent } from '../utils/clarity';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -95,6 +97,9 @@ const Navbar = () => {
     try {
       const { data } = await axios.post(`${backend_url}/api/auth/${userDetails.role}/logout`);
       if (data.success) {
+        trackEvent('logout');
+        clarityTrackEvent('logout');
+        clearUser();
         setIsLoggedIn(false);
         setUserDetails(null);
         toast.success(data.message);
@@ -223,7 +228,7 @@ const Navbar = () => {
                 ) : (
                   <div className="flex items-center justify-center gap-1.5 hover:bg-slate-500/10 rounded-xl px-3 py-2 transition-colors duration-200">
                     <Flame className="w-6 h-6 text-slate-400 dark:text-slate-500" />
-                    <span className="text-slate-400 dark:text-slate-500 font-semibold text-sm sm:text-lg leading-none">
+                    <span className="text-slate-400 dark:text-slate-500  sm:text-lg leading-none font-semibold text-lg mt-[0.2rem] lg:mt-0 transition-colors">
                       0
                     </span>
                   </div>

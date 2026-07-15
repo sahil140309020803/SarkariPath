@@ -10,10 +10,10 @@ import Header from '../components/AdminPage/Header';
 // --- UPDATED: Imports from the new 'AdminPage' subfolder ---
 import Dashboard from '../components/AdminPage/Dashboard';
 import TestGenerator from '../components/AdminPage/TestGenerator';
-import UserManagement from '../components/AdminPage/UserManagement';
 import PlatformSettings from '../components/AdminPage/PlatformSettings';
 import ExamManagement from '../components/AdminPage/ExamManagement';
 import CurrentAffairsDashboard from '../components/AdminPage/CurrentAffairsDashboard';
+import Analytics from '../components/AdminPage/Analytics';
 
 export default function AdminPage() {
     const [activePage, setActivePage] = useState('dashboard');
@@ -53,7 +53,7 @@ export default function AdminPage() {
             case 'exam-management': return <ExamManagement />;
             case 'manage-mock-tests': return <TestGenerator />;
             case 'current-affairs': return <CurrentAffairsDashboard />;
-            case 'user-management': return <UserManagement />;
+            case 'analytics': return <Analytics />;
             case 'settings': return <PlatformSettings />;
             default: return <Dashboard />;
         }

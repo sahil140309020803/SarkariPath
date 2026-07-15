@@ -20,7 +20,7 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
         { id: 'exam-management', icon: <Folder size={20} />, label: 'Exam Management' },
         { id: 'manage-mock-tests', icon: <FileText size={20} />, label: 'AI Test Generator' },
         { id: 'current-affairs', icon: <BookOpen size={20} />, label: 'Current Affairs' },
-        { id: 'user-management', icon: <Users size={20} />, label: 'User Management' },
+        { id: 'analytics', icon: <BarChart3 size={20} />, label: 'Analytics' },
         { id: 'settings', icon: <Settings2 size={20} />, label: 'Settings' },
     ];
 

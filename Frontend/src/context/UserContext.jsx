@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { trackEvent } from '../utils/analytics';
+import { clearUser, trackEvent as clarityTrackEvent } from '../utils/clarity';
 
 export const UserContext = createContext();
 
@@ -39,7 +41,7 @@ export const UserProvider = ({ children }) => {
         try {
             const { data } = await axios.get(`${backend_url}/api/user-details`);
             if (data.success) {
-                setUserDetails({...data.details, role: data.role});
+                setUserDetails({ ...data.details, role: data.role });
                 if (data.role === 'user') {
                     await fetchUserDashboardData();
                 }
@@ -54,7 +56,7 @@ export const UserProvider = ({ children }) => {
         axios.defaults.withCredentials = true;
         setIsLoading(true);
         try {
-            const {data} = await axios.get(`${backend_url}/api/is-auth`);
+            const { data } = await axios.get(`${backend_url}/api/is-auth`);
             if (data.success) {
                 setIsLoggedIn(true);
                 await getUserDetails();
@@ -62,12 +64,12 @@ export const UserProvider = ({ children }) => {
         } catch (err) {
             console.log(err.message);
         }
-        if(!userDetails)
+        if (!userDetails)
             await delay(1100);
         setIsLoading(false);
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         isAuth();
     }, [isLoggedIn, setIsLoggedIn]);
 
@@ -77,8 +79,11 @@ export const UserProvider = ({ children }) => {
             const role = userDetails?.role || 'user';
             const endpoint = role === 'admin' ? `${backend_url}/api/auth/admin/logout` : `${backend_url}/api/auth/user/logout`;
             const { data } = await axios.post(endpoint, {}, { withCredentials: true });
-            
+
             if (data.success) {
+                trackEvent('logout');
+                clarityTrackEvent('logout');
+                clearUser();
                 setIsLoggedIn(false);
                 setUserDetails(null);
                 setDashboardData(null); // Clear dashboard data on logout

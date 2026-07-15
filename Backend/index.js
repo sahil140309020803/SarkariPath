@@ -18,7 +18,7 @@ import { isAuthenticated } from './controllers/AuthController.js';
 import userDetails from './controllers/UserDetails.js';
 import categoryRouter from './routers/ExamCategory.js';
 import examRouter from './routers/HandleExams.js';
-import fetchAllUsers from './controllers/FetchAllUsers.js';
+import analyticsRouter from './routers/AnalyticsRouter.js';
 import fetchActiveTest from './controllers/fetchActiveTest.js';
 import testWindowRouter from './routers/TestWindowRouter.js';
 import { generationRouter } from './routers/GenerationRouter.js';
@@ -86,8 +86,8 @@ app.get('/api/admin/analytics', isAuth, getAnalyticsStats);
 // User Details routes
 app.get('/api/user-details', isAuth, userDetails);
 
-// Fetch all users (for admin)
-app.get('/api/users', isAuth, fetchAllUsers);
+// Visitor & session analytics routes
+app.use('/api', analyticsRouter);
 
 // Exam Details routes
 app.get('/api/exam-details/:examName', isAuth, getExamDetails);

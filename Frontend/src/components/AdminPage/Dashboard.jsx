@@ -65,7 +65,7 @@ const Dashboard = () => {
                             '#ec4899', // pink-500
                             '#14b8a6', // teal-500
                             '#f59e0b', // amber-500
-                            '#3b82f6'  // blue-500
+                            '#3b82f6'  // blue-550
                         ],
                         borderWidth: 0,
                         hoverOffset: 6,
@@ -317,9 +317,6 @@ const Dashboard = () => {
                     </div>
                 </div>
             )}
-            {/* ========================================== */}
-            {/* END: BULK DELETE MODAL */}
-            {/* ========================================== */}
         </div>
     );
 };

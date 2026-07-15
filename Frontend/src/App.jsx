@@ -16,13 +16,22 @@ import VerifyEmail from './pages/VerifyEmail'
 import ForgotPassword from './pages/ForgotPassword'
 import ProtectedRoute from './components/ProtectedRoute'
 import NotFound from './pages/NotFound'
+import VisitorTracker from './components/VisitorTracker'
+import AnalyticsTracker from './components/AnalyticsTracker'
+import { initAnalytics } from './utils/analytics'
+import { initClarity } from './utils/clarity'
+
+// Initialize GA4 and Clarity once at application startup (safe to call in module scope)
+initAnalytics();
+initClarity();
 
 const App = () => {
   const { isLoading } = useUser();
 
   return (
     <div>
-
+      <VisitorTracker />
+      <AnalyticsTracker />
       <ToastContainer />
       <Routes>
         {/* Public Routes */}

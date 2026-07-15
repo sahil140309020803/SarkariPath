@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from "../../context/UserContext";
 import { GoogleLogin } from '@react-oauth/google';
 import { useTheme } from "../../context/ThemeContext";
+import { trackEvent } from "../../utils/analytics";
+import { identifyUser, trackEvent as clarityTrackEvent } from "../../utils/clarity";
 
 const SignUp = ({ isLoaded }) => {
   const [name, setName] = useState('');
@@ -32,6 +34,8 @@ const SignUp = ({ isLoaded }) => {
       axios.defaults.withCredentials = true;
       const { data } = await axios.post(`${backend_url}/api/auth/user/google-login`, { idToken });
       if (data.success) {
+        trackEvent('login', { method: 'google' });
+        identifyUser(data.user?.id || data.userId, data.user?.email, data.user?.name);
         setIsLoggedIn(true);
         toast.success(data.message || "Google Login successful!", {
           autoClose: 2500
@@ -61,6 +65,8 @@ const SignUp = ({ isLoaded }) => {
       await delay(1500);
       const { data } = await axios.post(`${backend_url}/api/auth/user/register`, { name, email, password });
       if (data.success) {
+        trackEvent('sign_up', { method: 'email' });
+        clarityTrackEvent('register');
         toast.success(data.message || "Registration successful! Please verify your email.");
         navigate('/verify-email', { state: { email } });
       } else {
