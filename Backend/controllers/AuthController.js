@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import userModel from "../models/userModel.js";
 import adminModel from "../models/adminModel.js";
 import { OAuth2Client } from 'google-auth-library';
-import fs from 'fs';
 import otpModel from "../models/otpModel.js";
 import { sendOtpEmail, sendForgotPasswordOtpEmail } from "../utils/emailService.js";
 
@@ -285,25 +284,16 @@ const isAuthenticated = async (req, res) => {
 }
 
 const googleLogin = async (req, res) => {
-    const logPath = "d:/Projects/SarkariPath/Backend/debug.log";
-    const log = (msg) => {
-        try {
-            fs.appendFileSync(logPath, `[${new Date().toISOString()}] [googleLogin] ${msg}\n`);
-        } catch (e) {
-            console.error(e);
-        }
-    };
-
     const { idToken } = req.body;
-    log(`googleLogin endpoint hit. idToken received: ${!!idToken}`);
+    console.log(`[googleLogin] endpoint hit. idToken received: ${!!idToken}`);
 
     if (!idToken) {
-        log("Error: idToken is missing in req.body");
+        console.log("[googleLogin] Error: idToken is missing in req.body");
         return res.json({ success: false, message: "Google ID Token is required" });
     }
 
     try {
-        log("Verifying ID token...");
+        console.log("[googleLogin] Verifying ID token...");
         const ticket = await client.verifyIdToken({
             idToken: idToken,
             audience: process.env.GOOGLE_CLIENT_ID,
@@ -316,19 +306,19 @@ const googleLogin = async (req, res) => {
         const picture = payload['picture'];
         const emailVerified = payload['email_verified'];
 
-        log(`Token payload: sub=${googleId}, email=${email}, name=${name}, emailVerified=${emailVerified}`);
+        console.log(`[googleLogin] Token payload: sub=${googleId}, email=${email}, name=${name}, emailVerified=${emailVerified}`);
 
         if (!email) {
-            log("Error: Email is missing in token payload");
+            console.log("[googleLogin] Error: Email is missing in token payload");
             return res.json({ success: false, message: "Invalid token payload: Email missing" });
         }
 
         // 1. Search Admin collection first
         const admin = await adminModel.findOne({ email });
         if (admin) {
-            log(`Admin found matching email: ${email}. ID=${admin._id}`);
+            console.log(`[googleLogin] Admin found matching email: ${email}. ID=${admin._id}`);
             const token = jwt.sign({ email: admin.email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
-            log(`Generated Admin JWT token successfully. Signing email: ${admin.email}`);
+            console.log(`[googleLogin] Generated Admin JWT token successfully.`);
 
             res.cookie('token', token, {
                 httpOnly: true,
@@ -336,7 +326,7 @@ const googleLogin = async (req, res) => {
                 sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
                 maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
             });
-            log("Admin Cookie 'token' set successfully via res.cookie");
+            console.log("[googleLogin] Admin Cookie 'token' set successfully.");
 
             return res.json({
                 success: true,
@@ -348,14 +338,14 @@ const googleLogin = async (req, res) => {
 
         // 2. Search User collection
         let user = await userModel.findOne({ googleId });
-        log(`User lookup by googleId: ${user ? "Found: ID=" + user._id : "Not Found"}`);
+        console.log(`[googleLogin] User lookup by googleId: ${user ? "Found: ID=" + user._id : "Not Found"}`);
 
         if (!user) {
             user = await userModel.findOne({ email });
-            log(`User lookup by email: ${user ? "Found: ID=" + user._id : "Not Found"}`);
+            console.log(`[googleLogin] User lookup by email: ${user ? "Found: ID=" + user._id : "Not Found"}`);
 
             if (user) {
-                log(`Linking Google auth to existing account for email: ${email}`);
+                console.log(`[googleLogin] Linking Google auth to existing account for email: ${email}`);
                 user.googleId = googleId;
                 user.provider = "google";
                 if (!user.profilePicture) {
@@ -363,9 +353,9 @@ const googleLogin = async (req, res) => {
                 }
                 user.emailVerified = emailVerified;
                 await user.save();
-                log("Linked user successfully saved.");
+                console.log("[googleLogin] Linked user successfully saved.");
             } else {
-                log(`Creating new user account for name: ${name}, email: ${email}`);
+                console.log(`[googleLogin] Creating new user account for name: ${name}, email: ${email}`);
                 user = new userModel({
                     name,
                     email,
@@ -399,7 +389,7 @@ const googleLogin = async (req, res) => {
                 }
                 user.username = username;
                 await user.save();
-                log(`New user successfully created: ID=${user._id}`);
+                console.log(`[googleLogin] New user successfully created: ID=${user._id}`);
             }
         } else {
             let isModified = false;
@@ -416,14 +406,14 @@ const googleLogin = async (req, res) => {
                 isModified = true;
             }
             if (isModified) {
-                log(`Updating profile information for user ID: ${user._id}`);
+                console.log(`[googleLogin] Updating profile information for user ID: ${user._id}`);
                 await user.save();
-                log("User updates saved.");
+                console.log("[googleLogin] User updates saved.");
             }
         }
 
         const token = jwt.sign({ email: user.email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        log(`Generated JWT token successfully. Signing email: ${user.email}`);
+        console.log(`[googleLogin] Generated JWT token successfully for email: ${user.email}`);
 
         res.cookie('token', token, {
             httpOnly: true,
@@ -431,7 +421,7 @@ const googleLogin = async (req, res) => {
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
         });
-        log("Cookie 'token' set successfully via res.cookie");
+        console.log("[googleLogin] Cookie 'token' set successfully.");
 
         return res.json({
             success: true,
@@ -441,8 +431,7 @@ const googleLogin = async (req, res) => {
         });
 
     } catch (error) {
-        log(`Google Auth Error: ${error.stack || error.message}`);
-        console.error("Google Auth Error:", error);
+        console.error("[googleLogin] Google Auth Error:", error);
         return res.json({ success: false, message: "Google authentication failed: " + error.message });
     }
 };
