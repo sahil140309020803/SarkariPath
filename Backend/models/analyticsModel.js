@@ -12,6 +12,22 @@ const VisitorSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    lastSeen: {
+        type: Date,
+        default: Date.now
+    },
+    visits: [
+        {
+            date: {
+                type: String,
+                required: true
+            },
+            count: {
+                type: Number,
+                default: 1
+            }
+        }
+    ],
     device: String,
     browser: String
 }, {

@@ -29,7 +29,7 @@ setInterval(closeStaleSessions, 60000);
 // Heartbeat tracking controller
 export const handleHeartbeat = async (req, res) => {
     try {
-        const { visitorId, device, browser, userEmail } = req.body;
+        const { visitorId, device, browser, userEmail, isInitial } = req.body;
         if (!visitorId) {
             return res.status(400).json({ success: false, message: "visitorId is required" });
         }
@@ -61,15 +61,43 @@ export const handleHeartbeat = async (req, res) => {
 
         const expectedUserId = userObj ? userObj._id : null;
 
-        // 1. Find or create Visitor document (permanent record per browser)
+        // 1. Find or create/update Visitor document (permanent record per browser)
         let visitor = await VisitorModel.findOne({ visitorId });
+        const todayStr = now.toISOString().split('T')[0];
         if (!visitor) {
             visitor = new VisitorModel({
                 visitorId,
                 firstVisit: now,
+                lastSeen: now,
+                visits: [{ date: todayStr, count: 1 }],
                 device,
                 browser
             });
+            await visitor.save();
+        } else {
+            if (isInitial) {
+                const lastSeenTime = visitor.lastSeen ? visitor.lastSeen.getTime() : (visitor.updatedAt ? visitor.updatedAt.getTime() : 0);
+                const diffSeconds = (now.getTime() - lastSeenTime) / 1000;
+                if (diffSeconds > 40) {
+                    // Case 2: New website visit
+                    visitor.lastSeen = now;
+                    if (!visitor.visits) visitor.visits = [];
+                    const visitIndex = visitor.visits.findIndex(v => v.date === todayStr);
+                    if (visitIndex !== -1) {
+                        visitor.visits[visitIndex].count += 1;
+                    } else {
+                        visitor.visits.push({ date: todayStr, count: 1 });
+                    }
+                } else {
+                    // Case 3: Page refresh or quick reopen
+                    visitor.lastSeen = now;
+                }
+            } else {
+                // Heartbeat
+                visitor.lastSeen = now;
+            }
+            if (device) visitor.device = device;
+            if (browser) visitor.browser = browser;
             await visitor.save();
         }
 
@@ -173,25 +201,26 @@ export const getDashboardCards = async (req, res) => {
         const [
             totalVisitors,
             onlineUsers,
-            returningVisitorsAgg,
+            returningVisitorsCount,
             newVisitorsToday,
             totalRegisteredUsers,
             registrationsToday,
             registeredVisitorsAgg,
-            websiteVisits,
+            websiteVisitsAgg,
             totalDurationAggregation,
-            returningVisitorsTodayAgg,
+            returningVisitorsTodayCount,
             totalTestsAggregation,
             todayTestsAggregation,
-            todayWebsiteVisits
+            todayWebsiteVisitsAgg
         ] = await Promise.all([
             VisitorModel.countDocuments(),
             SessionModel.countDocuments({ isActive: true }),
-            SessionModel.aggregate([
-                { $group: { _id: "$visitorId", count: { $sum: 1 } } },
-                { $match: { count: { $gt: 1 } } },
-                { $count: "count" }
-            ]),
+            VisitorModel.countDocuments({
+                $or: [
+                    { "visits.1": { $exists: true } },
+                    { "visits.0.count": { $gt: 1 } }
+                ]
+            }),
             VisitorModel.countDocuments({ firstVisit: { $gte: startOfToday } }),
             userModel.countDocuments(),
             userModel.countDocuments({ createdAt: { $gte: startOfToday } }),
@@ -200,24 +229,32 @@ export const getDashboardCards = async (req, res) => {
                 { $group: { _id: "$visitorId" } },
                 { $count: "count" }
             ]),
-            SessionModel.countDocuments(),
-            SessionModel.aggregate([
-                { $group: { _id: null, totalDuration: { $sum: "$durationInSeconds" } } }
-            ]),
-            SessionModel.aggregate([
-                { $match: { sessionStart: { $gte: startOfToday } } },
-                { $group: { _id: "$visitorId" } },
+            VisitorModel.aggregate([
                 {
-                    $lookup: {
-                        from: "sessions",
-                        localField: "_id",
-                        foreignField: "visitorId",
-                        as: "allSessions"
+                    $project: {
+                        visits: {
+                            $cond: {
+                                if: { $gt: [{ $size: { $ifNull: ["$visits", []] } }, 0] },
+                                then: "$visits",
+                                else: [{ date: { $dateToString: { format: "%Y-%m-%d", date: "$firstVisit" } }, count: 1 }]
+                            }
+                        }
                     }
                 },
-                { $match: { "allSessions.1": { $exists: true } } },
-                { $count: "count" }
+                { $unwind: "$visits" },
+                { $group: { _id: null, total: { $sum: "$visits.count" } } }
             ]),
+            SessionModel.aggregate([
+                { $match: { userId: { $ne: null } } },
+                { $group: { _id: null, totalDuration: { $sum: "$durationInSeconds" } } }
+            ]),
+            VisitorModel.countDocuments({
+                lastSeen: { $gte: startOfToday },
+                $or: [
+                    { "visits.1": { $exists: true } },
+                    { "visits.0.count": { $gt: 1 } }
+                ]
+            }),
             userStatisticsModel.aggregate([
                 { $group: { _id: null, total: { $sum: "$testsAttempted" } } }
             ]),
@@ -226,16 +263,33 @@ export const getDashboardCards = async (req, res) => {
                 { $match: { "dailyStatistics.date": todayStr } },
                 { $group: { _id: null, total: { $sum: "$dailyStatistics.testsAttempted" } } }
             ]),
-            SessionModel.countDocuments({ sessionStart: { $gte: startOfToday } })
+            VisitorModel.aggregate([
+                {
+                    $project: {
+                        visits: {
+                            $cond: {
+                                if: { $gt: [{ $size: { $ifNull: ["$visits", []] } }, 0] },
+                                then: "$visits",
+                                else: [{ date: { $dateToString: { format: "%Y-%m-%d", date: "$firstVisit" } }, count: 1 }]
+                            }
+                        }
+                    }
+                },
+                { $unwind: "$visits" },
+                { $match: { "visits.date": todayStr } },
+                { $group: { _id: null, total: { $sum: "$visits.count" } } }
+            ])
         ]);
 
-        const returningVisitors = returningVisitorsAgg.length > 0 ? returningVisitorsAgg[0].count : 0;
+        const returningVisitors = returningVisitorsCount;
         const registeredVisitorsCount = registeredVisitorsAgg.length > 0 ? registeredVisitorsAgg[0].count : 0;
         const totalDuration = totalDurationAggregation.length > 0 ? totalDurationAggregation[0].totalDuration : 0;
-        const avgTimePerUser = totalVisitors > 0 ? Math.round(totalDuration / totalVisitors) : 0;
+        const avgTimePerUser = registeredVisitorsCount > 0 ? Math.round(totalDuration / registeredVisitorsCount) : 0;
         const totalTestsAttempted = totalTestsAggregation.length > 0 ? totalTestsAggregation[0].total : 0;
         const testsAttemptedToday = todayTestsAggregation.length > 0 ? todayTestsAggregation[0].total : 0;
-        const returningVisitorsToday = returningVisitorsTodayAgg.length > 0 ? returningVisitorsTodayAgg[0].count : 0;
+        const returningVisitorsToday = returningVisitorsTodayCount;
+        const websiteVisits = websiteVisitsAgg.length > 0 ? websiteVisitsAgg[0].total : 0;
+        const todayWebsiteVisits = todayWebsiteVisitsAgg.length > 0 ? todayWebsiteVisitsAgg[0].total : 0;
 
         // Visitor -> Registration Conversion Rate
         const conversionRate = totalVisitors > 0
@@ -286,23 +340,25 @@ export const getDashboardGraphs = async (req, res) => {
             last7Days.push(`${year}-${month}-${day}`);
         }
 
-        const [durationStats, visitorStats, registrationStats, testStats] = await Promise.all([
-            SessionModel.aggregate([
-                { $match: { sessionStart: { $gte: sevenDaysAgo } } },
+        const [visitsStats, visitorStats, registrationStats, testStats] = await Promise.all([
+            VisitorModel.aggregate([
                 {
-                    $group: {
-                        _id: {
-                            date: { $dateToString: { format: "%Y-%m-%d", date: "$sessionStart" } },
-                            visitorId: "$visitorId"
-                        },
-                        duration: { $sum: "$durationInSeconds" }
+                    $project: {
+                        visits: {
+                            $cond: {
+                                if: { $gt: [{ $size: { $ifNull: ["$visits", []] } }, 0] },
+                                then: "$visits",
+                                else: [{ date: { $dateToString: { format: "%Y-%m-%d", date: "$firstVisit" } }, count: 1 }]
+                            }
+                        }
                     }
                 },
+                { $unwind: "$visits" },
+                { $match: { "visits.date": { $in: last7Days } } },
                 {
                     $group: {
-                        _id: "$_id.date",
-                        uniqueVisitorsCount: { $sum: 1 },
-                        totalDuration: { $sum: "$duration" }
+                        _id: "$visits.date",
+                        count: { $sum: "$visits.count" }
                     }
                 }
             ]),
@@ -336,19 +392,14 @@ export const getDashboardGraphs = async (req, res) => {
             ])
         ]);
 
-        const durationMap = Object.fromEntries(
-            durationStats.map(d => {
-                const avg = d.uniqueVisitorsCount > 0 ? Math.round((d.totalDuration || 0) / d.uniqueVisitorsCount / 60) : 0;
-                return [d._id, avg];
-            })
-        );
+        const visitsMap = Object.fromEntries(visitsStats.map(v => [v._id, v.count]));
         const visitorMap = Object.fromEntries(visitorStats.map(v => [v._id, v.count]));
         const registrationMap = Object.fromEntries(registrationStats.map(r => [r._id, r.count]));
         const testMap = Object.fromEntries(testStats.map(t => [t._id, t.count]));
 
         const chartData = last7Days.map(date => ({
             date,
-            avgTimePerUser: durationMap[date] || 0, // in minutes
+            websiteVisits: visitsMap[date] || 0,
             visitors: visitorMap[date] || 0,
             registrations: registrationMap[date] || 0,
             testAttempts: testMap[date] || 0

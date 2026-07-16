@@ -30,7 +30,7 @@ const VisitorTracker = () => {
         return { device, browser };
     };
 
-    const sendHeartbeat = async () => {
+    const sendHeartbeat = async (isInitial = false) => {
         try {
             let id = localStorage.getItem('visitorId');
             if (!id) {
@@ -44,7 +44,8 @@ const VisitorTracker = () => {
                 visitorId: id,
                 device,
                 browser,
-                userEmail: email
+                userEmail: email,
+                isInitial
             }, { withCredentials: true });
         } catch (err) {
             // Silently fail or ignore error
@@ -56,8 +57,8 @@ const VisitorTracker = () => {
         if (isLoading) return;
         if (userDetails?.role === 'admin') return;
 
-        sendHeartbeat();
-        const interval = setInterval(sendHeartbeat, 30000);
+        sendHeartbeat(true);
+        const interval = setInterval(() => sendHeartbeat(false), 30000);
 
         return () => {
             clearInterval(interval);

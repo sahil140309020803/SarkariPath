@@ -139,7 +139,7 @@ const Analytics = () => {
     useEffect(() => {
         const charts = [];
 
-        // 1. Average Session Duration (Past 7 Days)
+        // 1. Website Visits (Past 7 Days)
         if (durationChartRef.current && visitorGraphs.length > 0) {
             const ctx = durationChartRef.current.getContext('2d');
             charts.push(new Chart(ctx, {
@@ -147,8 +147,8 @@ const Analytics = () => {
                 data: {
                     labels: visitorGraphs.map(item => item.date),
                     datasets: [{
-                        label: 'Avg Time Spent / User (Minutes)',
-                        data: visitorGraphs.map(item => item.avgTimePerUser),
+                        label: 'Website Visits',
+                        data: visitorGraphs.map(item => item.websiteVisits),
                         borderColor: '#10b981', // emerald-500
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         fill: true,
@@ -428,15 +428,15 @@ const Analytics = () => {
 
             {/* 3 New Graphs Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                {/* Average Time Spent Per User */}
+                {/* Website Visits Graph */}
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm dark:shadow-none transition-colors flex flex-col h-80">
-                    <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4 transition-colors">Avg Time Spent / User (Last 7 Days)</h3>
+                    <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-4 transition-colors">Website Visits (Last 7 Days)</h3>
                     <div className="flex-1 w-full relative">
                         {visitorGraphs.length > 0 ? (
                             <canvas ref={durationChartRef}></canvas>
                         ) : (
                             <div className="flex flex-col items-center justify-center text-gray-400 dark:text-slate-500 h-full">
-                                <p className="text-sm font-medium">No duration data available.</p>
+                                <p className="text-sm font-medium">No visit data available.</p>
                             </div>
                         )}
                     </div>
