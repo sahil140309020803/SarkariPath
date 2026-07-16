@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from 'bcryptjs';
+import axios from 'axios';
 import userModel from "../models/userModel.js";
 import adminModel from "../models/adminModel.js";
 import { OAuth2Client } from 'google-auth-library';
@@ -11,6 +12,16 @@ const generateOtp = () => {
 };
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+const setAuthCookie = (res, req, token) => {
+    const isProd = process.env.NODE_ENV === "production" || (req && req.headers['x-forwarded-proto'] === 'https');
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: isProd,
+        sameSite: isProd ? "none" : "lax",
+        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+    });
+};
 
 const adminLogin = async (req, res) => {
     const { adminID, password } = req.body;
@@ -121,12 +132,7 @@ const userLogin = async (req, res) => {
             }
 
             const token = jwt.sign({ email: email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
-            res.cookie('token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-                maxAge: 1 * 24 * 60 * 60 * 1000,
-            });
+            setAuthCookie(res, req, token);
 
             return res.json({ success: true, message: "Admin login successfully", token: token, role: 'admin' });
         }
@@ -167,12 +173,7 @@ const userLogin = async (req, res) => {
         }
 
         const token = jwt.sign({ email: email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000,
-        });
+        setAuthCookie(res, req, token);
 
         return res.json({ success: true, message: "User login successfully", token: token, role: 'user' });
 
@@ -209,12 +210,7 @@ const verifyOtp = async (req, res) => {
         await otpModel.deleteOne({ email });
 
         const token = jwt.sign({ email: email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000,
-        });
+        setAuthCookie(res, req, token);
 
         return res.json({
             success: true,
@@ -284,33 +280,46 @@ const isAuthenticated = async (req, res) => {
 }
 
 const googleLogin = async (req, res) => {
-    const { idToken } = req.body;
-    console.log(`[googleLogin] endpoint hit. idToken received: ${!!idToken}`);
+    const { idToken, accessToken } = req.body;
+    console.log(`[googleLogin] endpoint hit. idToken received: ${!!idToken}, accessToken received: ${!!accessToken}`);
 
-    if (!idToken) {
-        console.log("[googleLogin] Error: idToken is missing in req.body");
-        return res.json({ success: false, message: "Google ID Token is required" });
+    if (!idToken && !accessToken) {
+        console.log("[googleLogin] Error: Both idToken and accessToken are missing in req.body");
+        return res.json({ success: false, message: "Google authentication token (idToken or accessToken) is required" });
     }
 
     try {
-        console.log("[googleLogin] Verifying ID token...");
-        const ticket = await client.verifyIdToken({
-            idToken: idToken,
-            audience: process.env.GOOGLE_CLIENT_ID,
-        });
-        const payload = ticket.getPayload();
+        let googleId, email, name, picture, emailVerified;
 
-        const googleId = payload['sub'];
-        const email = payload['email'];
-        const name = payload['name'];
-        const picture = payload['picture'];
-        const emailVerified = payload['email_verified'];
+        if (idToken) {
+            console.log("[googleLogin] Verifying ID token...");
+            const ticket = await client.verifyIdToken({
+                idToken: idToken,
+                audience: process.env.GOOGLE_CLIENT_ID,
+            });
+            const payload = ticket.getPayload();
+            googleId = payload['sub'];
+            email = payload['email'];
+            name = payload['name'];
+            picture = payload['picture'];
+            emailVerified = payload['email_verified'];
+        } else {
+            console.log("[googleLogin] Fetching user info via Access Token...");
+            const { data: profile } = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            });
+            googleId = profile.sub;
+            email = profile.email;
+            name = profile.name;
+            picture = profile.picture;
+            emailVerified = profile.email_verified;
+        }
 
-        console.log(`[googleLogin] Token payload: sub=${googleId}, email=${email}, name=${name}, emailVerified=${emailVerified}`);
+        console.log(`[googleLogin] Resolved profile: sub=${googleId}, email=${email}, name=${name}, emailVerified=${emailVerified}`);
 
         if (!email) {
-            console.log("[googleLogin] Error: Email is missing in token payload");
-            return res.json({ success: false, message: "Invalid token payload: Email missing" });
+            console.log("[googleLogin] Error: Email is missing in profile payload");
+            return res.json({ success: false, message: "Invalid profile payload: Email missing" });
         }
 
         // 1. Search Admin collection first
@@ -320,12 +329,7 @@ const googleLogin = async (req, res) => {
             const token = jwt.sign({ email: admin.email, role: 'admin' }, process.env.JWT_SECRET, { expiresIn: '1d' });
             console.log(`[googleLogin] Generated Admin JWT token successfully.`);
 
-            res.cookie('token', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-                maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-            });
+            setAuthCookie(res, req, token);
             console.log("[googleLogin] Admin Cookie 'token' set successfully.");
 
             return res.json({
@@ -415,12 +419,7 @@ const googleLogin = async (req, res) => {
         const token = jwt.sign({ email: user.email, role: 'user' }, process.env.JWT_SECRET, { expiresIn: '1d' });
         console.log(`[googleLogin] Generated JWT token successfully for email: ${user.email}`);
 
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
-        });
+        setAuthCookie(res, req, token);
         console.log("[googleLogin] Cookie 'token' set successfully.");
 
         return res.json({

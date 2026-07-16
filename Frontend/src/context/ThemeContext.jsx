@@ -10,7 +10,7 @@ export const ThemeProvider = ({ children }) => {
     // Check local storage or default to light mode
     const [theme, setTheme] = useState(() => {
         const storedTheme = localStorage.getItem('theme');
-        return storedTheme ? storedTheme : 'light';
+        return storedTheme ? storedTheme : 'dark';
     });
 
     useEffect(() => {
