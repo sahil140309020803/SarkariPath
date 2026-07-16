@@ -4,7 +4,8 @@ import axios from 'axios';
 import {
   Clock, CheckCircle2, XCircle, MinusCircle, ChevronDown, ChevronUp,
   RotateCcw, BookOpen, Award, TrendingUp,
-  Sparkles, AlertCircle, User, LayoutList, Trophy, Zap, Loader2, BrainCircuit
+  Sparkles, AlertCircle, User, LayoutList, Trophy, Zap, Loader2, BrainCircuit,
+  TriangleAlert
 } from 'lucide-react';
 import { useTestAnalysis } from '../context/TestAnalysisContext';
 import { useUser } from '../context/UserContext';
@@ -12,6 +13,69 @@ import Navbar from '../components/Navbar.jsx';
 import BeautifulLoadingScreen from '../components/BeautifulLoadingScreen';
 
 
+
+// ---------------------------------------------------------------------------
+// Expiry Warning Banner
+// ---------------------------------------------------------------------------
+const getExpiryLabel = (expireAt) => {
+  if (!expireAt) return null;
+
+  const diffMs = new Date(expireAt) - Date.now();
+  if (diffMs <= 0) return null;
+
+  const totalMinutes = Math.floor(diffMs / (1000 * 60));
+
+  const days = Math.floor(totalMinutes / (24 * 60));
+  const hours = Math.floor((totalMinutes % (24 * 60)) / 60);
+  const minutes = totalMinutes % 60;
+
+  const parts = [];
+
+  if (days > 0) {
+    parts.push(`${days} day${days > 1 ? "s" : ""}`);
+  }
+
+  if (hours > 0) {
+    parts.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+  }
+
+  if (minutes > 0) {
+    parts.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
+  }
+
+  return parts.join(" ");
+};
+
+const ExpiryWarning = ({ expireAt }) => {
+  const timeLabel = getExpiryLabel(expireAt);
+  if (!timeLabel) return null;
+
+  return (
+    <div
+      role="alert"
+      className="flex items-center gap-3 px-4 py-3.5 rounded-xl border
+        bg-amber-50 border-amber-200
+        dark:bg-amber-950/40 dark:border-amber-700/60
+        shadow-sm animate-in slide-in-from-top-2 duration-400"
+    >
+      {/* Icon */}
+      <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/50">
+        <TriangleAlert
+          size={17}
+          strokeWidth={2.5}
+          className="text-amber-600 dark:text-amber-400"
+        />
+      </span>
+
+      {/* Message */}
+      <p className="text-sm font-medium leading-snug text-amber-800 dark:text-amber-300">
+        This submission will expire in{' '}
+        <span className="font-bold">{timeLabel}</span>{' '}
+        due to automatic system cleanup.
+      </p>
+    </div>
+  );
+};
 
 const CircularProgress = ({ value, max }) => {
   const radius = 72;
@@ -102,7 +166,7 @@ const Badge = ({ text }) => {
     Medium: "bg-yellow-100 text-yellow-700 dark:bg-amber-900/30 dark:text-amber-400",
     Hard: "bg-red-100 text-red-700 dark:bg-rose-900/30 dark:text-rose-400"
   };
-  return <span className={`px-2 py-1 rounded text-xs font-semibold ${styles[text] || "bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300"}`}>{text}</span>;
+  return <span className={`px-2 py-1 rounded-md text-xs font-semibold ${styles[text] || "bg-gray-100/50 dark:bg-slate-800 text-gray-700 dark:text-slate-300"}`}>{text}</span>;
 };
 
 const LeaderboardModal = ({ isOpen, onClose, data, isLoading, page, totalPages, onPageChange }) => {
@@ -210,7 +274,8 @@ const getGrade = (accuracy) => {
 };
 
 const ScoreOverview = ({ data }) => {
-  const grade = getGrade(data.accuracy);
+  const percentage = data.totalScore > 0 ? (data.score / data.totalScore) * 100 : 0;
+  const grade = getGrade(percentage);
   const isQuiz = data.type === 'quiz';
 
   return (
@@ -280,7 +345,7 @@ const ScoreOverview = ({ data }) => {
                       {grade.desc}
                     </div>
                     <div className="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5">
-                      Based on {data.accuracy}% accuracy
+                      Based on {percentage.toFixed(2)}% percentage
                     </div>
                   </div>
                 </div>
@@ -475,21 +540,7 @@ const AnalysisSection = ({ data, onGenerateAI, isGenerating, aiInsights }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-900/50 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl p-12 text-center">
-            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BrainCircuit className="text-blue-400 dark:text-blue-500" size={32} />
-            </div>
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-2">No Analysis Generated Yet</h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-sm mx-auto">Get deep insights into your performance, identifying exactly where you shine and where to focus your efforts.</p>
-            <button
-              onClick={onGenerateAI}
-              className="group relative flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-2xl hover:shadow-lg hover:shadow-blue-500/30 transition-all active:scale-95 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 skew-x-12"></div>
-              <BrainCircuit size={20} />
-              <span>Analyze with AI</span>
-            </button>
-          </div>
+          <></>
         )}
       </div>
 
@@ -568,7 +619,7 @@ const QuestionReview = ({ questions }) => {
   return (
     <div className="space-y-6" id="detailed-analysis">
       <div className="flex justify-between items-center bg-white dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm transition-colors">
-        <div className="text-2xl font-bold text-slate-900 dark:text-white">Detailed Analysis</div>
+        <div className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">Detailed Analysis</div>
         <div className="text-sm text-gray-500 dark:text-slate-400 font-semibold">Showing {filteredQuestions.length} questions</div>
       </div>
 
@@ -598,7 +649,7 @@ const QuestionReview = ({ questions }) => {
                 <Badge text={q.difficulty} />
               </div>
               <div className="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto">
-                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-800 px-2 py-1 rounded font-semibold transition-colors"><Clock size={14} /> {q.time}</div>
+                <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-slate-400 bg-gray-100 dark:bg-slate-800/70 px-2 py-1 rounded-md font-semibold transition-colors"><Clock size={14} /> {q.time}</div>
                 {expandedQuestion === q.id ? <ChevronUp className="text-gray-400 dark:text-slate-500" /> : <ChevronDown className="text-gray-400 dark:text-slate-500" />}
               </div>
             </div>
@@ -641,7 +692,7 @@ const QuestionReview = ({ questions }) => {
                     <div className="bg-blue-600 dark:bg-indigo-600 p-1 rounded"><BookOpen size={14} className="text-white" /></div>
                     <p className="text-blue-800 dark:text-indigo-300 text-sm uppercase font-bold tracking-wider">Explanation</p>
                   </div>
-                  <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-line">{q.solution}</p>
+                  <div className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed whitespace-pre-line" dangerouslySetInnerHTML={{ __html: q.solution }} />
                 </div>
               </div>
             )}
@@ -743,11 +794,11 @@ export default function Analysis() {
       </div>
     );
   }
-  console.log(analysisData);
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans pb-24 transition-colors">
       <Navbar />
       <main className="max-w-7xl mx-auto px-4 py-8 space-y-8 animate-in fade-in duration-500">
+        <ExpiryWarning expireAt={analysisData?.submissionExpireAt} />
         <ScoreOverview data={analysisData} />
         <AnalysisSection
           data={analysisData}

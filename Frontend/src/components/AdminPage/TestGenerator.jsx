@@ -14,6 +14,7 @@ const TestGenerator = () => {
     const [subjects, setSubjects] = useState([{ name: '', count: 1 }]);
     const [recentGenerations, setRecentGenerations] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isHistoryLoading, setIsHistoryLoading] = useState(false);
     const [previewTest, setPreviewTest] = useState(null);
     const [previewLang, setPreviewLang] = useState('en');
     const [isValidating, setIsValidating] = useState(false);
@@ -43,6 +44,7 @@ const TestGenerator = () => {
 
     const fetchGenerations = async () => {
         if (!backend_url) return;
+        setIsHistoryLoading(true);
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/fetch`);
@@ -53,6 +55,8 @@ const TestGenerator = () => {
             }
         } catch (error) {
             alert(error.message);
+        } finally {
+            setIsHistoryLoading(false);
         }
     }
     console.log('recentGenerations', recentGenerations);
@@ -65,7 +69,7 @@ const TestGenerator = () => {
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/delete/${testId}`);
             if (data.success) {
-                toast.success('Test generation discarded successfully', { autoClose: 2000 });
+                toast.success('Test generation discarded successfully');
                 setPreviewTest(null);
                 fetchGenerations();
             } else {
@@ -81,7 +85,7 @@ const TestGenerator = () => {
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/publish/${testId}`);
             if (data.success) {
-                toast.success('Test generation published successfully', { autoClose: 2000 });
+                toast.success('Test generation published successfully');
                 fetchGenerations();
             } else {
                 alert(data.message);
@@ -176,7 +180,7 @@ const TestGenerator = () => {
                                 count: aiResp.data.countsMap[sub.name] || 1
                             }));
                             setSubjects(initialSubjects);
-                            toast.success("AI auto-populated question breakdown based on latest syllabus!", { autoClose: 2000 });
+                            toast.success("AI auto-populated question breakdown based on latest syllabus!");
                         }
                     } catch (e) {
                         console.error("AI question count distribution failed", e);
@@ -469,7 +473,7 @@ const TestGenerator = () => {
                             </div>
                         </div>
                     </div>
-                    <hr className="dark:border-slate-800" />
+                    <hr className="dark:border-slate-800 border-slate-400" />
                     <div>
                         <div className="flex justify-between items-center mb-3">
                             <h4 className="text-sm font-semibold text-gray-800 dark:text-slate-200">Subjects Breakdown</h4>
@@ -515,7 +519,22 @@ const TestGenerator = () => {
                     <div className="mt-8">
                         <h3 className="text-xl font-semibold text-gray-700 dark:text-slate-200 transition-colors">History</h3>
                         <div className="space-y-3 mt-4 max-h-[54dvh] overflow-y-auto custom-scrollbar pr-3">
-                            {recentGenerations.length > 0 ? recentGenerations.map((gen, index) => (
+                            {isHistoryLoading ? (
+                                <div className="space-y-3">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-slate-100 dark:bg-slate-800/60 animate-pulse">
+                                            <div className="space-y-2 flex-1">
+                                                <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                                                <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-1/2" />
+                                            </div>
+                                            <div className="flex gap-2 ml-4">
+                                                <div className="h-6 w-6 bg-slate-200 dark:bg-slate-700 rounded" />
+                                                <div className="h-6 w-6 bg-slate-200 dark:bg-slate-700 rounded" />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : recentGenerations.length > 0 ? recentGenerations.map((gen, index) => (
                                 <div key={index} className={`flex items-center justify-between p-3 rounded-lg transition ${gen.Status === 'Published' ? 'border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 hover:bg-green-100 dark:hover:bg-green-900/40' : ''} ${gen.Status === 'Draft' ? 'border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20 hover:bg-yellow-100 dark:hover:bg-yellow-900/40' : ''}`}>
                                     <div>
                                         <p className="font-semibold text-gray-900 dark:text-white transition-colors">

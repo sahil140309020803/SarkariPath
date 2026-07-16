@@ -98,7 +98,8 @@ export const TestAnalysisProvider = ({ children }) => {
                 weaknesses
             },
             subjects,
-            questions: processedQuestions
+            questions: processedQuestions,
+            submissionExpireAt: submission.expireAt || null
         };
     };
 

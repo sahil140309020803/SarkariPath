@@ -33,6 +33,7 @@ const ExamManagement = () => {
     const [isMocksModalOpen, setIsMocksModalOpen] = useState(false);
     const [selectedExamMocks, setSelectedExamMocks] = useState([]);
     const [selectedExamForMocks, setSelectedExamForMocks] = useState(null);
+    const [isMocksLoading, setIsMocksLoading] = useState(false);
     const [previewTest, setPreviewTest] = useState(null);
     const [previewLang, setPreviewLang] = useState('en');
 
@@ -62,7 +63,7 @@ const ExamManagement = () => {
             setSubjects([...subjects, newManualSubject.trim()]);
             setNewManualSubject('');
         } else if (subjects.includes(newManualSubject.trim())) {
-            toast.warning("Subject already exists", { autoClose: 1000 });
+            toast.warning("Subject already exists");
         }
     };
 
@@ -77,7 +78,7 @@ const ExamManagement = () => {
             if (data.success) {
                 const merged = new Set([...subjects.filter(s => s.trim() !== ''), ...data.subjects]);
                 setSubjects(Array.from(merged));
-                toast.success('Successfully generated subjects!', { autoClose: 1000 });
+                toast.success('Successfully generated subjects!');
             } else {
                 toast.error(data.message || 'AI Generation failed');
             }
@@ -112,15 +113,15 @@ const ExamManagement = () => {
             const { data } = await req;
 
             if (data.success) {
-                toast.success(data.message, { autoClose: 1000 });
+                toast.success(data.message);
                 setIsCatUpdated(prev => !prev);
                 closeCatModal();
             } else {
-                toast.error(data.message, { autoClose: 1000 });
+                toast.error(data.message);
             }
         } catch (err) {
             console.error('Category error:', err);
-            toast.error("Failed to process category request.", { autoClose: 1000 });
+            toast.error("Failed to process category request.");
         }
     };
 
@@ -130,12 +131,12 @@ const ExamManagement = () => {
         try {
             const { data } = await axios.get(`${backend_url}/api/exam-category/delete-category/${categoryId}`);
             if (data.success) {
-                toast.success(data.message, { autoClose: 1000 });
+                toast.success(data.message);
                 setIsCatUpdated(prev => !prev);
-            } else toast.error(data.message, { autoClose: 1000 });
+            } else toast.error(data.message);
         } catch (err) {
             console.error('Delete category err:', err);
-            toast.error("Failed to delete category.", { autoClose: 1000 });
+            toast.error("Failed to delete category.");
         }
     };
 
@@ -174,7 +175,7 @@ const ExamManagement = () => {
 
     const saveTopicsToMap = () => {
         setTopicsMap(prev => ({ ...prev, [currentTopicSubject]: currentTopicsList }));
-        toast.success(`Topics saved for ${currentTopicSubject}`, { autoClose: 1000 });
+        toast.success(`Topics saved for ${currentTopicSubject}`);
         closeTopicModal();
     };
 
@@ -185,7 +186,7 @@ const ExamManagement = () => {
             if (data.success) {
                 const merged = new Set([...currentTopicsList, ...data.topics]);
                 setCurrentTopicsList(Array.from(merged));
-                toast.success('Successfully generated topics!', { autoClose: 1000 });
+                toast.success('Successfully generated topics!');
             } else {
                 toast.error(data.message || 'AI Generation failed');
             }
@@ -211,7 +212,7 @@ const ExamManagement = () => {
     const handleAddExam = async (e) => {
         e.preventDefault();
         if (!activeCatSection._id) {
-            toast.error("Please select a category first.", { autoClose: 1000 });
+            toast.error("Please select a category first.");
             return;
         }
         axios.defaults.withCredentials = true;
@@ -227,13 +228,13 @@ const ExamManagement = () => {
 
             const { data } = await req;
             if (data.success) {
-                toast.success(data.message, { autoClose: 1000 });
+                toast.success(data.message);
                 setIsCatUpdated(prev => !prev);
                 closeExamModal();
-            } else toast.error(data.message, { autoClose: 1000 });
+            } else toast.error(data.message);
         } catch (err) {
             console.error('Exam err:', err);
-            toast.error("Failed to process exam request.", { autoClose: 1000 });
+            toast.error("Failed to process exam request.");
         }
     };
 
@@ -243,12 +244,12 @@ const ExamManagement = () => {
         try {
             const { data } = await axios.get(`${backend_url}/api/exams/delete-exam/${examId}`);
             if (data.success) {
-                toast.success(data.message, { autoClose: 1000 });
+                toast.success(data.message);
                 setIsCatUpdated(prev => !prev);
-            } else toast.error(data.message, { autoClose: 1000 });
+            } else toast.error(data.message);
         } catch (err) {
             console.error('Delete exam err:', err);
-            toast.error("Failed to delete exam.", { autoClose: 1000 });
+            toast.error("Failed to delete exam.");
         }
     };
 
@@ -277,6 +278,8 @@ const ExamManagement = () => {
         e.stopPropagation();
         setSelectedExamForMocks(exam);
         setIsMocksModalOpen(true);
+        setSelectedExamMocks([]);
+        setIsMocksLoading(true);
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/exam/${exam._id}`);
@@ -287,6 +290,8 @@ const ExamManagement = () => {
             }
         } catch (err) {
             toast.error("Failed to fetch mock tests");
+        } finally {
+            setIsMocksLoading(false);
         }
     };
 
@@ -302,7 +307,7 @@ const ExamManagement = () => {
         try {
             const { data } = await axios.get(`${backend_url}/api/admin/test-generations/delete/${testId}`);
             if (data.success) {
-                toast.success("Mock test deleted", { autoClose: 1000 });
+                toast.success("Mock test deleted");
                 setSelectedExamMocks(prev => prev.filter(m => m._id !== testId));
             } else {
                 toast.error(data.message);
@@ -339,7 +344,7 @@ const ExamManagement = () => {
                                         {activeCatSection._id !== cat._id && <p className="text-xs text-slate-400 mt-1">{cat.Exams?.length || 0} Exams</p>}
                                     </div>
                                 </div>
-                                <div className="flex gap-2 group-hover:opacity-100 opacity-0 transition-opacity">
+                                <div className="flex gap-2 lg:group-hover:opacity-100 lg:opacity-0 transition-opacity">
                                     <button onClick={(e) => openEditCatModal(cat, e)} className={`${activeCatSection._id === cat._id ? 'text-indigo-200 hover:text-white' : 'text-slate-400 hover:text-indigo-600'} transition`}>
                                         <Edit2 size={16} />
                                     </button>
@@ -353,7 +358,7 @@ const ExamManagement = () => {
                 </div>
 
                 {/* Exams Section */}
-                <div className='flex flex-col p-6 rounded-2xl shadow-xl dark:shadow-none space-y-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 w-full lg:col-span-7 min-h-[15rem] h-[32rem] transition-colors'>
+                <div className='flex flex-col p-4 sm:p-6 rounded-2xl shadow-xl dark:shadow-none space-y-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 w-full lg:col-span-7 min-h-[15rem] h-[32rem] transition-colors'>
                     <div className="border-b border-slate-200 dark:border-slate-800 pb-3 flex justify-between items-center transition-colors">
                         <div>
                             <div className='flex items-center gap-3 font-bold text-lg text-slate-700 dark:text-slate-200 transition-colors'>🎓 Exams: {activeCatSection?.Name || 'Select Category'}</div>
@@ -371,7 +376,7 @@ const ExamManagement = () => {
                             <div className='font-medium'>No Exams Available</div>
                         </div>
                     ) : (
-                        <div className='space-y-3 pt-2 overflow-y-auto h-full pr-2 custom-scrollbar'>
+                        <div className='space-y-3 pt-2 overflow-y-auto h-full custom-scrollbar'>
                             {activeCatSection.Exams.map((exam, index) => (
                                 <div key={index} className='p-4 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl hover:shadow-md dark:hover:shadow-none hover:bg-white dark:hover:bg-slate-700/80 transition-all duration-200 group flex justify-between items-center'>
                                     <div className='flex gap-4 items-center'>
@@ -381,7 +386,7 @@ const ExamManagement = () => {
                                             <div className='text-xs text-slate-500 dark:text-slate-400 mt-1 transition-colors'>{exam.Subjects?.length || 0} Subjects</div>
                                         </div>
                                     </div>
-                                    <div className="flex gap-3 group-hover:opacity-100 opacity-0 transition-opacity">
+                                    <div className="flex gap-3 lg:group-hover:opacity-100 lg:opacity-0 transition-opacity">
                                         <button onClick={(e) => openMocksModal(exam, e)} className="text-slate-400 hover:text-emerald-600 transition" title="View Mock Tests">
                                             <Eye size={18} />
                                         </button>
@@ -525,7 +530,25 @@ const ExamManagement = () => {
             {/* Mocks List Modal */}
             <Modal isOpen={isMocksModalOpen} onClose={closeMocksModal} title={`Published Mock Tests: ${selectedExamForMocks?.Name}`} maxWidth="max-w-2xl">
                 <div className="mt-2 space-y-3 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
-                    {selectedExamMocks.length === 0 ? (
+                    {isMocksLoading ? (
+                        <div className="space-y-3 py-2">
+                            {[1, 2, 3].map(i => (
+                                <div key={i} className="flex items-center justify-between p-4 bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl animate-pulse">
+                                    <div className="space-y-2 flex-1">
+                                        <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+                                        <div className="flex gap-2">
+                                            <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-16" />
+                                            <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-24" />
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2 ml-4">
+                                        <div className="h-8 w-8 bg-slate-200 dark:bg-slate-700 rounded-xl" />
+                                        <div className="h-8 w-8 bg-slate-200 dark:bg-slate-700 rounded-xl" />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : selectedExamMocks.length === 0 ? (
                         <div className="text-center py-10 text-slate-500">No mock tests found for this exam.</div>
                     ) : (
                         selectedExamMocks.map((gen, idx) => (

@@ -161,7 +161,18 @@ const Analytics = () => {
                     maintainAspectRatio: false,
                     scales: {
                         y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#94a3b8',
+                                callback: function (value) {
+                                    const date = new Date(this.getLabelForValue(value));
+                                    return date.toLocaleDateString('en-US', {
+                                        weekday: 'short'
+                                    });
+                                },
+                            },
+                        }
                     },
                     plugins: {
                         legend: { display: false }
@@ -201,7 +212,18 @@ const Analytics = () => {
                     maintainAspectRatio: false,
                     scales: {
                         y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#94a3b8',
+                                callback: function (value) {
+                                    const date = new Date(this.getLabelForValue(value));
+                                    return date.toLocaleDateString('en-US', {
+                                        weekday: 'short'
+                                    });
+                                },
+                            },
+                        }
                     },
                     plugins: {
                         legend: {
@@ -231,7 +253,18 @@ const Analytics = () => {
                     maintainAspectRatio: false,
                     scales: {
                         y: { beginAtZero: true, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8' } },
-                        x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                        x: {
+                            grid: { display: false },
+                            ticks: {
+                                color: '#94a3b8',
+                                callback: function (value) {
+                                    const date = new Date(this.getLabelForValue(value));
+                                    return date.toLocaleDateString('en-US', {
+                                        weekday: 'short'
+                                    });
+                                },
+                            },
+                        }
                     },
                     plugins: {
                         legend: { display: false }
@@ -258,7 +291,7 @@ const Analytics = () => {
                     <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">Real-time visitor telemetry and user metrics</p>
                 </div>
                 <div className="flex items-center gap-3 bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl px-4 py-2 shadow-sm text-sm">
-                    <div className="flex items-center gap-2 text-gray-600 dark:text-slate-350">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-slate-400">
                         <Clock size={16} className={`text-indigo-500 ${isRefreshing ? 'animate-spin' : 'animate-pulse'}`} />
                         <span>Auto-refresh in <strong className="font-semibold text-indigo-600 dark:text-indigo-400">{countdown}s</strong></span>
                     </div>
@@ -460,7 +493,7 @@ const Analytics = () => {
                         </div>
 
                         {/* Status filter buttons */}
-                        <div className="flex items-center bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-250/50 dark:border-slate-700/50">
+                        <div className="flex items-center bg-gray-100 dark:bg-slate-800 p-1 rounded-xl border border-gray-300/50 dark:border-slate-700/50">
                             <button
                                 onClick={() => setStatusFilter('all')}
                                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all ${statusFilter === 'all' ? 'bg-white dark:bg-slate-900 shadow text-indigo-600 dark:text-indigo-400' : 'text-gray-500 hover:text-gray-700 dark:hover:text-slate-350'}`}

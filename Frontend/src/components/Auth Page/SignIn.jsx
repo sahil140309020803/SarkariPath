@@ -31,9 +31,7 @@ const SignIn = ({ isLoaded }) => {
         trackEvent('login', { method: 'google' });
         identifyUser(data.user?.id || data.userId, data.user?.email, data.user?.name);
         setIsLoggedIn(true);
-        toast.success(data.message || "Google Login successful!", {
-          autoClose: 2500
-        });
+        toast.success(data.message || "Google Login successful!");
         navigate('/');
       } else {
         toast.error(data.message || "Google authentication failed");
@@ -57,9 +55,7 @@ const SignIn = ({ isLoaded }) => {
         trackEvent('login', { method: 'email' });
         identifyUser(data.user?.id || data.userId, data.user?.email, data.user?.name);
         setIsLoggedIn(true);
-        toast.success(data.message, {
-          autoClose: 2500
-        });
+        toast.success(data.message);
         navigate('/');
       } else if (data.unverified) {
         toast.info(data.message || "Please verify your email.");

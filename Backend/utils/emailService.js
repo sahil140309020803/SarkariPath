@@ -1,20 +1,23 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
+import dns from "dns";
 
-export const transporter = new Proxy({}, {
-    get(target, prop) {
-        const gmailTransporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
-            }
-        });
-        
-        const value = gmailTransporter[prop];
-        if (typeof value === 'function') {
-            return value.bind(gmailTransporter);
-        }
-        return value;
+dns.setDefaultResultOrder("ipv4first");
+
+export const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+    },
+});
+
+// Verify SMTP connection when the server starts
+transporter.verify((error, success) => {
+    if (error) {
+        console.error("❌ SMTP Connection Failed:");
+        console.error(error);
+    } else {
+        console.log("✅ SMTP Server is ready to send emails.");
     }
 });
 

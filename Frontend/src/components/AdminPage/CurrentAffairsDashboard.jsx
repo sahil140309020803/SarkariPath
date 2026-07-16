@@ -480,7 +480,7 @@ export default function CurrentAffairsDashboard() {
       {/* STATS SECTION */}
       {activeTab === 'hub' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-850 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-900 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
             <div className="p-3.5 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-lg">
               <UploadCloud size={24} />
             </div>
@@ -490,7 +490,7 @@ export default function CurrentAffairsDashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-850 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
             <div className="p-3.5 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 rounded-lg">
               <Sparkles size={24} />
             </div>
@@ -500,7 +500,7 @@ export default function CurrentAffairsDashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-850 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm hover:shadow-md transition duration-250 flex items-center gap-4">
             <div className="p-3.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-lg">
               <Calendar size={24} />
             </div>
@@ -579,10 +579,22 @@ export default function CurrentAffairsDashboard() {
 
                 {/* RECENT UPLOADS & METRICS CARD */}
                 <div className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm space-y-5 transition-colors">
-                  <h3 className="text-lg font-bold text-gray-800 dark:text-white border-b dark:border-slate-800 pb-2">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white border-b border-slate-300 dark:border-slate-800 pb-2">
                     Recent PDF Generations
                   </h3>
-                  {recentPDFs.length === 0 ? (
+                  {isLoadingStats ? (
+                    <div className="space-y-3">
+                      {[1, 2, 3].map(i => (
+                        <div key={i} className="flex justify-between items-center p-3 rounded-lg border border-gray-100 dark:border-slate-800/80 bg-gray-50/50 dark:bg-slate-950/20 animate-pulse">
+                          <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-32" />
+                          <div className="flex items-center gap-3">
+                            <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded-full w-24" />
+                            <div className="h-3 bg-slate-200 dark:bg-slate-700 rounded w-16" />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : recentPDFs.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-12 text-gray-400">
                       <Calendar size={48} className="stroke-1 text-gray-300 dark:text-slate-600 mb-2" />
                       <p className="text-sm font-medium">No PDFs uploaded yet</p>
@@ -700,8 +712,8 @@ export default function CurrentAffairsDashboard() {
                             {idx + 1}
                           </span>
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${q.Difficulty === 'Easy' ? 'bg-green-105 text-green-800 dark:bg-green-950/40 dark:text-green-400' :
-                              q.Difficulty === 'Medium' ? 'bg-yellow-105 text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-400' :
-                                'bg-red-105 text-red-800 dark:bg-red-950/40 dark:text-red-400'
+                            q.Difficulty === 'Medium' ? 'bg-yellow-105 text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-400' :
+                              'bg-red-105 text-red-800 dark:bg-red-950/40 dark:text-red-400'
                             }`}>
                             {q.Difficulty}
                           </span>
@@ -779,21 +791,21 @@ export default function CurrentAffairsDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-gray-50 dark:bg-slate-950/40 border-b dark:border-slate-850 text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider transition-colors">
+                    <tr className="bg-gray-50 dark:bg-slate-950/40 border-b border-slate-300 dark:border-slate-900 text-xs font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wider transition-colors">
                       <th className="p-4 pl-6">CA Month</th>
                       <th className="p-4">Total Questions</th>
                       <th className="p-4">Uploaded Date</th>
                       <th className="p-4 pr-6 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-150 dark:divide-slate-850 transition-colors">
+                  <tbody className="divide-y divide-gray-200 dark:divide-slate-800 transition-colors">
                     {records.map((rec, idx) => (
                       <tr key={rec._id} className="hover:bg-gray-50/40 dark:hover:bg-slate-950/10 transition">
                         <td className="p-4 pl-6 font-bold text-gray-900 dark:text-white">
                           {new Date(rec.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })}
                         </td>
                         <td className="p-4">
-                          <span className="px-2.5 py-0.5 bg-indigo-55 dark:bg-indigo-950/40 text-indigo-750 dark:text-indigo-400 text-xs font-extrabold rounded-full">
+                          <span className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-750 dark:text-indigo-400 text-xs font-bold rounded-full">
                             {rec.totalQuestions} Questions
                           </span>
                         </td>
@@ -842,7 +854,7 @@ export default function CurrentAffairsDashboard() {
       >
         <div className="space-y-4">
           {/* Filters Row */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-gray-50 dark:bg-slate-950/20 p-3 rounded-xl border border-gray-150 dark:border-slate-850">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 bg-gray-50 dark:bg-slate-950/20 p-3 rounded-xl border border-gray-200 dark:border-slate-800">
             <div className="relative w-full sm:w-72">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
               <input
@@ -874,24 +886,24 @@ export default function CurrentAffairsDashboard() {
 
           {isLoadingRecordQuestions ? (
             <div className="flex flex-col items-center justify-center py-20">
-              <div className="h-10 w-10 border-4 border-indigo-150 border-t-indigo-650 animate-spin rounded-full"></div>
+              <div className="h-10 w-10 border-4 border-indigo-200 border-t-indigo-700 animate-spin rounded-full"></div>
               <span className="text-xs text-gray-500 mt-2">Loading questions...</span>
             </div>
           ) : filteredRecordQuestions.length === 0 ? (
             <div className="text-center py-16 text-gray-400">
-              <AlertCircle className="mx-auto text-gray-350 mb-2 stroke-1" size={40} />
+              <AlertCircle className="mx-auto text-gray-400 mb-2 stroke-1" size={40} />
               <p className="text-xs font-semibold">No questions match your query</p>
             </div>
           ) : (
             <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
               {filteredRecordQuestions.map((q, idx) => (
-                <div key={q._id} className="p-4 bg-gray-50/40 dark:bg-slate-950/20 border dark:border-slate-850 rounded-xl relative space-y-3">
-                  <div className="flex justify-between items-center border-b dark:border-slate-850 pb-1.5">
+                <div key={q._id} className="p-4 bg-gray-50/40 dark:bg-slate-950/20 border border-slate-300 dark:border-slate-800 rounded-xl relative space-y-3">
+                  <div className="flex justify-between items-center border-b border-slate-300 dark:border-slate-800 pb-1.5">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-gray-600 dark:text-slate-400">#{idx + 1}</span>
                       <span className={`px-2 py-0.5 rounded text-[9px] font-extrabold uppercase ${q.Difficulty === 'Easy' ? 'bg-green-100 text-green-800 dark:bg-green-950/40 dark:text-green-400' :
-                          q.Difficulty === 'Medium' ? 'bg-yellow-105 text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-400' :
-                            'bg-red-100 text-red-800 dark:bg-red-950/40 dark:text-red-400'
+                        q.Difficulty === 'Medium' ? 'bg-yellow-105 text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-400' :
+                          'bg-red-100 text-red-800 dark:bg-red-950/40 dark:text-red-400'
                         }`}>
                         {q.Difficulty}
                       </span>
@@ -903,17 +915,17 @@ export default function CurrentAffairsDashboard() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 divide-y lg:divide-y-0 lg:divide-x divide-gray-150 dark:divide-slate-855">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 divide-y lg:divide-y-0 lg:divide-x divide-gray-200 dark:divide-slate-900">
                     <div>
                       <h5 className="font-semibold text-xs text-gray-800 dark:text-white leading-relaxed">{q.en?.Question}</h5>
                       <div className="grid grid-cols-2 gap-1.5 mt-2">
                         {q.en?.options?.map((opt, oIdx) => (
-                          <div key={oIdx} className={`p-1.5 rounded border text-[11px] ${opt.isCorrect ? 'bg-green-50/80 dark:bg-green-950/20 border-green-300 dark:border-green-900/50 text-green-700 dark:text-green-400 font-semibold' : 'bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-650 dark:text-slate-400'}`}>
+                          <div key={oIdx} className={`p-1.5 rounded border text-[11px] ${opt.isCorrect ? 'bg-green-50/80 dark:bg-green-950/20 border-green-300 dark:border-green-900/50 text-green-700 dark:text-green-400 font-semibold' : 'bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-700 dark:text-slate-400'}`}>
                             {String.fromCharCode(65 + oIdx)}. {opt.text}
                           </div>
                         ))}
                       </div>
-                      <div className="mt-2.5 p-2 bg-white dark:bg-slate-900/50 border dark:border-slate-850 rounded text-[10px] text-gray-500 leading-normal">
+                      <div className="mt-2.5 p-2 bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-800 rounded text-[10px] text-gray-500 leading-normal">
                         <strong>English Solution:</strong> <div dangerouslySetInnerHTML={{ __html: q.en?.solution }} />
                       </div>
                     </div>
@@ -922,12 +934,12 @@ export default function CurrentAffairsDashboard() {
                       <h5 className="font-semibold text-xs text-gray-800 dark:text-white leading-relaxed">{q.hi?.Question}</h5>
                       <div className="grid grid-cols-2 gap-1.5 mt-2">
                         {q.hi?.options?.map((opt, oIdx) => (
-                          <div key={oIdx} className={`p-1.5 rounded border text-[11px] ${opt.isCorrect ? 'bg-green-50/80 dark:bg-green-950/20 border-green-300 dark:border-green-900/50 text-green-700 dark:text-green-400 font-semibold' : 'bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-650 dark:text-slate-400'}`}>
+                          <div key={oIdx} className={`p-1.5 rounded border text-[11px] ${opt.isCorrect ? 'bg-green-50/80 dark:bg-green-950/20 border-green-300 dark:border-green-900/50 text-green-700 dark:text-green-400 font-semibold' : 'bg-white dark:bg-slate-900 border-gray-200 dark:border-slate-800 text-gray-700 dark:text-slate-400'}`}>
                             {String.fromCharCode(65 + oIdx)}. {opt.text}
                           </div>
                         ))}
                       </div>
-                      <div className="mt-2.5 p-2 bg-white dark:bg-slate-900/50 border dark:border-slate-850 rounded text-[10px] text-gray-500 leading-normal">
+                      <div className="mt-2.5 p-2 bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-800 rounded text-[10px] text-gray-500 leading-normal">
                         <strong>हिन्दी व्याख्या (Solution):</strong> <div dangerouslySetInnerHTML={{ __html: q.hi?.solution }} />
                       </div>
                     </div>
@@ -1033,7 +1045,7 @@ export default function CurrentAffairsDashboard() {
                   <label className="block text-xs font-semibold text-gray-400">विकल्प (Options - Auto-synced correctness)</label>
                   {editingQuestionData.hi.options.map((opt, optIdx) => (
                     <div key={optIdx} className="flex items-center gap-2">
-                      <div className={`h-4 w-4 rounded-full border-4 flex items-center justify-center ${opt.isCorrect ? 'border-indigo-600 bg-indigo-650' : 'border-gray-350'}`}></div>
+                      <div className={`h-4 w-4 rounded-full border-4 flex items-center justify-center ${opt.isCorrect ? 'border-indigo-600 bg-indigo-600' : 'border-gray-300'}`}></div>
                       <span className="text-xs font-bold text-gray-500">{String.fromCharCode(65 + optIdx)}</span>
                       <input
                         type="text"
@@ -1057,18 +1069,18 @@ export default function CurrentAffairsDashboard() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 border-t dark:border-slate-850 pt-3">
+            <div className="flex justify-end gap-3 border-t dark:border-slate-800 pt-3">
               <button
                 type="button"
                 onClick={() => { setEditingQuestionIndex(null); setEditingQuestionData(null); }}
-                className="px-4 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-350 text-xs font-bold rounded-lg"
+                className="px-4 py-2 border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-slate-400 text-xs font-bold rounded-lg"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={() => saveEditedQuestion(false)}
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-750 text-white text-xs font-bold rounded-lg transition"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition"
               >
                 Save Updates
               </button>
@@ -1100,9 +1112,9 @@ export default function CurrentAffairsDashboard() {
               }}
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
             />
-            <FileUp className="mx-auto text-gray-450 dark:text-slate-600 group-hover:text-indigo-600 dark:group-hover:text-cyan-455 transition-colors mb-2" size={40} />
+            <FileUp className="mx-auto text-gray-500 dark:text-slate-600 group-hover:text-indigo-600 dark:group-hover:text-cyan-500 transition-colors mb-2" size={40} />
             <span className="text-xs font-bold text-indigo-600 dark:text-cyan-400 group-hover:underline">Select Replacement PDF File</span>
-            <p className="text-[10px] text-gray-450 dark:text-slate-500 mt-1">PDF up to 50MB</p>
+            <p className="text-[10px] text-gray-500 dark:text-slate-500 mt-1">PDF up to 50MB</p>
           </div>
         </div>
       </Modal>

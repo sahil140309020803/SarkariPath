@@ -153,8 +153,8 @@ const VerifyEmail = () => {
 
         {/* Header/Logo */}
         <div className="flex flex-col items-center justify-center">
-          <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-200 mb-4">
-            <img src={LOGO} alt="logo" className='w-16 h-16 text-white' />
+          <div>
+            <img src={LOGO} alt="logo" className='w-16 h-16' />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Verify Email</h2>
           <p className="text-sm text-gray-500 dark:text-slate-400 mt-2 text-center">
@@ -207,8 +207,8 @@ const VerifyEmail = () => {
             onClick={handleResend}
             disabled={timer > 0 || isResending}
             className={`transition-colors cursor-pointer ${timer > 0 || isResending
-                ? "text-gray-400 dark:text-slate-650 cursor-not-allowed"
-                : "text-indigo-650 hover:text-indigo-750 dark:text-cyan-400 dark:hover:text-cyan-300"
+              ? "text-gray-400 dark:text-slate-650 cursor-not-allowed"
+              : "text-indigo-650 hover:text-indigo-750 dark:text-cyan-400 dark:hover:text-cyan-300"
               }`}
           >
             {isResending ? (

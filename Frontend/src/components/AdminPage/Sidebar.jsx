@@ -51,7 +51,10 @@ const Sidebar = ({ activePage, setActivePage, isOpen, setIsOpen }) => {
                         key={item.id}
                         role="button"
                         tabIndex="0"
-                        onClick={() => setActivePage(item.id)}
+                        onClick={() => (
+                            setActivePage(item.id),
+                            setIsOpen(false)
+                        )}
                         onKeyDown={(e) => handleKeyDown(e, item.id)}
                         className={`nav-link flex items-center px-4 py-2.5 rounded-lg transition-colors duration-200 cursor-pointer ${activePage === item.id ? 'text-white bg-blue-500' : 'text-gray-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 dark:hover:text-slate-200'} ${!isOpen ? 'justify-center px-0' : ''}`}
                         title={!isOpen ? item.label : ''}

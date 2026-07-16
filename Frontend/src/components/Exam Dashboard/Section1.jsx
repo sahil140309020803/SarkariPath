@@ -65,8 +65,8 @@ const Section1 = () => {
                 key={tag.id}
                 onClick={() => setFilter(tag.id)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow-sm border cursor-pointer ${filter === tag.id
-                    ? 'bg-blue-600 dark:bg-indigo-600 text-white border-blue-600 dark:border-indigo-650'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
+                  ? 'bg-blue-600 dark:bg-indigo-600 text-white border-blue-600 dark:border-indigo-650'
+                  : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
                   }`}
               >
                 {tag.label}
@@ -76,7 +76,7 @@ const Section1 = () => {
         </div>
 
         {/* Mock Tests List container with max-height and scrolling */}
-        <div className="w-full max-h-[550px] overflow-y-auto mt-2 mb-2 bg-transparent sm:bg-white sm:dark:bg-slate-900 rounded-xl p-0 sm:p-5 shadow-none sm:shadow-lg dark:shadow-none border border-none sm:border-slate-100 sm:dark:border-slate-800 flex flex-col gap-4 transition-colors custom-scrollbar pr-1">
+        <div className="w-full max-h-[46rem] overflow-y-auto mt-2 mb-2 bg-transparent sm:bg-white sm:dark:bg-slate-900 rounded-xl p-0 sm:p-5 shadow-none border border-none sm:border-slate-100 sm:dark:border-slate-800 flex flex-col gap-4 transition-colors custom-scrollbar pr-1">
           {!isExamDataFetched && <div className="text-slate-500 dark:text-slate-400">Loading mock tests...</div>}
 
           {isExamDataFetched && filteredMockTests.length === 0 && (
@@ -91,7 +91,7 @@ const Section1 = () => {
               <div
                 key={index}
 
-                className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-cyan-800 shadow-sm dark:shadow-none hover:-translate-y-1 transition-all duration-500 hover:shadow dark:hover:shadow-lg dark:hover:shadow-slate-900 w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700/50"
+                className="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-slate-200 shadow-md dark:shadow-none hover:-translate-y-0.5 transition-all duration-500 hover:shadow-lg dark:hover:shadow-slate-900 w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 cursor-pointer hover:bg-blue-50 dark:hover:bg-slate-500/30 border border-slate-200 dark:border-slate-700/50"
               >
                 <div className="font-semibold text-lg text-gray-800 dark:text-slate-200 transition-colors space-y-1 w-full">
                   <div className="flex items-center gap-3 flex-wrap">

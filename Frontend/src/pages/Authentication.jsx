@@ -63,6 +63,16 @@ const Authentication = ({ initialIsLogin }) => {
             <SignUp isLoaded={!isLogin && isLoaded} />
           </div>
         </div>
+        {/* <div
+          className={`transition-all duration-500 ease-in-out ${isLogin ? "min-h-[400px]" : "min-h-[560px]"
+            }`}
+        >
+          {isLogin ? (
+            <SignIn isLoaded={isLoaded} />
+          ) : (
+            <SignUp isLoaded={isLoaded} />
+          )}
+        </div> */}
       </div>
     </div>
   );

@@ -71,9 +71,9 @@ const Header = ({ toggleSidebar }) => {
                         )}
                     </button>
                     {notificationsOpen && (
-                        <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-200 dark:border-slate-800 z-50 transition-colors">
-                            <div className="p-4 border-b dark:border-slate-800"><h3 className="font-semibold text-gray-800 dark:text-white">Notifications</h3></div>
-                            <div className="divide-y max-h-80 overflow-y-auto dark:divide-slate-800 custom-scrollbar">
+                        <div className="absolute -right-20  sm:right-0 mt-3 w-80 bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-200 dark:border-slate-800 z-50 transition-colors">
+                            <div className="p-4 border-slate-400 border-b dark:border-slate-800"><h3 className="font-semibold text-gray-800 dark:text-white">Notifications</h3></div>
+                            <div className="divide-y max-h-70 overflow-y-auto divide-slate-300 dark:divide-slate-800 custom-scrollbar">
                                 {notifications.length > 0 ? (
                                     notifications.map((notif, index) => (
                                         <div key={index} className="p-4 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors">
@@ -88,7 +88,6 @@ const Header = ({ toggleSidebar }) => {
                                     <div className="p-4 text-center text-sm text-gray-500 dark:text-slate-400">No new notifications</div>
                                 )}
                             </div>
-                            <div className="p-2 bg-gray-50 dark:bg-slate-800 text-center transition-colors"><a href="#" className="text-sm font-medium text-indigo-600 dark:text-cyan-400 hover:underline">View all notifications</a></div>
                         </div>
                     )}
                 </div>

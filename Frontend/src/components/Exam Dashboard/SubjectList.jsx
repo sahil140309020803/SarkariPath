@@ -62,7 +62,7 @@ const SubjectList = () => {
                                     <div className='text-sm font-medium text-slate-600 dark:text-slate-400'>Practice tests by topic and difficulty.</div>
                                     <div className='flex justify-between items-center gap-6 text-sm font-semibold text-slate-500 dark:text-slate-400'>
                                         <div className='flex items-center gap-1'><span className='text-emerald-500'>✅</span> 15 Questions</div>
-                                        <div className='flex items-center gap-1'><span>⌛</span> 20 Minutes</div>
+                                        <div className='flex items-center gap-1'><span>⌛</span> 15 Minutes</div>
                                     </div>
                                 </div>
                                 <div className='flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 mt-2'>

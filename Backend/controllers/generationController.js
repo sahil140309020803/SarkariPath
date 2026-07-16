@@ -76,7 +76,7 @@ export const publishGeneration = async (req, res) => {
 export const fetchMockTestsByExam = async (req, res) => {
   const { examId } = req.params;
   try {
-    const mocks = await MockTestModel.find({ ExamId: examId })
+    const mocks = await MockTestModel.find({ ExamId: examId, Status: "Published" })
       .populate('Questions')
       .sort({ createdAt: -1 });
     res.status(200).json({ success: true, mocks });
@@ -98,4 +98,4 @@ export const fetchSubjectsForExam = async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to fetch subjects for exam" });
   }
 }
-
+

@@ -233,8 +233,8 @@ const ForgotPassword = () => {
 
         {/* Logo and Header */}
         <div className="flex flex-col items-center justify-center">
-          <div className="w-18 h-18 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-indigo-200 dark:shadow-none mb-4">
-            <img src={LOGO} alt="logo" className='w-16 h-16 text-white' />
+          <div>
+            <img src={LOGO} alt="logo" className='w-16 h-16' />
           </div>
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white">
             {step === 1 && "Forgot Password"}
@@ -287,7 +287,7 @@ const ForgotPassword = () => {
               <label className="text-sm font-semibold text-center text-gray-600 dark:text-slate-300">
                 Enter 6-digit OTP
               </label>
-              
+
               {/* Separate OTP Square inputs */}
               <div className="flex justify-center gap-3 my-4">
                 {otpValues.map((val, idx) => (
@@ -325,8 +325,8 @@ const ForgotPassword = () => {
                 onClick={handleResendOtp}
                 disabled={timer > 0 || isResending}
                 className={`transition-colors cursor-pointer ${timer > 0 || isResending
-                    ? "text-gray-400 dark:text-slate-650 cursor-not-allowed"
-                    : "text-indigo-650 hover:text-indigo-750 dark:text-cyan-400 dark:hover:text-cyan-300"
+                  ? "text-gray-400 dark:text-slate-650 cursor-not-allowed"
+                  : "text-indigo-650 hover:text-indigo-750 dark:text-cyan-400 dark:hover:text-cyan-300"
                   }`}
               >
                 {isResending ? (
@@ -338,7 +338,7 @@ const ForgotPassword = () => {
                 )}
               </button>
             </div>
-            
+
             <button
               type="button"
               onClick={() => setStep(1)}

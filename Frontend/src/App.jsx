@@ -25,6 +25,7 @@ import { initClarity } from './utils/clarity'
 initAnalytics();
 initClarity();
 
+
 const App = () => {
   const { isLoading } = useUser();
 
@@ -32,7 +33,7 @@ const App = () => {
     <div>
       <VisitorTracker />
       <AnalyticsTracker />
-      <ToastContainer />
+      <ToastContainer autoClose={2000} />
       <Routes>
         {/* Public Routes */}
         <Route path='/' element={<Home />} />

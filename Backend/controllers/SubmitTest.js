@@ -2,7 +2,7 @@ import { MockTestModel, QuizModel, QuestionModel, TestSubmissionModel } from "..
 import userModel from "../models/userModel.js";
 import userStatisticsModel from "../models/userStatisticsModel.js";
 
-const MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS = 10 * 60 * 1000;
+const REATTEMPT_EXPIRY_MS = 1 * 24 * 60 * 60 * 1000; // 1 day — applied to ALL reattempts (quiz or mock)
 
 export const submitTest = async (req, res) => {
     console.log("Payload received:", JSON.stringify(req.body, null, 2));
@@ -142,12 +142,15 @@ export const submitTest = async (req, res) => {
 
         let submissionExpireAt = null;
         const testType = isMock ? 'mock_test' : 'quiz';
-        if (testType === 'quiz') {
+
+        if (previousAttemptsCount > 0) {
+            // Any reattempt (quiz or mock test) → expires in 1 day
+            submissionExpireAt = new Date(Date.now() + REATTEMPT_EXPIRY_MS);
+        } else if (testType === 'quiz') {
+            // Quiz first attempt → inherit the quiz's 7-day expiry
             submissionExpireAt = mockTest.expireAt;
-        } else if (testType === 'mock_test' && previousAttemptsCount > 0) {
-            // Re-attempt for mock test expires in 10 minutes
-            submissionExpireAt = new Date(Date.now() + MOCK_TEST_REATTEMPT_EXPIRY_MILLISECONDS);
         }
+        // Mock test first attempt → null (never expires)
 
         const newSubmission = new TestSubmissionModel({
             userId: userEmail,
