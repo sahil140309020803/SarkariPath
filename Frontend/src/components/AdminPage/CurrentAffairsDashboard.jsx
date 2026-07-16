@@ -107,7 +107,6 @@ export default function CurrentAffairsDashboard() {
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
-      console.log("Websocket connected:", newSocket.id);
     });
 
     newSocket.on('ca_generation_progress', (data) => {

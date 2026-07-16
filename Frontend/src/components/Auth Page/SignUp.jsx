@@ -142,7 +142,7 @@ const SignUp = ({ isLoaded }) => {
           </button>
 
           {/* Invisible Official Google Login Trigger Overlay */}
-          <div className="absolute inset-0 opacity-0 cursor-pointer [&>div]:w-full [&>div>iframe]:w-full [&>div>iframe]:cursor-pointer z-10">
+          <div className="absolute inset-0 opacity-0 cursor-pointer [&_div]:w-full [&_div]:h-full [&_iframe]:w-full [&_iframe]:h-full [&_iframe]:cursor-pointer z-10">
             <GoogleLogin
               onSuccess={credentialResponse => {
                 handleGoogleSuccess(credentialResponse.credential);

@@ -59,7 +59,7 @@ const TestGenerator = () => {
             setIsHistoryLoading(false);
         }
     }
-    console.log('recentGenerations', recentGenerations);
+
 
     const handleDeleteGeneration = async (testId) => {
         if (!confirm('Are you sure you want to discard this test generation? This action cannot be undone.')) {

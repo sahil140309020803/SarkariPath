@@ -12,23 +12,14 @@ export const initClarity = () => {
     const projectId = import.meta.env.VITE_CLARITY_PROJECT_ID;
 
     if (!projectId || projectId === 'YOUR_PROJECT_ID') {
-        if (import.meta.env.DEV) {
-            console.warn('[Clarity] Project ID is missing or placeholder. Skipping initialization.');
-        }
         return;
     }
 
     try {
         Clarity.init(projectId);
         isInitialized = true;
-        if (import.meta.env.DEV) {
-            console.log('[Clarity] Initialized successfully with project ID:', projectId);
-        }
     } catch (error) {
-        if (import.meta.env.DEV) {
-            console.error('[Clarity] Initialization failed:', error);
-        }
-        // Silently ignore in production
+        // Silently ignore
     }
 };
 
@@ -45,13 +36,8 @@ export const identifyUser = (userId, email, name) => {
     try {
         // Clarity.identify(customId, customSessionId, customPageId, friendlyName)
         Clarity.identify(userId, email, name, name);
-        if (import.meta.env.DEV) {
-            console.log('[Clarity] User identified:', { userId, email, name });
-        }
     } catch (error) {
-        if (import.meta.env.DEV) {
-            console.error('[Clarity] identifyUser failed:', error);
-        }
+        // Silently ignore
     }
 };
 
@@ -64,13 +50,8 @@ export const clearUser = () => {
 
     try {
         Clarity.identify('guest', undefined, undefined, 'Guest');
-        if (import.meta.env.DEV) {
-            console.log('[Clarity] User identity cleared (reset to guest).');
-        }
     } catch (error) {
-        if (import.meta.env.DEV) {
-            console.error('[Clarity] clearUser failed:', error);
-        }
+        // Silently ignore
     }
 };
 
@@ -85,13 +66,8 @@ export const setTag = (key, value) => {
 
     try {
         Clarity.setTag(key, value);
-        if (import.meta.env.DEV) {
-            console.log(`[Clarity] Tag set: ${key} = ${value}`);
-        }
     } catch (error) {
-        if (import.meta.env.DEV) {
-            console.error('[Clarity] setTag failed:', error);
-        }
+        // Silently ignore
     }
 };
 
@@ -104,12 +80,7 @@ export const trackEvent = (eventName) => {
 
     try {
         Clarity.event(eventName);
-        if (import.meta.env.DEV) {
-            console.log(`[Clarity] Event tracked: "${eventName}"`);
-        }
     } catch (error) {
-        if (import.meta.env.DEV) {
-            console.error(`[Clarity] trackEvent "${eventName}" failed:`, error);
-        }
+        // Silently ignore
     }
 };

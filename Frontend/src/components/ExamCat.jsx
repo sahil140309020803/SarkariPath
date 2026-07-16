@@ -6,7 +6,7 @@ import AnimatedSection from './AnimatedSection';
 
 const ExamCat = () => {
   const { examCatList } = useExam();
-  console.log(examCatList)
+
 
   return (
     <div className='w-full flex justify-center py-8'>

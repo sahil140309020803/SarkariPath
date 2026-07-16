@@ -40,8 +40,6 @@ const VisitorTracker = () => {
             const { device, browser } = getDeviceAndBrowser();
             const email = userDetails?.email || null;
 
-            console.log(`[VisitorTracker] Heartbeat sent at ${new Date().toLocaleTimeString()} for visitor ID: ${id}`);
-
             await axios.post(`${backend_url}/api/analytics/heartbeat`, {
                 visitorId: id,
                 device,
@@ -49,7 +47,7 @@ const VisitorTracker = () => {
                 userEmail: email
             }, { withCredentials: true });
         } catch (err) {
-            console.error("VisitorTracker Heartbeat error:", err);
+            // Silently fail or ignore error
         }
     };
 

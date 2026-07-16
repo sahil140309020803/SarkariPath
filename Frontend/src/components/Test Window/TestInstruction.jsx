@@ -9,7 +9,7 @@ const TestInstruction = () => {
 
     const { activeTest, setActiveTest, questions, setQuestions, duration, setDuration, markingScheme, setMarkingScheme, activeTestID, setActiveTestID, isTestStarted, setIsTestStarted } = useTestWindow();
 
-    console.log(activeTest);
+
     const { testID } = useParams();
     useEffect(() => {
         setActiveTestID(testID);

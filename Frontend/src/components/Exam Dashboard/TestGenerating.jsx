@@ -80,7 +80,7 @@ const TestGenerating = () => {
             // Prioritize activeTopic over activeSubject for specific topic tests
             const ruleName = activeTopic || activeSubject?.name || activeSubject || "General Awareness";
 
-            console.log('Selected Exam:', activeExamPage);
+
             const payload = {
                 title: fullTitle,
                 examId: examId,
@@ -133,7 +133,6 @@ const TestGenerating = () => {
                 // console.log('Generated Test Data:', data);
                 if (data.test && data.test._id) {
                     const testId = data.test._id;
-                    console.log('Navigating to Test ID:', testId);
                     navigate(`/tests/${testId}`);
                 } else {
                     toast.error("Test generated but ID missing.");

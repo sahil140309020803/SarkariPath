@@ -62,7 +62,7 @@ export const UserProvider = ({ children }) => {
                 await getUserDetails();
             }
         } catch (err) {
-            console.log(err.message);
+            // Quietly fail
         }
         if (!userDetails)
             await delay(1100);

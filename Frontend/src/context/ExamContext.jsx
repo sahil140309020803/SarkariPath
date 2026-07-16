@@ -33,7 +33,6 @@ export const ExamProvider = ({ children }) => {
         axios.defaults.withCredentials = true;
         try {
             const { data } = await axios.get(`${backend_url}/api/exam-details/${activeExamPage}`);
-            console.log(data);
             if (data.success) {
                 setIsExamDataFetched({ 
                     ExamId: data.ExamId, 

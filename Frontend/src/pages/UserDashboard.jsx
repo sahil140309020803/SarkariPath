@@ -162,7 +162,7 @@ const UserDashboard = () => {
     const isDark = document.documentElement.classList.contains('dark');
     const gridColor = isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.6)';
     const textColor = isDark ? '#94a3b8' : '#64748b';
-    console.log(isDark);
+
 
     // 1. Tests Taken Chart
     if (testsChartRef.current) {

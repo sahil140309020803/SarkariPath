@@ -842,8 +842,6 @@ export default function Analysis() {
               onClick={() => {
                 if (analysisData?.testId) {
                   navigate(`/tests/${analysisData?.testId}`);
-                } else {
-                  console.warn("Test ID not found for retake");
                 }
               }}
               className="flex items-center justify-center gap-2 px-6 md:px-8 py-2.5 bg-blue-600 dark:bg-indigo-600 text-white font-bold rounded-xl hover:bg-blue-700 dark:hover:bg-indigo-500 transition-all shadow-lg shadow-blue-200 dark:shadow-indigo-900/40 hover:-translate-y-0.5"

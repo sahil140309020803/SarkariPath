@@ -32,7 +32,6 @@ const AITopicSumm = ({ examContext }) => {
     
 
     const GenerateContent = async() => {
-        console.log('Button clicked')
         if(!topic || !language || !examContext) {
             alert('Please fill all the fields');
         }
@@ -43,7 +42,7 @@ const AITopicSumm = ({ examContext }) => {
                 setContent(data.message);
             }
         }catch(err) {
-            console.log(err);
+            // Silently ignore or handle
         } 
         setLoading(false);
     }
