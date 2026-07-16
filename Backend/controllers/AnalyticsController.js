@@ -34,7 +34,7 @@ export const handleHeartbeat = async (req, res) => {
             return res.status(400).json({ success: false, message: "visitorId is required" });
         }
 
-        console.log(`[Backend] Heartbeat received at ${new Date().toLocaleTimeString()} for visitorId: ${visitorId}, userEmail: ${userEmail || 'guest'}`);
+
 
         // Backend Failsafe: Check if request is authenticated as an Admin
         const { token } = req.cookies || {};
