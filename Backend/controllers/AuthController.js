@@ -58,6 +58,9 @@ const register = async (req, res) => {
     if (!name || !email || !password) {
         return res.json({ success: false, message: "All Fields are required" });
     }
+    if (password.length < 6) {
+        return res.json({ success: false, message: "Password must be at least 6 characters long" });
+    }
 
     try {
         const existingUser = await userModel.findOne({ email });
