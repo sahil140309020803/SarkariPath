@@ -1,4 +1,5 @@
 import { AI } from "../GenAI/ai.js";
+import { getDifficultyInstructions } from "../services/difficultyHelper.js";
 
 export const generateQuiz = async (req, res) => {
     const { Exam, Subject, Topic, Difficulty } = req.body;
@@ -9,12 +10,16 @@ export const generateQuiz = async (req, res) => {
     }
 
     try {
+        const difficultyInstructions = getDifficultyInstructions(Difficulty || 'Medium', Exam, Subject);
+
         let prompt = `You are an expert multilingual question designer and a strict json parser for competitive exams. Your task is to generate a high-quality, 15-question multiple-choice quiz (MCQ).
 
 **Exam:** ${Exam}
 **Subject:** ${Subject}
 **Topic:** ${Topic || 'General'}
 **Difficulty Level:** ${Difficulty}
+
+${difficultyInstructions}
 
 **CRITICAL INSTRUCTIONS:**
 1.  **Task:** Generate a targeted quiz of exactly "15" questions. The final output must be a JSON object with a single key, which is the name of the "[SUBJECT]", and its value should be an array of the 15 questions.

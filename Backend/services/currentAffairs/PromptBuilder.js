@@ -18,6 +18,11 @@ Do NOT skip any current affairs point, announcement, or key detail present in th
    I. [Statement 1]
    II. [Statement 2]
 
+6. **Difficulty & Question Length Guidelines**:
+   - Assign "Difficulty" as "Easy", "Medium", or "Hard" depending on the complexity of the news and question.
+   - For "Hard" difficulty questions, the question statement MUST be significantly longer, detailed, and context-rich. Avoid short or straightforward one-sentence questions. Provide ample background context or scenario descriptions from the text chunk.
+   - For "Hard" difficulty questions, at least 50% must be statement-based (e.g., "Consider the following statements regarding X... Which of these is/are correct?"). Focus on deep policy/constitutional/economic analysis rather than simple factual extraction.
+
 ---
 
 ### TEXT CHUNK:

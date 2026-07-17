@@ -1,3 +1,5 @@
+import { getDifficultyInstructions } from '../difficultyHelper.js';
+
 export function getAdminMultipleQuestionsPrompt(examName, subjectName, topics, difficulty, history = [], count = 5) {
   const isEnglish = (subjectName || "").toLowerCase().includes('english') || (topics && topics.some(t => t.toLowerCase().includes('english')));
   const isHindi = (subjectName || "").toLowerCase().includes('hindi') || (topics && topics.some(t => t.toLowerCase().includes('hindi')));
@@ -42,9 +44,14 @@ ${topics.length >= count ? `- Assign exactly ONE topic to each question (e.g. Qu
 - The "hi" object must contain the question, options, answer, and solution in Hindi.`;
   }
 
+  const difficultyInstructions = getDifficultyInstructions(difficulty, examName, subjectName);
+
   return `You are a high-level question developer for the "${examName}" exam.
   Randomness Seed: ${Math.floor(Math.random() * 100000) + 1}
   Task: ${taskText}
+
+${difficultyInstructions}
+
 ${topicMappingInstructions}
 ${languageInstructions}
 ${historyList}

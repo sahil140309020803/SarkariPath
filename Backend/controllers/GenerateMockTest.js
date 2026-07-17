@@ -1,14 +1,19 @@
 import { AI } from "../GenAI/ai.js";
 import fs from 'fs';
+import { getDifficultyInstructions } from "../services/difficultyHelper.js";
 
 export const generateMockTest = async (req, res) => {
     const { Exam, SubjectPrompt, Difficulty } = req.body;
     let aiResponseText;
     try {
+        const difficultyInstructions = getDifficultyInstructions(Difficulty || 'Medium', Exam, '');
+
         let prompt = `You are an expert multilingual question designer and also act as json parser for competitive exams. Your task is to generate a set of high-quality multiple-choice questions (MCQs) based on the parameters provided.
 
 **Exam:** ${Exam}
 **Difficulty Level:** ${Difficulty || 'Medium'}
+
+${difficultyInstructions}
 
 **CRITICAL INSTRUCTIONS:**
 1.  **Subject Prompt**: 
