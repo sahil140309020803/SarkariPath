@@ -19,7 +19,7 @@ const setAuthCookie = (res, req, token) => {
         httpOnly: true,
         secure: isProd,
         sameSite: isProd ? "none" : "lax",
-        maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 };
 
@@ -43,7 +43,7 @@ const adminLogin = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-            maxAge: 1 * 24 * 60 * 60 * 1000,
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         });
 
         return res.json({ success: true, message: "Admin login successfully", token: token, role: 'admin' });
